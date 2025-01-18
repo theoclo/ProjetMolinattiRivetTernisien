@@ -41,6 +41,19 @@ public class ConnexionMembreView {
         combobox_asso.setItems(InitialisationAppMembre.associations);
         combobox.setVisible(false);
 
+        if(combobox_asso.getSelectionModel().getSelectedItem() == null){
+            bouton_connexion.setDisable(true);
+        }
+        else{
+            bouton_connexion.setDisable(false);
+        }
+        if(combobox.getSelectionModel().getSelectedItem() == null){
+            bouton_connexion.setDisable(true);
+        }
+        else{
+            bouton_connexion.setDisable(false);
+        }
+
         combobox_asso.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 combobox.getItems().clear();
@@ -56,8 +69,15 @@ public class ConnexionMembreView {
                 combobox.setVisible(false);
             }
         });
+        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                bouton_connexion.setDisable(false);
+            }else {
+                bouton_connexion.setDisable(true);
+            }
+        });
 
-        bouton_connexion.setOnMouseClicked(event -> {
+                bouton_connexion.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se connecter' cliqué");
             membreActuel = (Personne) combobox.getValue();
 
