@@ -72,7 +72,7 @@ public class AjoutArbreVotesMembreView {
             System.out.println("Bouton 'Valider' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ajout arbre aux votes");
-            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter l'arbre "+arbreSelectionne.getIdBase()+ " en haut de votre liste ?");
+            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter l'arbre "+arbreSelectionne.getIdBase()+ " dans la liste de vos votes ?");
             alert.setContentText("");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
@@ -83,11 +83,16 @@ public class AjoutArbreVotesMembreView {
                     System.out.println("L'utilisateur a cliqué sur Oui");
                     try {
                         boolean fait = InitialisationAppMembre.membreActuel.nominerArbre(finalArbreSelectionne);
+                        if(!fait){
+                            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                            alert2.setTitle("Erreur");
+                            alert2.setHeaderText("Erreur lors de l'ajout de l'arbre aux votes");
+                            alert2.setContentText("L'arbre est déjà dans votre liste");
+                            alert2.showAndWait();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
-
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_votes.fxml"));
