@@ -262,8 +262,46 @@ public class Personne implements Abonne, Entite {
             System.out.println("Vous n'êtes dans aucune association");
         }
     }
-    public void nominerArbre(Arbre a) //5 max sinon le premier saute
+    public boolean nominerArbre(Arbre a) throws IOException //5 max sinon le premier saute
     {
+        Association asso = Association.getAssociation(association.get());
+        ArrayList<Arbre> listeReco=new ArrayList<>();
+        if(asso.getListeReco().containsKey(this.pseudo)){
+            listeReco = asso.getListeReco().get(this.pseudo);
+        }
+        boolean dejaPresent = false;
+        for(Arbre arbre:listeReco){
+            if(arbre.getIdBase()==(a.getIdBase())){
+                dejaPresent = true;
+            }
+        }
+        System.out.println(dejaPresent);
+
+        if(listeReco.size() == 5){
+            if(dejaPresent){
+                return true;
+            }
+            else{
+                listeReco.remove(0);
+                listeReco.add(a);
+                asso.getListeReco().put(this.pseudo, listeReco);
+                Main.MaJFichierJSONAssociation();
+                return true;
+            }
+
+        }
+        else{
+            if(dejaPresent){
+                return true;
+            }
+            else {
+                listeReco.add(a);
+                asso.getListeReco().put(this.pseudo, listeReco);
+                System.out.println(listeReco);
+                Main.MaJFichierJSONAssociation();
+                return true;
+            }
+        }
 
     }
 

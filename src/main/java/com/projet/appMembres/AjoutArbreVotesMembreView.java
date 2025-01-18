@@ -1,5 +1,7 @@
 package com.projet.appMembres;
 
+import com.projet.Arbre;
+import com.projet.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -65,19 +67,26 @@ public class AjoutArbreVotesMembreView {
         });
 
         valider.setOnMouseClicked(event -> {
+            Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
             System.out.println("Bouton 'Valider' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ajout arbre aux votes");
-            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter cet arbre en haut de votre liste ?");
+            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter l'arbre "+arbreSelectionne.getIdBase()+ " en haut de votre liste ?");
             alert.setContentText("");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            Arbre finalArbreSelectionne = arbreSelectionne;
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
+                    try {
+                        InitialisationAppMembre.membreActuel.nominerArbre(finalArbreSelectionne);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                    //AJOUTER ARBRE DANS LA LISTE DE VOTES
 
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {

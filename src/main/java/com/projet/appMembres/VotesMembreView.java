@@ -1,5 +1,8 @@
 package com.projet.appMembres;
 
+import com.projet.Arbre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class VotesMembreView {
     @FXML
@@ -32,6 +36,14 @@ public class VotesMembreView {
     @FXML
     public void initialize(){
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
+        InitialisationAppMembre.listeRecommandations.clear();
+        Personne p = InitialisationAppMembre.membreActuel;
+        Association a = p.obtenirAssociationObjet().get();
+        ArrayList<Arbre> lR= a.getListeReco().get(p.getPseudo());
+        if(lR != null){
+            InitialisationAppMembre.listeRecommandations.addAll(lR);
+        }
+        listview.setItems(InitialisationAppMembre.listeRecommandations);
 
 
         deconnecter.setOnMouseClicked(event -> {

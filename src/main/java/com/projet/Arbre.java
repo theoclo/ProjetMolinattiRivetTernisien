@@ -238,5 +238,15 @@ public class Arbre {
         return arbreNonRemarquables;
     }
 
+    public static Arbre obtenirArbre(int id){
+        Arbre arbre = null;
+        for(Arbre a : listeArbres){
+            if(a.getIdBase() == id){
+                arbre = a;
+            }
+        }
+        return arbre;
+    }
+
 
 }

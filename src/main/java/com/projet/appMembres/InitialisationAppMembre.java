@@ -17,6 +17,7 @@ public class InitialisationAppMembre {
     public static ObservableList<Arbre> arbres = FXCollections.observableArrayList();
     public static ObservableList<Arbre> arbresNonRemarquables = FXCollections.observableArrayList();
     public static  ObservableList<Association> associations = FXCollections.observableArrayList();
+    public static ObservableList<Arbre> listeRecommandations = FXCollections.observableArrayList();
 
 
     public static void main(String[] args) throws IOException{
