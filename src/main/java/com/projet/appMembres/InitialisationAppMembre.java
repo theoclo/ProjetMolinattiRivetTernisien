@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.projet.Main.*;
 import static com.projet.Main.MaJFichierJSONPersonnes;
@@ -27,6 +28,8 @@ public class InitialisationAppMembre {
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
+
+
         associations.clear();
         arbres.clear();
         associations.addAll(listeAssociations);

@@ -1,5 +1,7 @@
 package com.projet.appMembres;
 
+import com.projet.Main;
+import com.projet.entite.Personne;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +39,8 @@ public class NotificationsMembreView {
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
 
         ObservableList<String> notifs = FXCollections.observableArrayList();
-        for(String notif : InitialisationAppMembre.membreActuel.getListeNotif()){
+        Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
+        for(String notif :p.getListeNotif()){
             notifs.add(notif);
         }
         listview.setItems(notifs);
@@ -72,7 +75,13 @@ public class NotificationsMembreView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     listview.getItems().clear();
-                    InitialisationAppMembre.membreActuel.getListeNotif().clear();
+                    p.getListeNotif().clear();
+                    try {
+                        Main.MaJFichierJSONPersonnes();
+                        Main.MaJFichierJSONAssociation();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println("L'utilisateur a cliqué sur Oui");
                 } else {
                     System.out.println("L'utilisateur a cliqué sur Non");

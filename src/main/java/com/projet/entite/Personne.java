@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.projet.Main.MaJFichierJSONAssociation;
+import static com.projet.Main.MaJFichierJSONPersonnes;
+
 public class Personne implements Abonne, Entite {
 
     /*  CHAMPS  */
@@ -326,5 +329,18 @@ public class Personne implements Abonne, Entite {
         return null;
     }
 
+    public void ajouterNotification(String notification) throws IOException {
+        Personne p = Personne.listePersonnes.get(0);
+
+        ArrayList<String> notif = new ArrayList<>();
+       if(p.getListeNotif()!= null){
+           notif = p.getListeNotif();
+       }
+        notif.add(notification);
+        p.setListeNotif(notif);
+        MaJFichierJSONPersonnes();
+        MaJFichierJSONAssociation();
+
+    }
 
 }
