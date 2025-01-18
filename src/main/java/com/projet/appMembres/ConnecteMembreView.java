@@ -68,7 +68,7 @@ public class ConnecteMembreView {
         });
 
         asso.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
+            System.out.println("Bouton 'Association' cliqué");
             Stage stage = (Stage) asso.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_association.fxml"));
@@ -96,7 +96,7 @@ public class ConnecteMembreView {
         });
 
         votes.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Visites' cliqué");
+            System.out.println("Bouton 'Votes' cliqué");
             Stage stage = (Stage) votes.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_votes.fxml"));

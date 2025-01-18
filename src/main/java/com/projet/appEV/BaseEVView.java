@@ -15,7 +15,7 @@ public class BaseEVView {
     @FXML
     public void initialize(){
         entrer.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Se connecter' cliqué");
+            System.out.println("Bouton 'Entrer' cliqué");
             Stage stage = (Stage) entrer.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_home.fxml"));
