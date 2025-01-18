@@ -279,7 +279,7 @@ public class Personne implements Abonne, Entite {
 
         if(listeReco.size() == 5){
             if(dejaPresent){
-                return true;
+                return false;
             }
             else{
                 listeReco.remove(0);
@@ -292,7 +292,7 @@ public class Personne implements Abonne, Entite {
         }
         else{
             if(dejaPresent){
-                return true;
+                return false;
             }
             else {
                 listeReco.add(a);

@@ -82,7 +82,7 @@ public class AjoutArbreVotesMembreView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
                     try {
-                        InitialisationAppMembre.membreActuel.nominerArbre(finalArbreSelectionne);
+                        boolean fait = InitialisationAppMembre.membreActuel.nominerArbre(finalArbreSelectionne);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
