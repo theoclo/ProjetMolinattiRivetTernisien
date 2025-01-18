@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="image" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@wallpaper.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="492.0" fitWidth="1366.0" layoutY="739.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@taskbar.png" />
+         </image>
+      </ImageView>
+      <MenuButton fx:id="eteindre" contentDisplay="TOP" layoutY="739.0" mnemonicParsing="false" popupSide="TOP" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: rgba(0, 0, 0, 0);">
+        <items>
+          <MenuItem fx:id="eteindre2" mnemonicParsing="false" text="Éteindre" />
+        </items>
+         <font>
+            <Font name="Acme Regular" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </MenuButton>
+      <HBox alignment="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="108.0" prefWidth="313.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="appMembres" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0);">
+                     <graphic>
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@logo_appMembres.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 20, 0, 0, 0);" text="Espace Membres" />
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="appAsso" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0);">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@logo_appAsso.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 20, 0, 0, 0);" text="Gestion Association" />
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="appEV" mnemonicParsing="false" prefHeight="108.0" prefWidth="35.0" style="-fx-background-color: rgba(0, 0, 0, 0);">
+                     <graphic>
+                        <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@logo_appEV.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,1), 20, 0, 0, 0);" text="Gestion Espaces Verts" />
+               </children>
+               <HBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
