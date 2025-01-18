@@ -182,7 +182,7 @@ public class Main {
         creationPersonnes(10); //A FAIRE SI PAS DE JSON ou si vide
         creationAssociation(2);
     }
-
+/**
     public static void main(String[] args) throws IOException {
         //creationJSON();
         MaJFichierJSONArbres();
@@ -198,4 +198,5 @@ public class Main {
         System.out.println(Personne.listePersonnes.get(3).affiche());
 
         }
+ **/
 }
