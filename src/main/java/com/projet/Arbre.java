@@ -228,5 +228,15 @@ public class Arbre {
         return arbreRemarquables;
     }
 
+    public static ArrayList<Arbre> obtenirNonRemarquables(){
+        ArrayList<Arbre> arbreNonRemarquables = new ArrayList<Arbre>();
+        for(Arbre a : listeArbres){
+            if(! a.classifie){
+                arbreNonRemarquables.add(a);
+            }
+        }
+        return arbreNonRemarquables;
+    }
+
 
 }
