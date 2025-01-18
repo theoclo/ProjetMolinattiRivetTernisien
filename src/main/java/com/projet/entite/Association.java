@@ -204,7 +204,7 @@ public class Association implements Abonne{
 
     @Override
     public String toString() {
-        return "Association [nom = "+nom+", president = "+president.getNom()+", budget = "+budget;
+        return nom;
     }
 
     public String affiche() { //affiche toutes les informations
