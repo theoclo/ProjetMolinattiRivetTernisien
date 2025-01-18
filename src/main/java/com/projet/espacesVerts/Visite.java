@@ -3,6 +3,7 @@ package com.projet.espacesVerts;
 import com.projet.Arbre;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Visite {
 
@@ -12,6 +13,8 @@ public class Visite {
     private String participant;
     private String CR;
     private boolean payee;
+
+    public static ArrayList<Visite> listeVisites=new ArrayList<Visite>();
 
 
     public Visite(String asso, Arbre arbre, LocalDateTime date){

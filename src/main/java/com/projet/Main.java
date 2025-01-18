@@ -8,9 +8,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
+import com.projet.espacesVerts.Visite;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -160,6 +162,19 @@ public class Main {
         Association.listeAssociations = objectMapper.readValue(new File("target/associations.json"), new TypeReference<ArrayList<Association>>() {});
         objectMapper.writeValue(new File("target/associations.json"), Association.listeAssociations);
     }
+    public static void MaJFichierJSONVisite() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new Jdk8Module());
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        if(!Visite.listeVisites.isEmpty()){
+            objectMapper.writeValue(new File("target/visites.json"),Visite.listeVisites);
+        }
+        Visite.listeVisites = objectMapper.readValue(new File("target/visites.json"), new TypeReference<ArrayList<Visite>>() {});
+        objectMapper.writeValue(new File("target/visites.json"), Visite.listeVisites);
+
+
+    }
 
     public static void creationJSON(){
         //creationServiceEV(); //QUE SI PAS JSON ou si vide
@@ -175,6 +190,7 @@ public class Main {
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
+        MaJFichierJSONVisite();
         Personne.listePersonnes.get(3).rejoindreAsso(Association.listeAssociations.get(0));
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();

@@ -218,5 +218,15 @@ public class Arbre {
         this.setClassification(new_classification);
     }
 
+    public static ArrayList<Arbre> obtenirArbreRemarquables(){
+        ArrayList<Arbre> arbreRemarquables = new ArrayList<Arbre>();
+        for(Arbre a : listeArbres){
+            if(a.classifie){
+                arbreRemarquables.add(a);
+            }
+        }
+        return arbreRemarquables;
+    }
+
 
 }
