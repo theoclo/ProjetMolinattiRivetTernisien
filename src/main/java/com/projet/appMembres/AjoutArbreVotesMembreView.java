@@ -30,7 +30,7 @@ public class AjoutArbreVotesMembreView {
     @FXML
     public void initialize() {
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
-        listview.setItems(InitialisationAppMembre.items);
+        listview.setItems(InitialisationAppMembre.arbresNonRemarquables);
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
