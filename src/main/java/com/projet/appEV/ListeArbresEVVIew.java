@@ -1,5 +1,6 @@
 package com.projet.appEV;
 
+import com.projet.appMembres.InitialisationAppMembre;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,6 +27,7 @@ public class ListeArbresEVVIew {
 
     @FXML
     public void initialize(){
+        listview.setItems(InitialisationAppMembre.arbres);
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();

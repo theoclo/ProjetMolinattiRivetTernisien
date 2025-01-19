@@ -279,7 +279,6 @@ public class Personne implements Abonne, Entite {
                 dejaPresent = true;
             }
         }
-        System.out.println(dejaPresent);
 
         if(listeReco.size() == 5){
             if(dejaPresent){
@@ -301,7 +300,6 @@ public class Personne implements Abonne, Entite {
             else {
                 listeReco.add(a);
                 asso.getListeReco().put(this.pseudo, listeReco);
-                System.out.println(listeReco);
                 Main.MaJFichierJSONAssociation();
                 return true;
             }
