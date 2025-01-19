@@ -318,15 +318,32 @@ public class Association implements Abonne{
         }
     }
 
-    public void exclureMembre(Personne p){
-        if(listeMembre.contains(p)){
+    public boolean exclureMembre(Personne p) throws IOException {
+
+        Personne membre=null;
+        for(Personne m : listeMembre){
+            if(m.getPseudo().equals(p.getPseudo())){
+                membre = m;
+            }
+            if(this.getPresident().getPseudo().equals(p.getPseudo())){
+                return false;
+            }
+        }
+        if(membre!= null){
+
             //ajouter l'effacement de ses données
-            listeMembre.remove(p);
+            listeMembre.remove(membre);
             p.setAssociation(Optional.empty());
+            Main.MaJFichierJSONAssociation();
+            Main.MaJFichierJSONPersonnes();
+            Main.MaJFichierJSONAssociation();
+            return true;
         }
         else{
             System.out.println("Cette personne n'est pas membre de l'association.");
+            return false;
         }
+
     }
 
     public void ajouterBudget(int montant){

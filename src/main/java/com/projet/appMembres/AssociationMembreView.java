@@ -85,7 +85,7 @@ public class AssociationMembreView {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Quitter l'association");
             alert.setHeaderText("Êtes-vous sûr de vouloir quitter l'association ?");
-            //Peut etre afficher la date etc
+
             alert.setContentText("Cela entraînera la suppression de vos données");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
@@ -93,19 +93,33 @@ public class AssociationMembreView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
-                    //PERSONNE.quitterAsso();
-                    //AJOUTER VISITE DANS LE PLANNING
-
-                    Stage stage = (Stage) retour.getScene().getWindow();
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_connexion.fxml"));
-                        fxmlLoader.setController(new ConnexionMembreView());
-                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                        stage.setScene(scene);
-                        stage.setTitle("Application Membre");
+                        boolean fait = InitialisationAppMembre.membreActuel.quitterAsso();
+                        if(!fait){
+                            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                            alert2.setTitle("Erreur");
+                            alert2.setHeaderText("Erreur lors de la demande de quitter l'association");
+                            alert2.setContentText("Vous ne pouvez pas quitter l'association");
+                            alert2.showAndWait();
+                        }
+                        else{
+                            Stage stage = (Stage) retour.getScene().getWindow();
+                            try {
+                                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_connexion.fxml"));
+                                fxmlLoader.setController(new ConnexionMembreView());
+                                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                                stage.setScene(scene);
+                                stage.setTitle("Application Membre");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
+
+
+
                 } else {
                     System.out.println("L'utilisateur a cliqué sur Non");
                 }

@@ -255,14 +255,15 @@ public class Personne implements Abonne, Entite {
     public String faireCompteRendu(){
         return "Compte Rendu : ";
     }
-    public void quitterAsso() //ne pas oublier de supp les infos côté asso
+    public boolean quitterAsso() throws IOException //ne pas oublier de supp les infos côté asso
     {
         if(association.isPresent()) {
             Association a= Association.getAssociation(association.get());
-            a.exclureMembre(this);
+            return a.exclureMembre(this);
         }
         else{
             System.out.println("Vous n'êtes dans aucune association");
+            return false;
         }
     }
     public boolean nominerArbre(Arbre a) throws IOException //5 max sinon le premier saute
