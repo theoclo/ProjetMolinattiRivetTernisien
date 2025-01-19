@@ -3,6 +3,8 @@ package com.projet.appEV;
 import com.projet.Arbre;
 import com.projet.Main;
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -80,8 +82,15 @@ public class AbattreArbreEVView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
-
-
+                    for(Association a : InitialisationAppMembre.associations){
+                        for(Personne p : a.getListeMembre()){
+                            try {
+                                p.retirerArbre(finalArbreSelectionne);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
                     InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
                     InitialisationAppMembre.arbres.remove(finalArbreSelectionne);
                     Arbre.listeArbres.remove(finalArbreSelectionne);
