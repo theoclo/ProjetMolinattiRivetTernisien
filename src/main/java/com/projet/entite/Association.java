@@ -444,31 +444,28 @@ public class Association implements Abonne{
     }
 
 
-    public List<Arbre> selectNomination(){
-        ArrayList<Arbre> arbreVote = new ArrayList<>();
-        boolean deja_present ;
-        for (ArrayList<Arbre> arbreList : listeReco.values()) {
-            for (Arbre arbre : arbreList) {
-                deja_present = false;
-                arbre.increasePoint_classification();
-                for(int i = 0; i < arbreVote.size(); i++){
-                    if(arbreVote.get(i) == arbre){
-                        deja_present = true;
-                    }
+    public LinkedHashMap<Arbre, Integer> selectNomination(){
+        Map<Arbre,Integer> votes = new HashMap<>();
+        for(ArrayList<Arbre> a : listeReco.values()){
+            for(Arbre arbre : a){
+                Arbre arbreVote = Arbre.obtenirArbre(arbre.getIdBase());
+                if(votes.containsKey(arbreVote)){
+                    votes.put(arbreVote, votes.get(arbreVote)+1);
                 }
-                if(!deja_present){
-                    arbreVote.add(arbre);
+                else{
+                    votes.put(arbreVote, 1);
                 }
             }
         }
-        ArrayList<Arbre> arbreVote2 = arbreVote;
-        arbreVote.sort((a1, a2) -> Integer.compare(a2.getPoint_classification(), a1.getPoint_classification()));
-        for(Arbre arbre : arbreVote2){
-            arbre.resetPoint_classification();
-        }
-        return arbreVote.stream()
-                .limit(5)
-                .collect(Collectors.toList());
+        LinkedHashMap<Arbre, Integer> sortedMap = votes.entrySet().stream()
+                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed()) // Descending order
+                .limit(5) // Limit to 5 entries
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        System.out.println(sortedMap.keySet());
+        System.out.println(sortedMap.values());
+        System.out.println(sortedMap.size());
+        return sortedMap;
     }
 
 }
