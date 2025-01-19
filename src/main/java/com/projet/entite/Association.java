@@ -2,6 +2,7 @@ package com.projet.entite;
 
 import com.projet.Arbre;
 import com.projet.Main;
+import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.espacesVerts.ServiceEV;
 import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
@@ -336,6 +337,10 @@ public class Association implements Abonne{
             Main.MaJFichierJSONAssociation();
             Main.MaJFichierJSONPersonnes();
             Main.MaJFichierJSONAssociation();
+            InitialisationAppMembre.associations.clear();
+            InitialisationAppMembre.associations.addAll(Association.listeAssociations);
+
+
             return true;
         }
         else{
