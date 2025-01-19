@@ -7,12 +7,11 @@ import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Association implements Abonne{
 
@@ -442,6 +441,32 @@ public class Association implements Abonne{
                 return false;
             }
         }
+    }
+
+
+    public List<Arbre> selectNomination(){
+        ArrayList<Arbre> arbreVote = new ArrayList<>();
+        boolean deja_present ;
+        for (ArrayList<Arbre> arbreList : listeReco.values()) {
+            for (Arbre arbre : arbreList) {
+                deja_present = false;
+                arbre.increasePoint_classification();
+                for(int i = 0; i < arbreVote.size(); i++){
+                    if(arbreVote.get(i) == arbre){
+                        deja_present = true;
+                    }
+                }
+                if(!deja_present){
+                    arbreVote.add(arbre);
+                }
+            }
+        }
+
+        arbreVote.sort((a1, a2) -> Integer.compare(a2.getPoint_classification(), a1.getPoint_classification()));
+
+        return arbreVote.stream()
+                .limit(5)
+                .collect(Collectors.toList());
     }
 
 }

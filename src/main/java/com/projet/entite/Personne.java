@@ -249,13 +249,6 @@ public class Personne implements Abonne, Entite {
             }
         }
     }
-    public void sInscrireVisite(Arbre a, LocalDate d) //mettre en bool pour traiter le cas ou pas possible de s’inscrire ?
-    {
-
-    }
-    public String faireCompteRendu(){
-        return "Compte Rendu : ";
-    }
     public boolean quitterAsso() throws IOException //ne pas oublier de supp les infos côté asso
     {
         if(association.isPresent()) {

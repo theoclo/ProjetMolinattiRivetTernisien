@@ -34,6 +34,7 @@ public class Arbre {
     Map<String, Double> coordGPS = new HashMap<>();
     private boolean classifie;
     private Optional<LocalDate> dateClassification;
+    private int point_classification;
 
     //private Pair < Boolean , Optional <LocalDate> > classification;
     private ArrayList <String> listeCR;
@@ -66,7 +67,7 @@ public class Arbre {
         this.classifie = false;
         this.dateClassification = Optional.empty();
         this.listeCR = new ArrayList<>();
-
+        this.point_classification = 0;
     }
 
     public Arbre(){
@@ -82,7 +83,7 @@ public class Arbre {
         this.classifie = false;
         this.dateClassification = Optional.empty();
         this.listeCR = new ArrayList<>();
-
+        this.point_classification = 0;
     }
 
 
@@ -130,7 +131,9 @@ public class Arbre {
         return listeCR;
     }
 
-
+    public int getPoint_classification() {
+        return point_classification;
+    }
 
     /*  SETTERS  */
 
@@ -170,6 +173,9 @@ public class Arbre {
         this.listeCR = listeCR;
     }
 
+    public void increasePoint_classification(){
+        this.point_classification++;
+    }
 
 
     /*  AFFICHAGE  */
