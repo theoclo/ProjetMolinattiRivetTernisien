@@ -101,7 +101,7 @@ public class GestionArbresEVView {
             System.out.println("Bouton 'Ajouter un arbre remarquable' cliqué");
             Stage stage = (Stage) remarquable.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_ajoutArbreRemarquable.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_rendreRemarquable.fxml"));
                 fxmlLoader.setController(new AjoutArbreRemarquableEVView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
