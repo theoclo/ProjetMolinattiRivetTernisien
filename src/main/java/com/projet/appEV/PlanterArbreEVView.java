@@ -71,7 +71,7 @@ public class PlanterArbreEVView {
         });
 
         retour.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Se connecter' cliqué");
+            System.out.println("Bouton 'Retour' cliqué");
             Stage stage = (Stage) retour.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));
