@@ -30,7 +30,7 @@ public class ListeArbresEVVIew {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appMembres/ev_base.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_base.fxml"));
                 fxmlLoader.setController(new BaseEVView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
