@@ -461,9 +461,11 @@ public class Association implements Abonne{
                 }
             }
         }
-
+        ArrayList<Arbre> arbreVote2 = arbreVote;
         arbreVote.sort((a1, a2) -> Integer.compare(a2.getPoint_classification(), a1.getPoint_classification()));
-
+        for(Arbre arbre : arbreVote2){
+            arbre.resetPoint_classification();
+        }
         return arbreVote.stream()
                 .limit(5)
                 .collect(Collectors.toList());

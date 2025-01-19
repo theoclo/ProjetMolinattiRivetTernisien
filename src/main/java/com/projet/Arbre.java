@@ -176,6 +176,7 @@ public class Arbre {
     public void increasePoint_classification(){
         this.point_classification++;
     }
+    public void resetPoint_classification(){this.point_classification = 0;}
 
 
     /*  AFFICHAGE  */
