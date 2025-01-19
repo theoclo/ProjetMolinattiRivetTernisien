@@ -18,5 +18,7 @@ module com.projet.testpersonne {
     exports com.projet.launcher;
     opens com.projet.appEV to javafx.fxml;
     exports com.projet.appEV;
+    opens com.projet.appAsso to javafx.fxml;
+    exports com.projet.appAsso;
 
 }
