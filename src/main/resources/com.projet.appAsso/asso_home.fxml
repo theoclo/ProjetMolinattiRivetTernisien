@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -23,7 +23,7 @@
          <effect>
             <BoxBlur iterations="3" />
          </effect></ImageView>
-      <Pane prefHeight="48.0" prefWidth="800.0" style="-fx-background-color: rgba(42, 84, 161, 0.8);">
+      <Pane prefHeight="48.0" prefWidth="800.0" style="-fx-background-color: rgba(138, 175, 235, 0.8);">
          <children>
             <Pane prefHeight="48.0" prefWidth="41.0">
                <children>
