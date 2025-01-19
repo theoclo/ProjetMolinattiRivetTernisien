@@ -79,8 +79,8 @@ public class VisitesCompteRenduView {
             System.out.println("Bouton 'Retour' cliqué");
             Stage stage = (Stage) retour.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_connecte.fxml"));
-                fxmlLoader.setController(new ConnecteMembreView());
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_visites.fxml"));
+                fxmlLoader.setController(new VisitesMembreView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Membre");
