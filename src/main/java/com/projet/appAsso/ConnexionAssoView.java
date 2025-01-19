@@ -51,11 +51,11 @@ public class ConnexionAssoView {
             System.out.println("Bouton 'Se connecter' cliqué");
             Stage stage = (Stage) connexion.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appAsso/asso_home.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_home.fxml"));
                 fxmlLoader.setController(new HomeAssoView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
-                stage.setTitle("Application Espaces Verts");
+                stage.setTitle("Application Association");
             } catch (IOException e) {
                 e.printStackTrace();
             }
