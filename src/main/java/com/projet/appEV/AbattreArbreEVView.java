@@ -1,9 +1,5 @@
 package com.projet.appEV;
 
-import com.projet.Arbre;
-import com.projet.appMembres.AppMembre;
-import com.projet.appMembres.InitialisationAppMembre;
-import com.projet.appMembres.VotesMembreView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
