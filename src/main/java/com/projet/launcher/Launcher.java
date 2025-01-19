@@ -18,6 +18,7 @@ import static com.projet.Main.*;
 public class Launcher extends Application {
 
     public static void main(String[] args) throws IOException {
+        //creationJSON();
         MaJFichierJSONArbres();
         MaJFichierJSONPersonnes();
         MaJFichierServiceEV();
