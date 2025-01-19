@@ -34,6 +34,12 @@ public class AjoutArbreVotesMembreView {
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
         listview.setItems(InitialisationAppMembre.arbresNonRemarquables);
 
+        valider.setDisable(true);
+
+        listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            valider.setDisable(false);
+        });
+
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();

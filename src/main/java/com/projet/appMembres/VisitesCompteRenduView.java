@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InscriptionVisitesMembreView {
+public class VisitesCompteRenduView {
 
     private Visite visiteChoisie;
 
@@ -36,10 +36,13 @@ public class InscriptionVisitesMembreView {
     private Button valider;
 
     @FXML
+    private TextArea textCR;
+
+    @FXML
     public void initialize() {
         List<String> visiteListe = new ArrayList<>();
         for(Visite v : InitialisationAppMembre.membreActuel.obtenirAssociationObjet().get().getListeVisite()){
-            if(v.getDate().isAfter(LocalDateTime.now()) && v.getParticipant() == ""){
+            if(v.getDate().isBefore(LocalDateTime.now()) && v.getParticipant() == InitialisationAppMembre.membreActuel.getPseudo()){
                 visiteListe.add(v.toString());
             }
         }
@@ -89,8 +92,8 @@ public class InscriptionVisitesMembreView {
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Inscription à une visite");
-            alert.setHeaderText("Êtes-vous sûr de vouloir vous inscrire pour faire cette visite ?");
+            alert.setTitle("Rédaction d'un compte-rendu");
+            alert.setHeaderText("Voulez-vous confirmer l'envoi de ce compte-rendu ?");
             //Peut etre afficher la date etc
             alert.setContentText("");
             ButtonType buttonTypeYes = new ButtonType("Oui");
@@ -104,7 +107,7 @@ public class InscriptionVisitesMembreView {
 
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
-                        visiteChoisie = (Visite) combobox.getValue();
+                        visiteChoisie.modifCR(textCR.textProperty().getValue());
                         FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_visites.fxml"));
                         fxmlLoader.setController(new VisitesMembreView());
                         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
@@ -120,3 +123,4 @@ public class InscriptionVisitesMembreView {
         });
     }
 }
+

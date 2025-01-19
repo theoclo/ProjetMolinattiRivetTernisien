@@ -29,6 +29,9 @@ public class VisitesMembreView {
     private Button sinscrire;
 
     @FXML
+    private Button compte_rendu;
+
+    @FXML
     public void initialize() {
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
 
@@ -85,6 +88,20 @@ public class VisitesMembreView {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_inscriptionVisite.fxml"));
                 fxmlLoader.setController(new InscriptionVisitesMembreView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Membre");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        compte_rendu.setOnMouseClicked(event -> {
+            System.out.println("Bouton 'S'inscrire à une visite' cliqué");
+            Stage stage = (Stage) compte_rendu.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_compteRendu.fxml"));
+                fxmlLoader.setController(new VisitesCompteRenduView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Membre");
