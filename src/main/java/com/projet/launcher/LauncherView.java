@@ -1,7 +1,9 @@
 package com.projet.launcher;
 
 import com.projet.appAsso.AppAsso;
+import com.projet.appAsso.ConnexionAssoView;
 import com.projet.appAsso.HomeAssoView;
+import com.projet.appAsso.InitialisationAppAsso;
 import com.projet.appEV.AppEV;
 import com.projet.appEV.BaseEVView;
 import com.projet.appEV.InitialisationAppEV;
@@ -111,11 +113,11 @@ public class LauncherView {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                     if(mouseEvent.getClickCount() == 2){
                         try {
-                            InitialisationAppMembre.main(new String[]{});
+                            InitialisationAppAsso.main(new String[]{});
                             FileInputStream inputstream = new FileInputStream("src/main/resources/Acme-Regular.ttf");
                             Font.loadFont(inputstream,12);
                             FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_connexion.fxml"));
-                            fxmlLoader.setController(new HomeAssoView());
+                            fxmlLoader.setController(new ConnexionAssoView());
                             Parent root = fxmlLoader.load();
                             Stage stage = new Stage();
                             stage.setScene(new Scene(root));
