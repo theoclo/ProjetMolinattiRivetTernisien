@@ -15,6 +15,7 @@ public class InitialisationAppAsso {
     public static Association associationActuelle;
 
     public static void main(String[] args) throws IOException {
+        /**
         MaJFichierJSONArbres();
         MaJFichierJSONPersonnes();
         MaJFichierServiceEV();
@@ -26,5 +27,6 @@ public class InitialisationAppAsso {
         InitialisationAppMembre.arbres.addAll(Arbre.listeArbres);
         InitialisationAppMembre.arbresNonRemarquables.clear();
         InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
+         **/
     }
 }

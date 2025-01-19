@@ -22,6 +22,7 @@ public class InitialisationAppMembre {
 
 
     public static void main(String[] args) throws IOException{
+        /**
         //creationJSON();
         MaJFichierJSONArbres();
         MaJFichierJSONPersonnes(); //met à jour le fichier json si modification (si ajout d'une valeur dans Personne.listePersonnes
@@ -36,6 +37,7 @@ public class InitialisationAppMembre {
         arbres.addAll(Arbre.listeArbres);
         arbresNonRemarquables.clear();
         arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
+         **/
     }
 
 }

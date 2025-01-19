@@ -1,5 +1,8 @@
 package com.projet.launcher;
 
+import com.projet.Arbre;
+import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,9 +13,23 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import static com.projet.Main.*;
+
 public class Launcher extends Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        MaJFichierJSONArbres();
+        MaJFichierJSONPersonnes();
+        MaJFichierServiceEV();
+        MaJFichierJSONAssociation();
+        MaJFichierJSONPersonnes();
+        InitialisationAppMembre.associations.clear();
+        InitialisationAppMembre.associations.addAll(Association.listeAssociations);
+        InitialisationAppMembre.arbres.clear();
+        InitialisationAppMembre.arbres.addAll(Arbre.listeArbres);
+        InitialisationAppMembre.arbresNonRemarquables.clear();
+        InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
+
         launch(args);
     }
 
