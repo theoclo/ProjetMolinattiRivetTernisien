@@ -1,5 +1,7 @@
 package com.projet.launcher;
 
+import com.projet.appAsso.AppAsso;
+import com.projet.appAsso.HomeAssoView;
 import com.projet.appEV.AppEV;
 import com.projet.appEV.BaseEVView;
 import com.projet.appEV.InitialisationAppEV;
@@ -103,7 +105,6 @@ public class LauncherView {
             }
         });
 
-        /*
         appAsso.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -113,12 +114,12 @@ public class LauncherView {
                             InitialisationAppMembre.main(new String[]{});
                             FileInputStream inputstream = new FileInputStream("src/main/resources/Acme-Regular.ttf");
                             Font.loadFont(inputstream,12);
-                            FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("membre_connexion.fxml"));
-                            fxmlLoader.setController(new ConnexionMembreView());
+                            FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_connexion.fxml"));
+                            fxmlLoader.setController(new HomeAssoView());
                             Parent root = fxmlLoader.load();
                             Stage stage = new Stage();
                             stage.setScene(new Scene(root));
-                            stage.setTitle("Application Membre");
+                            stage.setTitle("Application Association");
                             stage.setResizable(false);
                             stage.show();
                         } catch (IOException o) {
@@ -128,7 +129,5 @@ public class LauncherView {
                 }
             }
         });
-
-         */
     }
 }
