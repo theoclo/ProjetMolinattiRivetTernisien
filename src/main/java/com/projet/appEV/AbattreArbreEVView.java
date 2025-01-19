@@ -1,5 +1,10 @@
 package com.projet.appEV;
 
+import com.projet.Arbre;
+import com.projet.Main;
+import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,7 +33,8 @@ public class AbattreArbreEVView {
     private Button retour;
 
     @FXML
-    public void initialize(){
+    public void initialize() throws IOException {
+        listview.setItems(InitialisationAppMembre.arbresNonRemarquables);
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
@@ -62,6 +68,8 @@ public class AbattreArbreEVView {
         });
 
         abattre.setOnMouseClicked(event -> {
+            Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
             System.out.println("Bouton 'Abattre' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ajout arbre aux votes");
@@ -70,11 +78,30 @@ public class AbattreArbreEVView {
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            Arbre finalArbreSelectionne = arbreSelectionne;
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
+                    for(Association a : InitialisationAppMembre.associations){
+                        for(Personne p : a.getListeMembre()){
+                            try {
+                                p.retirerArbre(finalArbreSelectionne);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
+                    InitialisationAppMembre.arbres.remove(finalArbreSelectionne);
+                    Arbre.listeArbres.remove(finalArbreSelectionne);
+                    try {
+                        Main.MaJFichierJSONArbres();
+                        Main.MaJFichierServiceEV();
+                        Main.MaJFichierJSONAssociation();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                    //VALIDER L'ABATTAGE DE L'ARBRE
 
 
                     Stage stage = (Stage) abattre.getScene().getWindow();

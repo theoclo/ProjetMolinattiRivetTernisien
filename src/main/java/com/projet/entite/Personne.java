@@ -2,6 +2,7 @@ package com.projet.entite;
 
 import com.projet.Arbre;
 import com.projet.Main;
+import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.espacesVerts.ServiceEV;
 import com.projet.espacesVerts.Visite;
 
@@ -279,7 +280,6 @@ public class Personne implements Abonne, Entite {
                 dejaPresent = true;
             }
         }
-        System.out.println(dejaPresent);
 
         if(listeReco.size() == 5){
             if(dejaPresent){
@@ -301,12 +301,29 @@ public class Personne implements Abonne, Entite {
             else {
                 listeReco.add(a);
                 asso.getListeReco().put(this.pseudo, listeReco);
-                System.out.println(listeReco);
                 Main.MaJFichierJSONAssociation();
                 return true;
             }
         }
 
+    }
+
+    public void retirerArbre(Arbre a) throws IOException {
+        Association asso = Association.getAssociation(association.get());
+        ArrayList<Arbre> listeReco=new ArrayList<>();
+        if(asso.getListeReco().containsKey(this.pseudo)){
+            listeReco = asso.getListeReco().get(this.pseudo);
+        }
+        for(Arbre arbre:listeReco){
+            if(arbre.getIdBase()==(a.getIdBase())){
+                listeReco.remove(arbre);
+                System.out.println(listeReco);
+                asso.getListeReco().put(this.pseudo, listeReco);
+                Main.MaJFichierJSONPersonnes();
+                Main.MaJFichierJSONAssociation();
+                return;
+            }
+        }
     }
 
     public void participerVisite(Visite v){
