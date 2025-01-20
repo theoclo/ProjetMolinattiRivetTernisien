@@ -1,5 +1,6 @@
 package com.projet.appMembres;
 
+import com.projet.espacesVerts.Visite;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 public class ConnecteMembreView {
     @FXML
@@ -34,6 +36,9 @@ public class ConnecteMembreView {
     @FXML
     public void initialize(){
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
+        InitialisationAppMembre.listeVisites.clear();
+        InitialisationAppMembre.listeVisites.addAll(Visite.obtenirVisitesAsso(InitialisationAppMembre.membreActuel.getAssociation().get()));
+        InitialisationAppMembre.listeVisites.sort(Comparator.comparing(Visite::getDate));
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");

@@ -11,7 +11,7 @@ public class Visite {
     private final Arbre arbre;
     private LocalDateTime date;
     private String participant;
-    private String CR;
+    private String cr;
     private boolean payee;
 
     public static ArrayList<Visite> listeVisites=new ArrayList<Visite>();
@@ -22,7 +22,16 @@ public class Visite {
         this.arbre = arbre;
         this.date = date;
         this.participant = "";
-        this.CR = "";
+        this.cr = "";
+        this.payee = false;
+    }
+
+    public Visite(){
+        this.association = "";
+        this.arbre = null;
+        this.date = null;
+        this.participant = "";
+        this.cr = "";
         this.payee = false;
     }
 
@@ -42,8 +51,8 @@ public class Visite {
         return participant;
     }
 
-    public String getCR(){
-        return CR;
+    public String getCr(){
+        return cr;
     }
 
     public boolean getPayee() {
@@ -58,7 +67,7 @@ public class Visite {
     }
 
     public void modifCR(String new_CR){
-        this.CR = new_CR;
+        this.cr = new_CR;
     }
 
     public void affecterParticipant(String pseudo_membre){
@@ -73,5 +82,15 @@ public class Visite {
     @Override
     public String toString(){
         return "Arbre : " + arbre.getIdBase() + " | Date et Heure : " + date;
+    }
+
+    public static ArrayList<Visite> obtenirVisitesAsso(String asso){
+        ArrayList<Visite> visites = new ArrayList<Visite>();
+        for(Visite v : listeVisites){
+            if(v.getAssociation().equals(asso)){
+                visites.add(v);
+            }
+        }
+        return visites;
     }
 }

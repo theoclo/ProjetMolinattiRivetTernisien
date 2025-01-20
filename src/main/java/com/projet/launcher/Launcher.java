@@ -3,6 +3,7 @@ package com.projet.launcher;
 import com.projet.Arbre;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
+import com.projet.espacesVerts.Visite;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.projet.Main.*;
 
@@ -24,6 +27,7 @@ public class Launcher extends Application {
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
+        MaJFichierJSONVisite();
         InitialisationAppMembre.associations.clear();
         InitialisationAppMembre.associations.addAll(Association.listeAssociations);
         InitialisationAppMembre.arbres.clear();
@@ -32,6 +36,7 @@ public class Launcher extends Application {
         InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
         InitialisationAppMembre.arbresRemarquables.clear();
         InitialisationAppMembre.arbresRemarquables.addAll(Arbre.obtenirArbreRemarquables());
+
 
         launch(args);
     }
