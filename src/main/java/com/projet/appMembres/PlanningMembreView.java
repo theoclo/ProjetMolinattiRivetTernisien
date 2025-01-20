@@ -1,5 +1,6 @@
 package com.projet.appMembres;
 
+import com.projet.espacesVerts.Visite;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 public class PlanningMembreView {
     @FXML
@@ -29,6 +31,9 @@ public class PlanningMembreView {
     @FXML
     public void initialize(){
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
+        InitialisationAppMembre.listeVisites.sort(Comparator.comparing(Visite::getDate));
+
+        listview.setItems(InitialisationAppMembre.listeVisites);
 
 
 

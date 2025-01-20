@@ -1,5 +1,7 @@
 package com.projet.appAsso;
 
+import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.espacesVerts.Visite;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 public class HomeAssoView {
 
@@ -33,6 +36,9 @@ public class HomeAssoView {
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        InitialisationAppMembre.listeVisites.clear();
+        InitialisationAppMembre.listeVisites.addAll(Visite.obtenirVisitesAsso(InitialisationAppAsso.associationActuelle.getNom()));
+        InitialisationAppMembre.listeVisites.sort(Comparator.comparing(Visite::getDate));
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
