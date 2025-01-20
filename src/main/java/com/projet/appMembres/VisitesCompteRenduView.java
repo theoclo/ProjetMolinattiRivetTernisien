@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -48,12 +49,13 @@ public class VisitesCompteRenduView {
 
         combobox.setItems(FXCollections.observableList(visites));
 
-        if(combobox.getSelectionModel().getSelectedItem() == null){
-            valider.setDisable(true);
-        }
-        else{
-            valider.setDisable(false);
-        }
+        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            valider.setDisable(newValue == null || combobox.getValue() == null || textCR.getText().equals(""));
+        });
+
+        textCR.textProperty().addListener((observable, oldValue, newValue) -> {
+            valider.setDisable(newValue == null || combobox.getValue() == null || textCR.getText().equals(""));
+        });
 
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
 
