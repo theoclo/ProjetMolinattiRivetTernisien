@@ -34,6 +34,8 @@ public class AbattreArbreEVView {
 
     @FXML
     public void initialize() throws IOException {
+        InitialisationAppMembre.arbresNonRemarquables.clear();
+        InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
         listview.setItems(InitialisationAppMembre.arbresNonRemarquables);
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -94,6 +96,7 @@ public class AbattreArbreEVView {
                     InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
                     InitialisationAppMembre.arbres.remove(finalArbreSelectionne);
                     Arbre.listeArbres.remove(finalArbreSelectionne);
+
                     try {
                         Main.MaJFichierJSONArbres();
                         Main.MaJFichierServiceEV();
