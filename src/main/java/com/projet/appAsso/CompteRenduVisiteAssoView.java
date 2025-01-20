@@ -49,7 +49,7 @@ public class CompteRenduVisiteAssoView {
                 visites.add(v);
             }
         }
-        visites.sort(Comparator.comparing(Visite::getDate));
+        visites.sort(Comparator.comparing(Visite::getDate).reversed());
 
         combobox.setItems(FXCollections.observableList(visites));
 
