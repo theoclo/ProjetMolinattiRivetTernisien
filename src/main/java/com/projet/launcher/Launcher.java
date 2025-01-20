@@ -30,6 +30,8 @@ public class Launcher extends Application {
         InitialisationAppMembre.arbres.addAll(Arbre.listeArbres);
         InitialisationAppMembre.arbresNonRemarquables.clear();
         InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
+        InitialisationAppMembre.arbresRemarquables.clear();
+        InitialisationAppMembre.arbresRemarquables.addAll(Arbre.obtenirArbreRemarquables());
 
         launch(args);
     }

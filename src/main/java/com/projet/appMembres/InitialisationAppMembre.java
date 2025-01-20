@@ -17,6 +17,7 @@ public class InitialisationAppMembre {
     public static Personne membreActuel;
     public static ObservableList<Arbre> arbres = FXCollections.observableArrayList();
     public static ObservableList<Arbre> arbresNonRemarquables = FXCollections.observableArrayList();
+    public static ObservableList<Arbre> arbresRemarquables = FXCollections.observableArrayList();
     public static  ObservableList<Association> associations = FXCollections.observableArrayList();
     public static ObservableList<Arbre> listeRecommandations = FXCollections.observableArrayList();
 
