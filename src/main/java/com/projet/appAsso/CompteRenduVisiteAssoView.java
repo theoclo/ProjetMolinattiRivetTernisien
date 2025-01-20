@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class VisitesAssoView {
+public class CompteRenduVisiteAssoView {
+
     @FXML
     private Label nom_asso;
 
@@ -20,17 +23,20 @@ public class VisitesAssoView {
     private Button deconnecter;
 
     @FXML
-    private Button creer;
+    private ComboBox combobox;
 
     @FXML
-    private Button cr;
+    private TextArea text;
 
     @FXML
     private Button retour;
 
+
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+
+        text.setText("On ne peut pas modifier le texte de l'appli, mais on peut le set à partir du CR à lire et le consulter sur l'app");
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -46,16 +52,12 @@ public class VisitesAssoView {
             }
         });
 
-        refresh.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Refresh' cliqué");
-        });
-
         retour.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Retour' cliqué");
             Stage stage = (Stage) retour.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_home.fxml"));
-                fxmlLoader.setController(new HomeAssoView());
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_visites.fxml"));
+                fxmlLoader.setController(new VisitesAssoView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Association");
@@ -64,33 +66,11 @@ public class VisitesAssoView {
             }
         });
 
-        cr.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
-            Stage stage = (Stage) cr.getScene().getWindow();
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_compteRendu.fxml"));
-                fxmlLoader.setController(new CompteRenduVisiteAssoView());
-                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                stage.setScene(scene);
-                stage.setTitle("Application Association");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+        refresh.setOnMouseClicked(event -> {
+            System.out.println("Bouton 'Refresh' cliqué");
         });
 
-        creer.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
-            Stage stage = (Stage) creer.getScene().getWindow();
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_creerVisite.fxml"));
-                fxmlLoader.setController(new CreerVisiteAssoView());
-                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                stage.setScene(scene);
-                stage.setTitle("Application Association");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
     };
 }
