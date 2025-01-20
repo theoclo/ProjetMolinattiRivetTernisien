@@ -58,7 +58,7 @@ public class CompteRenduVisiteAssoView {
             text.setText(v.getCr());
         });
 
-        text.setText("On ne peut pas modifier le texte de l'appli, mais on peut le set à partir du CR à lire et le consulter sur l'app");
+        text.setText("Sélectionnez une visite pour en voir son compte rendu.");
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
