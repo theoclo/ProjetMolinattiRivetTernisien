@@ -52,8 +52,8 @@ public class AjoutArbreRemarquableEVView {
             System.out.println("Bouton 'Retour' cliqué");
             Stage stage = (Stage) retour.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_home.fxml"));
-                fxmlLoader.setController(new HomeEVView());
+                FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));
+                fxmlLoader.setController(new GestionArbresEVView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Espaces Verts");
