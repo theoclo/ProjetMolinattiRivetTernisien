@@ -120,9 +120,10 @@ public class GestionNotificationsEVView {
             alert.setHeaderText("Sélectionnez une personne à ajouter");
             alert.setResizable(false);
 
-            // ComboBox pour choisir l'association
             ComboBox<String> comboBox = new ComboBox<>();
+
             //comboBox.getItems().addAll(associations);
+
             comboBox.setPromptText("(Choisissez une personne)");
             comboBox.setStyle(
                     "-fx-background-color: rgba(237, 237, 237, 1);" +
@@ -131,18 +132,13 @@ public class GestionNotificationsEVView {
                             "-fx-border-color: black;"
             );
 
-            // Mise en page
             VBox content = new VBox(10, new Label("Personne :"), comboBox);
             content.setStyle("-fx-padding: 10;");
-
             alert.getDialogPane().setContent(content);
-
-            // Boutons OK et Annuler
             ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButton = new ButtonType("Annuler", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);
 
-            // Gestion du résultat
             alert.showAndWait().ifPresent(response -> {
                 if (response == okButton) {
                     String selectedAssociation = comboBox.getValue();
