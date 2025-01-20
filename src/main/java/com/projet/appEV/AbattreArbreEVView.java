@@ -72,7 +72,7 @@ public class AbattreArbreEVView {
             arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
             System.out.println("Bouton 'Abattre' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Ajout arbre aux votes");
+            alert.setTitle("Abattage d'un arbre");
             alert.setHeaderText("Êtes-vous sûr de vouloir abattre cet arbre ?");
             alert.setContentText("");
             ButtonType buttonTypeYes = new ButtonType("Oui");
