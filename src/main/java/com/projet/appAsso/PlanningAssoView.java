@@ -4,6 +4,9 @@ import com.projet.appMembres.AppMembre;
 import com.projet.appMembres.ConnexionMembreView;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.appMembres.VisitesMembreView;
+import com.projet.entite.Association;
+import com.projet.espacesVerts.Visite;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +16,8 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PlanningAssoView {
     @FXML
@@ -33,6 +38,10 @@ public class PlanningAssoView {
     @FXML
     public void initialize(){
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
+        lvisite.sort(Comparator.comparing(Visite::getDate));
+
+        listview.setItems(FXCollections.observableList(lvisite));
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");

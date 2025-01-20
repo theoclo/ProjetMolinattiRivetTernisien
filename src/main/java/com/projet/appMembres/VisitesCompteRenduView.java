@@ -1,5 +1,7 @@
 package com.projet.appMembres;
 
+import com.projet.appAsso.InitialisationAppAsso;
+import com.projet.entite.Association;
 import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class VisitesCompteRenduView {
@@ -40,13 +43,10 @@ public class VisitesCompteRenduView {
 
     @FXML
     public void initialize() {
-        List<String> visiteListe = new ArrayList<>();
-        for(Visite v : InitialisationAppMembre.membreActuel.obtenirAssociationObjet().get().getListeVisite()){
-            if(v.getDate().isBefore(LocalDateTime.now()) && v.getParticipant() == InitialisationAppMembre.membreActuel.getPseudo()){
-                visiteListe.add(v.toString());
-            }
-        }
-        combobox.setItems(FXCollections.observableList(visiteListe));
+        ArrayList<Visite> visites= Association.obtenirVisitesParticipant(InitialisationAppMembre.membreActuel.getAssociation().get(), InitialisationAppMembre.membreActuel.getPseudo());
+        visites.sort(Comparator.comparing(Visite::getDate));
+
+        combobox.setItems(FXCollections.observableList(visites));
 
         if(combobox.getSelectionModel().getSelectedItem() == null){
             valider.setDisable(true);

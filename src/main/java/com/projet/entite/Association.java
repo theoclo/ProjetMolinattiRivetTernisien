@@ -487,5 +487,19 @@ public class Association implements Abonne{
         return visites;
     }
 
+    public static ArrayList<Visite> obtenirVisitesParticipant(String asso, String participant){
+        ArrayList<Visite> visites = new ArrayList<Visite>();
+        Association a = Association.getAssociation(asso);
+        for(Visite v : a.listeVisite){
+            if(v.getAssociation().equals(asso)){
+                if(v.getParticipant().equals(participant)){
+                    visites.add(v);
+                }
+            }
+        }
+
+        return visites;
+    }
+
 }
 
