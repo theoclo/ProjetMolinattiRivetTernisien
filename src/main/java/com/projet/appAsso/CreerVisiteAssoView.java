@@ -10,10 +10,7 @@ import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import net.datafaker.providers.base.App;
 
@@ -38,10 +35,17 @@ public class CreerVisiteAssoView {
     @FXML
     private Button retour;
 
+    @FXML
+    private ListView list;
+
+    @FXML
+    private DatePicker date;
+
 
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        list.setItems(InitialisationAppMembre.arbresRemarquables);
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
