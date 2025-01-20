@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@fondEV.jpg" />
+            </image>
+            <effect>
+                <BoxBlur iterations="3" />
+            </effect></ImageView>
+        <Pane prefHeight="48.0" prefWidth="800.0" style="-fx-background-color: rgba(68, 117, 55, 0.8);">
+            <children>
+                <Pane prefHeight="48.0" prefWidth="41.0">
+                    <children>
+                        <Button fx:id="refresh" layoutX="2.0" layoutY="2.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0.1);">
+                            <graphic>
+                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@refresh.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </Pane>
+                <Pane layoutX="752.0" prefHeight="48.0" prefWidth="150.0">
+                    <children>
+                        <Button fx:id="deconnecter" layoutX="-5.0" layoutY="2.0" mnemonicParsing="false" style="-fx-background-color: rgba(0, 0, 0, 0.1);">
+                            <graphic>
+                                <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@home.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+        <VBox alignment="CENTER" layoutY="48.0" prefHeight="552.0" prefWidth="800.0">
+            <children>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="GESTION DES NOTIFICATIONS">
+                    <font>
+                        <Font name="Acme Regular" size="48.0" />
+                    </font>
+                </Text>
+                <Pane prefHeight="57.0" prefWidth="800.0" />
+                <VBox prefHeight="356.0" prefWidth="800.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="302.0" prefWidth="800.0">
+                            <children>
+                                <VBox alignment="CENTER" prefHeight="302.0" prefWidth="400.0">
+                                    <children>
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Associations abonnées">
+                                            <font>
+                                                <Font name="Acme Regular" size="25.0" />
+                                            </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                        </Text>
+                                        <ListView fx:id="listAsso" prefHeight="222.0" prefWidth="360.0" />
+                              <Button fx:id="asso" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="Ajouter une association" textFill="#447537">
+                                 <font>
+                                    <Font name="Acme Regular" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="400.0">
+                                    <children>
+                                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Particuliers abonnés">
+                                            <font>
+                                                <Font name="Acme Regular" size="25.0" />
+                                            </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                        </Text>
+                                        <ListView fx:id="listPart" prefHeight="222.0" prefWidth="360.0" />
+                              <Button fx:id="particulier" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;" text="Ajouter un particulier" textFill="#447537">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Acme Regular" size="16.0" />
+                                 </font>
+                              </Button>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </HBox.margin>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+      <Button fx:id="retour" layoutX="333.0" layoutY="530.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#447537">
+         <font>
+            <Font name="Acme Regular" size="25.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+    </children>
+</AnchorPane>

@@ -85,7 +85,6 @@ public class AssociationMembreView {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Quitter l'association");
             alert.setHeaderText("Êtes-vous sûr de vouloir quitter l'association ?");
-
             alert.setContentText("Cela entraînera la suppression de vos données");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
