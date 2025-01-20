@@ -94,11 +94,14 @@ public class VisitesCompteRenduView {
 
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
+
+            Visite v = (Visite) combobox.getValue();
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Rédaction d'un compte-rendu");
             alert.setHeaderText("Voulez-vous confirmer l'envoi de ce compte-rendu ?");
             //Peut etre afficher la date etc
-            alert.setContentText("");
+            alert.setContentText("Date de la visite : " + v.getDate().getDayOfYear() + "-" + v.getDate().getMonthValue() + "-" + v.getDate().getYear());
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
@@ -106,7 +109,6 @@ public class VisitesCompteRenduView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    Visite v = (Visite) combobox.getValue();
                     String text = textCR.getText();
                     for(Visite visite : visites){
                         if(v.equals(visite)){
