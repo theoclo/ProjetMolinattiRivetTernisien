@@ -118,10 +118,9 @@ public class VisitesCompteRenduView {
                             }
                         }
                     }
-
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
-                        visiteChoisie.modifCR(textCR.textProperty().getValue());
+
                         FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_visites.fxml"));
                         fxmlLoader.setController(new VisitesMembreView());
                         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
