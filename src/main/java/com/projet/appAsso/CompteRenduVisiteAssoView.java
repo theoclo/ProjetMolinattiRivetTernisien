@@ -1,5 +1,8 @@
 package com.projet.appAsso;
 
+import com.projet.entite.Association;
+import com.projet.espacesVerts.Visite;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class CompteRenduVisiteAssoView {
 
@@ -35,6 +41,22 @@ public class CompteRenduVisiteAssoView {
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+
+        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
+        ArrayList<Visite> visites = new ArrayList<>();
+        for(Visite v : lvisite){
+            if(!v.getCr().equals("")){
+                visites.add(v);
+            }
+        }
+        visites.sort(Comparator.comparing(Visite::getDate));
+
+        combobox.setItems(FXCollections.observableList(visites));
+
+        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Visite v = (Visite) combobox.getSelectionModel().getSelectedItem();
+            text.setText(v.getCr());
+        });
 
         text.setText("On ne peut pas modifier le texte de l'appli, mais on peut le set à partir du CR à lire et le consulter sur l'app");
 

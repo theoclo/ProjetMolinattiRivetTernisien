@@ -1,5 +1,6 @@
 package com.projet.appMembres;
 
+import com.projet.Main;
 import com.projet.appAsso.InitialisationAppAsso;
 import com.projet.entite.Association;
 import com.projet.espacesVerts.Visite;
@@ -105,7 +106,18 @@ public class VisitesCompteRenduView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    //AJOUTER VISITE DANS LE PLANNING
+                    Visite v = (Visite) combobox.getValue();
+                    String text = textCR.getText();
+                    for(Visite visite : visites){
+                        if(v.equals(visite)){
+                            v.modifCR(text);
+                            try {
+                                Main.MaJFichierJSONAssociation();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
 
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
