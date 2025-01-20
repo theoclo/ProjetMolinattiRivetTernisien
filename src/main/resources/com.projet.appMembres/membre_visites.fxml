@@ -75,7 +75,7 @@
                   <Font name="Acme Regular" size="48.0" />
                </font>
             </Text>
-            <Pane prefHeight="55.0" prefWidth="800.0" />
+            <Pane prefHeight="37.0" prefWidth="800.0" />
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0">
