@@ -1,6 +1,7 @@
 package com.projet.appAsso;
 
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
 import com.projet.espacesVerts.Visite;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +38,8 @@ public class HomeAssoView {
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
         InitialisationAppMembre.listeVisites.clear();
-        InitialisationAppMembre.listeVisites.addAll(Visite.obtenirVisitesAsso(InitialisationAppAsso.associationActuelle.getNom()));
+        Association a = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom());
+        InitialisationAppMembre.listeVisites.addAll(a.getListeVisite());
         InitialisationAppMembre.listeVisites.sort(Comparator.comparing(Visite::getDate));
 
         deconnecter.setOnMouseClicked(event -> {

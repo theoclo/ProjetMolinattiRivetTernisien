@@ -117,9 +117,9 @@ public class CreerVisiteAssoView {
                     Stage stage = (Stage) creer.getScene().getWindow();
 
                     Visite v = new Visite(InitialisationAppAsso.associationActuelle.getNom(), finalArbreSelectionne, dateSelectionnee.atStartOfDay());
-                    Visite.listeVisites.add(v);
+                    Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite().add(v);
                     try {
-                        Main.MaJFichierJSONVisite();
+                        Main.MaJFichierJSONAssociation();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

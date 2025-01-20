@@ -1,7 +1,10 @@
 package com.projet.appMembres;
 
+import com.projet.Main;
+import com.projet.entite.Association;
 import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class InscriptionVisitesMembreView {
@@ -37,20 +41,20 @@ public class InscriptionVisitesMembreView {
 
     @FXML
     public void initialize() {
-        List<String> visiteListe = new ArrayList<>();
-        for(Visite v : InitialisationAppMembre.membreActuel.obtenirAssociationObjet().get().getListeVisite()){
-            if(v.getDate().isAfter(LocalDateTime.now()) && v.getParticipant() == ""){
-                visiteListe.add(v.toString());
-            }
-        }
-        combobox.setItems(FXCollections.observableList(visiteListe));
 
-        if(combobox.getSelectionModel().getSelectedItem() == null){
-            valider.setDisable(true);
-        }
-        else{
-            valider.setDisable(false);
-        }
+        ArrayList<Visite> visites= Association.obtenirVisitesSansParticipant(InitialisationAppMembre.membreActuel.getAssociation().get());
+        visites.sort(Comparator.comparing(Visite::getDate));
+
+        combobox.setItems(FXCollections.observableList(visites));
+
+        combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                valider.setDisable(false);
+            }else {
+                valider.setDisable(true);
+            }
+        });
+
 
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
 
@@ -100,11 +104,21 @@ public class InscriptionVisitesMembreView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    //AJOUTER VISITE DANS LE PLANNING
+                    visiteChoisie = (Visite) combobox.getValue();
+                    for(Visite v : visites){
+                        if(visiteChoisie.equals(v)){
+                            v.affecterParticipant(InitialisationAppMembre.membreActuel.getPseudo());
+                            try {
+                                Main.MaJFichierJSONAssociation();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
 
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
-                        visiteChoisie = (Visite) combobox.getValue();
+
                         FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_visites.fxml"));
                         fxmlLoader.setController(new VisitesMembreView());
                         Scene scene = new Scene(fxmlLoader.load(), 800, 600);

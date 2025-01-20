@@ -14,7 +14,6 @@ public class Visite {
     private String cr;
     private boolean payee;
 
-    public static ArrayList<Visite> listeVisites=new ArrayList<Visite>();
 
 
     public Visite(String asso, Arbre arbre, LocalDateTime date){
@@ -81,16 +80,20 @@ public class Visite {
 
     @Override
     public String toString(){
-        return "Arbre : " + arbre.getIdBase() + " | Date et Heure : " + date;
+        String s= "Arbre : " + arbre.getIdBase() + " | Date et Heure : " + date;
+        if(!getParticipant().equals("")){
+            s+=" Membre : " + getParticipant();
+        }
+        return s;
     }
 
-    public static ArrayList<Visite> obtenirVisitesAsso(String asso){
-        ArrayList<Visite> visites = new ArrayList<Visite>();
-        for(Visite v : listeVisites){
-            if(v.getAssociation().equals(asso)){
-                visites.add(v);
-            }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Visite){
+            Visite v = (Visite)o;
+            return v.getAssociation().equals(this.getAssociation()) && v.getDate().equals(this.getDate()) && v.arbre.equals(this.getArbre());
         }
-        return visites;
+        return false;
     }
 }

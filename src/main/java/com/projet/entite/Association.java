@@ -473,5 +473,19 @@ public class Association implements Abonne{
         return sortedMap;
     }
 
+    public static ArrayList<Visite> obtenirVisitesSansParticipant(String asso){
+        ArrayList<Visite> visites = new ArrayList<Visite>();
+        Association a = Association.getAssociation(asso);
+        for(Visite v : a.listeVisite){
+            if(v.getAssociation().equals(asso)){
+                if(v.getParticipant().equals("")){
+                    visites.add(v);
+                }
+            }
+        }
+
+        return visites;
+    }
+
 }
 
