@@ -492,7 +492,7 @@ public class Association implements Abonne{
         Association a = Association.getAssociation(asso);
         for(Visite v : a.listeVisite){
             if(v.getAssociation().equals(asso)){
-                if(v.getParticipant().equals(participant)){
+                if(v.getParticipant().equals(participant) && v.getCr().equals("")){
                     visites.add(v);
                 }
             }
