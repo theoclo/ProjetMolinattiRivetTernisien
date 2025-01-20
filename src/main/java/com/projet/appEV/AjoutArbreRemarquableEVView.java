@@ -1,5 +1,7 @@
 package com.projet.appEV;
 
+import com.projet.Arbre;
+import com.projet.appMembres.InitialisationAppMembre;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AjoutArbreRemarquableEVView {
     @FXML
@@ -29,6 +33,15 @@ public class AjoutArbreRemarquableEVView {
 
     @FXML
     public void initialize(){
+
+        Map<Arbre, Integer> arbreRemarquable = new HashMap<>();
+        for(Arbre a : InitialisationAppMembre.arbresNonRemarquables){
+            arbreRemarquable.put(a, 0);
+        }
+
+        //A MODIFIER POUR LIER A InitialisationAppEV ou un truc du genre
+
+        listview.getItems().addAll(arbreRemarquable.keySet());
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
