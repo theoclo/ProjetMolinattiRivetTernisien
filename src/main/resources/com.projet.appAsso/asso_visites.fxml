@@ -107,7 +107,7 @@
                                         </Text>
                                     </children>
                                     <HBox.margin>
-                                        <Insets left="20.0" right="20.0" />
+                                        <Insets left="10.0" right="10.0" />
                                     </HBox.margin>
                                 </VBox>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -134,9 +134,39 @@
                                         </Text>
                                     </children>
                                     <HBox.margin>
-                                        <Insets left="20.0" right="20.0" />
+                                        <Insets left="10.0" right="10.0" />
                                     </HBox.margin>
                                 </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="planning" mnemonicParsing="false" prefWidth="144.0" style="-fx-background-color: rgba(237, 237, 237, 0.75); -fx-background-radius: 60;">
+                                 <graphic>
+                                    <ImageView fitHeight="220.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../com.projet.appMembres/planning.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(42,84,161,0.8), 20, 0, 0, 0);" text="Planning">
+                                 <font>
+                                    <Font name="Acme Regular" size="25.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </VBox>
                             </children>
                         </HBox>
                   <Button fx:id="retour" layoutX="300.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#8aafeb">

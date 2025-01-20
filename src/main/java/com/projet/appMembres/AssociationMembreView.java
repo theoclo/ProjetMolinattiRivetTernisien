@@ -98,7 +98,7 @@ public class AssociationMembreView {
                             Alert alert2 = new Alert(Alert.AlertType.ERROR);
                             alert2.setTitle("Erreur");
                             alert2.setHeaderText("Erreur lors de la demande de quitter l'association");
-                            alert2.setContentText("Vous ne pouvez pas quitter l'association");
+                            alert2.setContentText("Vous ne pouvez pas quitter l'association car vous en êtes le président");
                             alert2.showAndWait();
                         }
                         else{
