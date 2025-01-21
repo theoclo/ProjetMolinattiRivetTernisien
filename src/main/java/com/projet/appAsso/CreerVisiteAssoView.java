@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import net.datafaker.providers.base.App;
 
 import java.io.IOException;
@@ -55,6 +56,27 @@ public class CreerVisiteAssoView {
         list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             creer.setDisable(newValue == null || date.getValue() == null || date.getValue().isBefore(LocalDate.now()));
         });
+
+
+        //pour comprendre voir documentation sur les datepicker javafx
+        Callback<DatePicker, DateCell> dayCellFactory = new Callback<>() {
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #ffcccc;");
+                            setTooltip(new Tooltip("Date passée non sélectionnable"));
+                        }
+                    }
+                };
+            }
+        };
+
+        date.setDayCellFactory(dayCellFactory);
 
         date.valueProperty().addListener((observable, oldValue, newValue) -> {
             creer.setDisable(newValue == null || list.getSelectionModel().getSelectedItem() == null|| date.getValue().isBefore(LocalDate.now()));
