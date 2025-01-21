@@ -68,7 +68,7 @@ public class VisitesAssoView {
         });
 
         cr.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
+            System.out.println("Bouton 'Compte rendu' cliqué");
             Stage stage = (Stage) cr.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_compteRendu.fxml"));
@@ -82,7 +82,7 @@ public class VisitesAssoView {
         });
 
         creer.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
+            System.out.println("Bouton 'Créer une visite' cliqué");
             Stage stage = (Stage) creer.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_creerVisite.fxml"));
@@ -96,7 +96,7 @@ public class VisitesAssoView {
         });
 
         planning.setOnMouseClicked(event -> {
-            System.out.println("Bouton 'Notifications' cliqué");
+            System.out.println("Bouton 'Planning des visites' cliqué");
             Stage stage = (Stage) planning.getScene().getWindow();
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_planning.fxml"));
