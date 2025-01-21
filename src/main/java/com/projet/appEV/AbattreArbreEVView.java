@@ -5,6 +5,7 @@ import com.projet.Main;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class AbattreArbreEVView {
     @FXML
@@ -93,6 +95,22 @@ public class AbattreArbreEVView {
                             }
                         }
                     }
+
+                    for(Association asso : ServiceEV.obtenirAssosAbonne()){
+                        try {
+                            asso.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été abattu le "+LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
+                        try {
+                            p.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été abattu le "+LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
                     InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
                     InitialisationAppMembre.arbres.remove(finalArbreSelectionne);
                     Arbre.listeArbres.remove(finalArbreSelectionne);

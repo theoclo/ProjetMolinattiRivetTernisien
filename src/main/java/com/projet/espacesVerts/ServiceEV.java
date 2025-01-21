@@ -2,6 +2,8 @@ package com.projet.espacesVerts;
 
 import com.projet.Arbre;
 import com.projet.entite.Abonne;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class ServiceEV {
 
     private String commune;
     private ArrayList<Arbre> listeArbre;
-    private ArrayList <Abonne> listeAbonne;
+    private ArrayList <String> listeAbonne;
     private ArrayList < Evenement > listeEvent;
 
     public static ArrayList<ServiceEV> listeServiceEV = new ArrayList<>();
@@ -45,7 +47,7 @@ public class ServiceEV {
     public ArrayList < Arbre > getListeArbre() {
         return listeArbre;
     }
-    public ArrayList < Abonne > getListeAbonne() {
+    public ArrayList < String > getListeAbonne() {
         return listeAbonne;
     }
     public ArrayList < Evenement > getListeEvent() {
@@ -62,7 +64,7 @@ public class ServiceEV {
     public void setListeArbre(ArrayList < Arbre > listeArbre) {
         this.listeArbre = listeArbre;
     }
-    public void setListeAbonne(ArrayList<Abonne> listeAbonne) {
+    public void setListeAbonne(ArrayList<String> listeAbonne) {
         this.listeAbonne = listeAbonne;
     }
     public void setListeEvent(ArrayList<Evenement> listeEvent) {
@@ -110,7 +112,7 @@ public class ServiceEV {
         listeArbre.add(arbre);
     }
 
-    public void addAbonne(Abonne abonne) {
+    public void addAbonne(String abonne) {
         listeAbonne.add(abonne);
     }
 
@@ -122,7 +124,7 @@ public class ServiceEV {
     public void organiserEvent(Evenement.TypeEvent typeEvent, Arbre arbreEvent, String descEvent) {
         Evenement new_event = new Evenement(typeEvent, arbreEvent, LocalDate.now(), this, descEvent);
         listeEvent.add(new_event);
-        for (Abonne abonne : listeAbonne) {
+        for (String abonne : listeAbonne) {
             notifier(new_event);
         }
     }
@@ -140,8 +142,15 @@ public class ServiceEV {
     }
 
     public void notifier(Evenement event) {
-        for (Abonne abonne : listeAbonne) {
-            abonne.getListeNotif().add("Un évènement a été organisé : " + event.toString());
+        for (String abonne : listeAbonne) {
+            Personne p = Personne.obtenirPersonne(abonne);
+            Association a = Association.getAssociation(abonne);
+            if(a==null){
+                p.getListeNotif().add("Un évènement a été organisé : " + event.toString());
+            }
+            else{
+                a.getListeNotif().add("Un évènement a été organisé : " + event.toString());
+            }
         }
     }
 
@@ -155,6 +164,31 @@ public class ServiceEV {
         return serviceEV;
     }
 
+    public static ArrayList<Personne> obtenirParticuliersAbonne() {
+        ArrayList<Personne> personnes = new ArrayList<>();
+        for (String p : listeServiceEV.get(0).getListeAbonne()) {
+            Personne personne = Personne.obtenirPersonne(p);
+            if(personne != null){
+                personnes.add(personne);
+            }
+        }
+        return personnes;
+    }
+
+    public static ArrayList<Association> obtenirAssosAbonne() {
+        ArrayList<Association> associations = new ArrayList<>();
+        for (String a : listeServiceEV.get(0).getListeAbonne()) {
+            Association asso = Association.getAssociation(a);
+            if(asso != null){
+                associations.add(asso);
+            }
+        }
+        return associations;
+    }
+
+
 
 }
+
+
 

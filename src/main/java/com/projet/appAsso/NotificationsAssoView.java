@@ -1,5 +1,7 @@
 package com.projet.appAsso;
 
+import com.projet.Main;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,7 +12,7 @@ import java.io.IOException;
 
 public class NotificationsAssoView {
     @FXML
-    private Label nom_membre;
+    private Label nom_asso;
 
     @FXML
     private Button refresh;
@@ -45,6 +47,12 @@ public class NotificationsAssoView {
 
          */
 
+        nom_asso.setText(InitialisationAppAsso.associationActuelle.getNom());
+        listview.getItems().clear();
+        listview.setItems(FXCollections.observableArrayList(InitialisationAppAsso.associationActuelle.getListeNotif()));
+
+
+
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
@@ -63,7 +71,6 @@ public class NotificationsAssoView {
             System.out.println("Bouton 'Refresh' cliqué");
         });
 
-        /*
 
         supprimer.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Tout supprimer' cliqué");
@@ -77,9 +84,8 @@ public class NotificationsAssoView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     listview.getItems().clear();
-                    p.getListeNotif().clear();
+                    InitialisationAppAsso.associationActuelle.getListeNotif().clear();
                     try {
-                        Main.MaJFichierJSONPersonnes();
                         Main.MaJFichierJSONAssociation();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -90,7 +96,6 @@ public class NotificationsAssoView {
                 }
             });
         });
-         */
 
         retour.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Retour' cliqué");

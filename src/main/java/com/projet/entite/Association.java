@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.projet.Main.MaJFichierJSONAssociation;
+import static com.projet.Main.MaJFichierJSONPersonnes;
+
 public class Association implements Abonne{
 
     /*  CHAMPS  */
@@ -286,7 +289,7 @@ public class Association implements Abonne{
         }
         else{
             setAbonnement(Optional.of(sEV.getCommune()));
-            sEV.addAbonne(this);
+            sEV.addAbonne(this.getNom());
         }
     }
 
@@ -296,8 +299,8 @@ public class Association implements Abonne{
             System.out.println("Vous n'êtes pas abonné au Service EV d'une commune");
         }
         else{
-            for(Abonne abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
-                if(abonne == this){
+            for(String abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
+                if(abonne.equals(this.getNom())){
                     ServiceEV.getServiceEV(abonnement.get()).getListeAbonne().remove(abonne);
                 }
             }
@@ -499,6 +502,20 @@ public class Association implements Abonne{
         }
 
         return visites;
+    }
+
+    public void ajouterNotification(String notification) throws IOException {
+        Association a = Association.getAssociation(this.nom);
+
+        ArrayList<String> notif = new ArrayList<>();
+        if(a.getListeNotif()!= null){
+            notif = a.getListeNotif();
+        }
+        notif.add(notification);
+        a.setListeNotif(notif);
+        MaJFichierJSONPersonnes();
+        MaJFichierJSONAssociation();
+
     }
 
 }

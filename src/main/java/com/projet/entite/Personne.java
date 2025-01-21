@@ -199,7 +199,7 @@ public class Personne implements Abonne, Entite {
         }
         else{
             setAbonnement(Optional.of(sEV.getCommune()));
-            sEV.addAbonne(this);
+            sEV.addAbonne(this.getPseudo());
         }
     }
 
@@ -209,8 +209,8 @@ public class Personne implements Abonne, Entite {
             System.out.println("Vous n'êtes pas abonné au Service EV d'une commune");
         }
         else{
-            for(Abonne abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
-                if(abonne == this){
+            for(String abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
+                if(abonne.equals(this.getPseudo())){
                     ServiceEV.getServiceEV(abonnement.get()).getListeAbonne().remove(abonne);
                 }
             }
@@ -341,7 +341,7 @@ public class Personne implements Abonne, Entite {
     }
 
     public void ajouterNotification(String notification) throws IOException {
-        Personne p = Personne.listePersonnes.get(0);
+        Personne p = Personne.obtenirPersonne(this.pseudo);
 
         ArrayList<String> notif = new ArrayList<>();
        if(p.getListeNotif()!= null){

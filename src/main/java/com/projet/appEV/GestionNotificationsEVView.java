@@ -1,8 +1,14 @@
 package com.projet.appEV;
 
+import com.projet.Main;
 import com.projet.appMembres.AppMembre;
 import com.projet.appMembres.ConnexionMembreView;
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class GestionNotificationsEVView {
     @FXML
@@ -36,6 +44,11 @@ public class GestionNotificationsEVView {
 
     @FXML
     public void initialize(){
+
+        ServiceEV serviceEv = ServiceEV.listeServiceEV.get(0);
+
+        listAsso.setItems(FXCollections.observableList(ServiceEV.obtenirAssosAbonne()));
+        listPart.setItems(FXCollections.observableList(ServiceEV.obtenirParticuliersAbonne()));
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -78,7 +91,16 @@ public class GestionNotificationsEVView {
 
             // ComboBox pour choisir l'association
             ComboBox<String> comboBox = new ComboBox<>();
-            //comboBox.getItems().addAll(associations);
+
+            ArrayList<String> assoSansAbo= new ArrayList<>();
+            for(Association a : Association.listeAssociations){
+                if(a.getAbonnement().isEmpty()){
+                    assoSansAbo.add(a.getNom());
+                }
+            }
+
+            comboBox.getItems().addAll(assoSansAbo);
+
             comboBox.setPromptText("(Choisissez une association)");
             comboBox.setStyle(
                     "-fx-background-color: rgba(237, 237, 237, 1);" +
@@ -102,8 +124,19 @@ public class GestionNotificationsEVView {
             alert.showAndWait().ifPresent(response -> {
                 if (response == okButton) {
                     String selectedAssociation = comboBox.getValue();
+                    Association a = Association.getAssociation(selectedAssociation);
                     if (selectedAssociation != null) {
                         System.out.println("Association ajoutée : " + selectedAssociation);
+                        a.setAbonnement(Optional.of(serviceEv.getCommune()));
+                        ServiceEV.getServiceEV(serviceEv.getCommune()).addAbonne(a.getNom());
+
+                        try {
+                            Main.MaJFichierJSONAssociation();
+                            Main.MaJFichierServiceEV();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        listAsso.setItems(FXCollections.observableList(ServiceEV.obtenirAssosAbonne()));
                     } else {
                         System.out.println("Aucune association sélectionnée !");
                     }
@@ -122,7 +155,14 @@ public class GestionNotificationsEVView {
 
             ComboBox<String> comboBox = new ComboBox<>();
 
-            //comboBox.getItems().addAll(associations);
+            ArrayList<String> listePersonneSansAbo= new ArrayList<>();
+            for(Personne p : Personne.listePersonnes){
+                if(p.getAbonnement().isEmpty()){
+                    listePersonneSansAbo.add(p.getPseudo());
+                }
+            }
+
+            comboBox.getItems().addAll(listePersonneSansAbo);
 
             comboBox.setPromptText("(Choisissez une personne)");
             comboBox.setStyle(
@@ -141,11 +181,23 @@ public class GestionNotificationsEVView {
 
             alert.showAndWait().ifPresent(response -> {
                 if (response == okButton) {
-                    String selectedAssociation = comboBox.getValue();
-                    if (selectedAssociation != null) {
-                        System.out.println("Personne ajoutée : " + selectedAssociation);
+                    String selectedParticulier = comboBox.getValue();
+                    if (selectedParticulier != null) {
+                        System.out.println("Personne ajoutée : " + selectedParticulier);
+                        Personne p = Personne.obtenirPersonne(selectedParticulier);
+                        p.setAbonnement(Optional.of(serviceEv.getCommune()));
+                        ServiceEV.getServiceEV(serviceEv.getCommune()).addAbonne(p.getPseudo());
+                        try {
+                            Main.MaJFichierJSONAssociation();
+                            Main.MaJFichierJSONPersonnes();
+                            Main.MaJFichierServiceEV();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        listPart.setItems(FXCollections.observableList(ServiceEV.obtenirParticuliersAbonne()));
                     } else {
-                        System.out.println("Aucune association sélectionnée !");
+                        System.out.println("Aucun particulier sélectionné !");
                     }
                 } else {
                     System.out.println("Ajout annulé.");
