@@ -354,4 +354,24 @@ public class Personne implements Abonne, Entite {
 
     }
 
+    public ArrayList<String> cotisations(){
+        ArrayList<String> list = new ArrayList<>();
+        for(Map.Entry<Integer, LocalDate> entree : listeCotisation.entrySet()){
+            list.add(" Annee : " + entree.getKey() + " cotisé le : " + entree.getValue());
+        }
+        list.add("Total : " + listeCotisation.size()* Association.getAssociation(association.get()).getPrixCotisation());
+
+        return list;
+    }
+
+    public static ArrayList<String> personnesSansAsso(){
+        ArrayList<String> list = new ArrayList<>();
+        for(Personne p : Personne.listePersonnes){
+            if(p.getAssociation().isEmpty()){
+                list.add(p.getPseudo());
+            }
+        }
+        return list;
+    }
+
 }
