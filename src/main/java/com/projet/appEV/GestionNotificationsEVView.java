@@ -188,7 +188,7 @@ public class GestionNotificationsEVView {
                         p.setAbonnement(Optional.of(serviceEv.getCommune()));
                         ServiceEV.getServiceEV(serviceEv.getCommune()).addAbonne(p.getPseudo());
                         try {
-                            Main.MaJFichierJSONAssociation();
+
                             Main.MaJFichierJSONPersonnes();
                             Main.MaJFichierServiceEV();
                         } catch (IOException e) {

@@ -1,7 +1,11 @@
 package com.projet.appEV;
 
 import com.projet.Arbre;
+import com.projet.Main;
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,6 +82,8 @@ public class AjoutArbreRemarquableEVView {
 
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
+            Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Rendre remarquable un arbre");
             alert.setHeaderText("Êtes-vous sûr de vouloir rendre remarquable cet arbre ?");
@@ -84,12 +91,35 @@ public class AjoutArbreRemarquableEVView {
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            Arbre finalArbreSelectionne = arbreSelectionne;
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    //RENDRE REMARQUABLE L'ARBRE
+                    finalArbreSelectionne.classifier(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+                    for(Association asso : ServiceEV.obtenirAssosAbonne()){
+                        try {
+                            asso.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été classifié le "+LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
+                        try {
+                            p.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été classifié le "+LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
 
+                    InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
+                    InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne);
+                    try {
+                        Main.MaJFichierJSONArbres();
+                        Main.MaJFichierServiceEV();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));

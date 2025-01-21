@@ -113,7 +113,9 @@ public class ServiceEV {
     }
 
     public void addAbonne(String abonne) {
-        listeAbonne.add(abonne);
+        if(!listeAbonne.contains(abonne)) {
+            listeAbonne.add(abonne);
+        }
     }
 
     public void addEvent(Evenement event) {
