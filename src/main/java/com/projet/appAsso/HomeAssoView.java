@@ -92,7 +92,7 @@ public class HomeAssoView {
             System.out.println("Bouton 'Association' cliqué");
             Stage stage = (Stage) asso.getScene().getWindow();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_assotiation.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_association.fxml"));
                 fxmlLoader.setController(new AssociationAssoView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
