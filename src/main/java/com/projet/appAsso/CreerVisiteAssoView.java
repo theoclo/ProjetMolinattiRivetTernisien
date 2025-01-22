@@ -99,6 +99,16 @@ public class CreerVisiteAssoView {
 
         refresh.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Refresh' cliqué");
+            Stage stage = (Stage) refresh.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_creerVisite.fxml"));
+                fxmlLoader.setController(new CreerVisiteAssoView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Association");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         retour.setOnMouseClicked(event -> {

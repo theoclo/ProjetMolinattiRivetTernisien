@@ -37,6 +37,7 @@ public class CotisationsMembreView {
 
     @FXML
     public void initialize(){
+
         Personne m = InitialisationAppMembre.membreActuel;
         if(m.getSolde() < m.obtenirAssociationObjet().get().getPrixCotisation() || m.getListeCotisation().containsKey(LocalDate.now().getYear())){
             cotiser.setDisable(true);
@@ -70,6 +71,16 @@ public class CotisationsMembreView {
 
         refresh.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Refresh' cliqué");
+            Stage stage = (Stage) refresh.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_cotisations.fxml"));
+                fxmlLoader.setController(new CotisationsMembreView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Membre");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         retour.setOnMouseClicked(event -> {

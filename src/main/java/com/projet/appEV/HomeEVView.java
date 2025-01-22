@@ -24,6 +24,7 @@ public class HomeEVView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();

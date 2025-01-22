@@ -36,6 +36,8 @@ public class HomeAssoView {
 
     @FXML
     public void initialize() {
+        refresh.setVisible(false);
+
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
         InitialisationAppMembre.listeVisites.clear();
         Association a = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom());

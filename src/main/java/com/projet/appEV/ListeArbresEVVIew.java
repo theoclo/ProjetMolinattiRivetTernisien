@@ -27,6 +27,7 @@ public class ListeArbresEVVIew {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
         listview.setItems(InitialisationAppMembre.arbres);
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");

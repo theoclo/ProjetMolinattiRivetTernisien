@@ -36,6 +36,8 @@ public class ConnecteMembreView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
+
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
         InitialisationAppMembre.listeVisites.clear();
         Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());

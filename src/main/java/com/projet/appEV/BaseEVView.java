@@ -14,6 +14,7 @@ public class BaseEVView {
 
     @FXML
     public void initialize(){
+
         entrer.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Entrer' cliqué");
             Stage stage = (Stage) entrer.getScene().getWindow();

@@ -62,6 +62,16 @@ public class VotesMembreView {
 
         refresh.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Refresh' cliqué");
+            Stage stage = (Stage) refresh.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_votes.fxml"));
+                fxmlLoader.setController(new VotesMembreView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Membre");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         retour.setOnMouseClicked(event -> {

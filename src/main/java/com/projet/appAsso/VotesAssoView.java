@@ -71,6 +71,16 @@ public class VotesAssoView {
 
         refresh.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Refresh' cliqué");
+            Stage stage = (Stage) refresh.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_votes.fxml"));
+                fxmlLoader.setController(new VotesAssoView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Association");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         retour.setOnMouseClicked(event -> {

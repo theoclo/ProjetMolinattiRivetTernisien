@@ -36,6 +36,7 @@ public class AbattreArbreEVView {
 
     @FXML
     public void initialize() throws IOException {
+        refresh.setVisible(false);
         InitialisationAppMembre.arbresNonRemarquables.clear();
         InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
         listview.setItems(InitialisationAppMembre.arbresNonRemarquables);

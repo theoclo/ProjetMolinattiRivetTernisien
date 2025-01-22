@@ -33,6 +33,8 @@ public class VisitesMembreView {
 
     @FXML
     public void initialize() {
+        refresh.setVisible(false);
+
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
 
 

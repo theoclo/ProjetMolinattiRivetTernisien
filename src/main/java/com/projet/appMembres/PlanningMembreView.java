@@ -33,6 +33,7 @@ public class PlanningMembreView {
 
     @FXML
     public void initialize(){
+
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
         ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get()).getListeVisite();
         lvisite.sort(Comparator.comparing(Visite::getDate));
@@ -57,6 +58,16 @@ public class PlanningMembreView {
 
         refresh.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Refresh' cliqué");
+            Stage stage = (Stage) refresh.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_planning.fxml"));
+                fxmlLoader.setController(new PlanningMembreView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Membre");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         retour.setOnMouseClicked(event -> {

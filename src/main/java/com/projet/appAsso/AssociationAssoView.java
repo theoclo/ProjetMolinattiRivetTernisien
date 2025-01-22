@@ -42,6 +42,8 @@ public class AssociationAssoView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
+
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
 
         deconnecter.setOnMouseClicked(event -> {

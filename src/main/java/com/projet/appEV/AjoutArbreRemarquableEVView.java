@@ -38,6 +38,7 @@ public class AjoutArbreRemarquableEVView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
 
         Map<Arbre, Integer> arbreRemarquable = new HashMap<>();
         for(Arbre a : InitialisationAppMembre.arbresNonRemarquables){

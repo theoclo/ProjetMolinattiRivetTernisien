@@ -44,6 +44,7 @@ public class GestionNotificationsEVView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
 
         ServiceEV serviceEv = ServiceEV.listeServiceEV.get(0);
 

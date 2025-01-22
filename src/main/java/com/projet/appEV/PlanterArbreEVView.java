@@ -61,6 +61,7 @@ public class PlanterArbreEVView {
 
     @FXML
     public void initialize(){
+        refresh.setVisible(false);
 
         BooleanBinding fieldsNotValid = Bindings.createBooleanBinding(() ->
                         nom.getText().trim().isEmpty() ||
