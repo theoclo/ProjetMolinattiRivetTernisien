@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class PlanningAssoView {
@@ -40,6 +42,7 @@ public class PlanningAssoView {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
         ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
         lvisite.sort(Comparator.comparing(Visite::getDate));
+        Collections.reverse(lvisite);
 
         listview.setItems(FXCollections.observableList(lvisite));
 
