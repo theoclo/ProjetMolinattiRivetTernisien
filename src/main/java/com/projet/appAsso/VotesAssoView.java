@@ -1,5 +1,9 @@
 package com.projet.appAsso;
 
+import com.projet.Arbre;
+import com.projet.entite.Association;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +14,9 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class VotesAssoView {
 
@@ -28,10 +35,25 @@ public class VotesAssoView {
     @FXML
     private Button classement;
 
+    @FXML
+    private ListView list;
+
 
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        Association a = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom());
+        LinkedHashMap<Arbre, Integer> votesAsso = a.selectTop5Nomination();
+        ObservableList<String> items = FXCollections.observableArrayList();
+
+        for (Map.Entry<Arbre, Integer> entry : votesAsso.entrySet()) {
+            Arbre arbre = entry.getKey();
+            int votes = entry.getValue();
+            items.add("Votes : "+ votes + " - Arbre : " + arbre);
+        }
+
+        list.setItems(items);
+
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -72,8 +94,17 @@ public class VotesAssoView {
             alert.setHeaderText("Voici la liste complète des votes actuels :");
             ListView<String> listView = new ListView<>();
             alert.getDialogPane().setContent(listView);
-            listView.setPrefHeight(150);
-            listView.setPrefWidth(300);
+            LinkedHashMap<Arbre, Integer> votesAsso2 = a.selectAllNomination();
+            ObservableList<String> items2 = FXCollections.observableArrayList();
+
+            for (Map.Entry<Arbre, Integer> entry : votesAsso2.entrySet()) {
+                Arbre arbre = entry.getKey();
+                int votes = entry.getValue();
+                items2.add("Votes : "+ votes + " - Arbre : " + arbre);
+            }
+            listView.setItems(items2);
+            listView.setPrefHeight(300);
+            listView.setPrefWidth(600);
             alert.showAndWait();
         });
     }

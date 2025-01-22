@@ -8,7 +8,6 @@ import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -452,7 +451,7 @@ public class Association implements Abonne{
     }
 
 
-    public LinkedHashMap<Arbre, Integer> selectNomination(){
+    public LinkedHashMap<Arbre, Integer> selectTop5Nomination(){
         Map<Arbre,Integer> votes = new HashMap<>();
         for(ArrayList<Arbre> a : listeReco.values()){
             for(Arbre arbre : a){
@@ -466,8 +465,31 @@ public class Association implements Abonne{
             }
         }
         LinkedHashMap<Arbre, Integer> sortedMap = votes.entrySet().stream()
-                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed()) // Descending order
-                .limit(5) // Limit to 5 entries
+                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed())
+                .limit(5)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        System.out.println(sortedMap.keySet());
+        System.out.println(sortedMap.values());
+        System.out.println(sortedMap.size());
+        return sortedMap;
+    }
+
+    public LinkedHashMap<Arbre, Integer> selectAllNomination(){
+        Map<Arbre,Integer> votes = new HashMap<>();
+        for(ArrayList<Arbre> a : listeReco.values()){
+            for(Arbre arbre : a){
+                Arbre arbreVote = Arbre.obtenirArbre(arbre.getIdBase());
+                if(votes.containsKey(arbreVote)){
+                    votes.put(arbreVote, votes.get(arbreVote)+1);
+                }
+                else{
+                    votes.put(arbreVote, 1);
+                }
+            }
+        }
+        LinkedHashMap<Arbre, Integer> sortedMap = votes.entrySet().stream()
+                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
         System.out.println(sortedMap.keySet());
