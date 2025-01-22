@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,14 +41,41 @@ public class AjoutArbreRemarquableEVView {
     public void initialize(){
         refresh.setVisible(false);
 
-        Map<Arbre, Integer> arbreRemarquable = new HashMap<>();
-        for(Arbre a : InitialisationAppMembre.arbresNonRemarquables){
-            arbreRemarquable.put(a, 0);
+       ArrayList<Arbre> arbreNonRemarquable = new ArrayList<>();
+        arbreNonRemarquable.addAll(InitialisationAppMembre.arbresNonRemarquables);
+
+        ArrayList<Integer> idNonRemarquable = new ArrayList<>();
+        for(Arbre arbre : arbreNonRemarquable){
+            idNonRemarquable.add(arbre.getIdBase());
         }
+
 
         //A MODIFIER POUR LIER A InitialisationAppEV ou un truc du genre
 
-        listview.getItems().addAll(arbreRemarquable.keySet());
+        listview.getItems().addAll(arbreNonRemarquable);
+
+        valider.setDisable(true);
+
+        text.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                text.setText(oldValue);
+            }
+            if(text.getText().equals("") && listview.getSelectionModel().getSelectedItem() == null){
+                valider.setDisable(true);
+            }
+            else{
+                valider.setDisable(false);
+            }
+        });
+
+        listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(text.getText().equals("") && listview.getSelectionModel().getSelectedItem() == null){
+                valider.setDisable(true);
+            }
+            else{
+                valider.setDisable(false);
+            }
+        });
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -84,57 +112,78 @@ public class AjoutArbreRemarquableEVView {
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
             Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
-            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Rendre remarquable un arbre");
-            alert.setHeaderText("Êtes-vous sûr de vouloir rendre remarquable cet arbre ?");
-            alert.setContentText("");
-            ButtonType buttonTypeYes = new ButtonType("Oui");
-            ButtonType buttonTypeNo = new ButtonType("Non");
-            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-            Arbre finalArbreSelectionne = arbreSelectionne;
-            alert.showAndWait().ifPresent(buttonType -> {
-                if (buttonType == buttonTypeYes) {
-                    System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    finalArbreSelectionne.classifier(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
-                    for(Association asso : ServiceEV.obtenirAssosAbonne()){
-                        try {
-                            asso.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été classifié le "+LocalDate.now());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+            if(arbreSelectionne == null){
+                int id = Integer.valueOf(text.getText());
+                for(Integer i : idNonRemarquable){
+                    if(id == i){
+                        arbreSelectionne = Arbre.obtenirArbre(i);
                     }
-                    for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
-                        try {
-                            p.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été classifié le "+LocalDate.now());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-
-                    InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
-                    InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne);
-                    try {
-                        Main.MaJFichierJSONArbres();
-                        Main.MaJFichierServiceEV();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Stage stage = (Stage) retour.getScene().getWindow();
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));
-                        fxmlLoader.setController(new GestionArbresEVView());
-                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                        stage.setScene(scene);
-                        stage.setTitle("Application Espaces Verts");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.out.println("L'utilisateur a cliqué sur Non");
                 }
-            });
+            }
+            else{
+                arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
+            }
+            if(arbreSelectionne == null){
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Erreur");
+                alert2.setHeaderText("Erreur lors de la demande ce classification de l'arbre");
+                alert2.setContentText("L'arbre ayant l'id "+ text.getText() + " n'existe pas dans la base de données");
+                alert2.showAndWait();
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Rendre remarquable un arbre");
+                alert.setHeaderText("Êtes-vous sûr de vouloir rendre remarquable cet arbre ?");
+                alert.setContentText("Son id dans la base de données est " + arbreSelectionne.getIdBase());
+                ButtonType buttonTypeYes = new ButtonType("Oui");
+                ButtonType buttonTypeNo = new ButtonType("Non");
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                Arbre finalArbreSelectionne = arbreSelectionne;
+                alert.showAndWait().ifPresent(buttonType -> {
+                    if (buttonType == buttonTypeYes) {
+                        System.out.println("L'utilisateur a cliqué sur Oui");
+
+                        finalArbreSelectionne.classifier(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+                        for (Association asso : ServiceEV.obtenirAssosAbonne()) {
+                            try {
+                                asso.ajouterNotification("L'arbre " + finalArbreSelectionne.getIdBase() + " a été classifié le " + LocalDate.now());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        for (Personne p : ServiceEV.obtenirParticuliersAbonne()) {
+                            try {
+                                p.ajouterNotification("L'arbre " + finalArbreSelectionne.getIdBase() + " a été classifié le " + LocalDate.now());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                        InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
+                        InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne);
+                        try {
+                            Main.MaJFichierJSONArbres();
+                            Main.MaJFichierServiceEV();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Stage stage = (Stage) retour.getScene().getWindow();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));
+                            fxmlLoader.setController(new GestionArbresEVView());
+                            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                            stage.setScene(scene);
+                            stage.setTitle("Application Espaces Verts");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("L'utilisateur a cliqué sur Non");
+                    }
+
+                });
+            }
         });
 
 
