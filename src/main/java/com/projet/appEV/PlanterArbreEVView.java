@@ -1,6 +1,11 @@
 package com.projet.appEV;
 
+import com.projet.Arbre;
+import com.projet.Main;
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlanterArbreEVView {
     @FXML
@@ -96,9 +104,48 @@ public class PlanterArbreEVView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
-
-                    //PLANTER L'ARBRE (AJOUTER L'ARBRE A LA LISTE DES ARBRES)
-
+                    String n = nom.getText();
+                    String g = genre.getText();
+                    String esp = espece.getText();
+                    int circ = Integer.parseInt(circonference.getText());
+                    int haut = Integer.parseInt(hauteur.getText());
+                    String ad = adresse.getText();
+                    double lat = Double.parseDouble(latitude.getText());
+                    double lon = Double.parseDouble(longitude.getText());
+                    HashMap<String, Double> coordGPS = new HashMap<>();
+                    coordGPS.put("latitude", lat);
+                    coordGPS.put("longitude", lon);
+                    net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
+                    int rand = faker.number().numberBetween(1, 99874);
+                    for(Arbre a : Arbre.listeArbres){
+                        while(a.getIdBase() == rand){
+                            rand = faker.number().numberBetween(1, 99874);
+                        }
+                    }
+                    Arbre arbre = new Arbre(rand, n, g, esp, circ, haut, Arbre.ArbreDEV.Jeune, ad, coordGPS);
+                    Arbre.listeArbres.add(arbre);
+                    for(Association asso : ServiceEV.obtenirAssosAbonne()){
+                        try {
+                            asso.ajouterNotification("L'arbre "+arbre.getIdBase()+" a été planté le "+ LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
+                        try {
+                            p.ajouterNotification("L'arbre "+ arbre.getIdBase()+" a été planté le "+LocalDate.now());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    System.out.println("L'arbre " + arbre + " a été créé !");
+                    ServiceEV.listeServiceEV.get(0).addArbre(arbre);
+                    try {
+                        Main.MaJFichierJSONArbres();
+                        Main.MaJFichierServiceEV();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(AppEV.class.getResource("/com.projet.appEV/ev_gestionArbres.fxml"));
@@ -115,4 +162,6 @@ public class PlanterArbreEVView {
             });
         });
     }
+
+
 }
