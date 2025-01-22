@@ -48,6 +48,7 @@ public class ConnexionAssoView {
 
         connexion.setOnMouseClicked(event -> {
             InitialisationAppAsso.associationActuelle = (Association) combobox.getValue();
+            InitialisationAppAsso.associationActuelle = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom());
             System.out.println("Bouton 'Se connecter' cliqué");
             Stage stage = (Stage) connexion.getScene().getWindow();
             try {

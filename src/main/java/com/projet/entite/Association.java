@@ -28,7 +28,7 @@ public class Association implements Abonne{
     private int budget;
     private int prixCotisation;
     private int montantDefraiement;
-    private ArrayList<Entite> listeDonateurs;
+    private ArrayList<String> listeDonateurs;
     private ArrayList<String> listeFactures; //String de type : String f = "50 : facture";
     //int i = f.indexOf(' ');
     //String word = f.substring(0, i);
@@ -49,7 +49,7 @@ public class Association implements Abonne{
                        int b,
                        int pC,
                        int mDF,
-                       ArrayList<Entite> lD,
+                       ArrayList<String> lD,
                        ArrayList<String> lF,
                        HashMap<String, ArrayList<Arbre>> lR) {
         nom = n;
@@ -131,7 +131,7 @@ public class Association implements Abonne{
         return montantDefraiement;
     }
 
-    public ArrayList<Entite> getListeDonateurs(){
+    public ArrayList<String> getListeDonateurs(){
         return listeDonateurs;
     }
 
@@ -187,7 +187,7 @@ public class Association implements Abonne{
         this.montantDefraiement = montantDefraie;
     }
 
-    public void setListeDonateurs(ArrayList<Entite> listeDonateurs) {
+    public void setListeDonateurs(ArrayList<String> listeDonateurs) {
         this.listeDonateurs = listeDonateurs;
     }
 
@@ -247,7 +247,7 @@ public class Association implements Abonne{
     public void lireDonateur(){
         System.out.println("Liste des donateurs :");
         int i=1;
-        for(Entite donateur : this.listeDonateurs){
+        for(String donateur : this.listeDonateurs){
             System.out.println(i+". "+donateur);
         }
     }
@@ -368,7 +368,7 @@ public class Association implements Abonne{
 
 
 
-    public void ajouterDonateur(Entite p){
+    public void ajouterDonateur(String p){
         if(listeDonateurs.contains(p)){
             System.out.println("Cette personne fait déjà partie des donateurs.");
         }
@@ -377,7 +377,7 @@ public class Association implements Abonne{
         }
     }
 
-    public void supprimerDonateur(Entite p){
+    public void supprimerDonateur(String p){
         if(listeDonateurs.contains(p)){
             listeDonateurs.remove(p);
         }
