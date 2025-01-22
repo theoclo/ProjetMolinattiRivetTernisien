@@ -95,7 +95,7 @@
                               <Insets bottom="7.0" right="10.0" top="7.0" />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Circonférence">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Circonférence (cm)">
                            <font>
                               <Font name="Acme Regular" size="16.0" />
                            </font>
@@ -103,7 +103,7 @@
                               <Insets bottom="7.0" right="10.0" top="7.0" />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Hauteur">
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(68,117,55,0.8), 20, 0, 0, 0);" text="Hauteur (m)">
                            <font>
                               <Font name="Acme Regular" size="16.0" />
                            </font>

@@ -6,6 +6,8 @@ import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -60,6 +62,27 @@ public class PlanterArbreEVView {
     @FXML
     public void initialize(){
 
+        BooleanBinding fieldsNotValid = Bindings.createBooleanBinding(() ->
+                        nom.getText().trim().isEmpty() ||
+                                genre.getText().trim().isEmpty() ||
+                                espece.getText().trim().isEmpty() ||
+                                circonference.getText().trim().isEmpty() ||
+                                hauteur.getText().trim().isEmpty() ||
+                                adresse.getText().trim().isEmpty() ||
+                                latitude.getText().trim().isEmpty() ||
+                                longitude.getText().trim().isEmpty(),
+                nom.textProperty(),
+                genre.textProperty(),
+                espece.textProperty(),
+                circonference.textProperty(),
+                hauteur.textProperty(),
+                adresse.textProperty(),
+                latitude.textProperty(),
+                longitude.textProperty()
+        );
+
+        planter.disableProperty().bind(fieldsNotValid);
+
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
@@ -92,15 +115,68 @@ public class PlanterArbreEVView {
             }
         });
 
+        nom.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z\\s-]*")) {
+                nom.setText(oldValue);
+            }
+        });
+        genre.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z\\s-]*")) {
+                genre.setText(oldValue);
+            }
+        });
+        espece.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z\\s-]*")) {
+                espece.setText(oldValue);
+            }
+        });
+        circonference.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                circonference.setText(oldValue);
+            }
+        });
+        hauteur.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                hauteur.setText(oldValue);
+            }
+        });
+        adresse.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z0-9\\s]*")) {
+                adresse.setText(oldValue);
+            }
+        });
+        latitude.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
+                latitude.setText(oldValue);
+            }
+        });
+        longitude.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("-?\\d*(\\.\\d*)?")) {
+                longitude.setText(oldValue);
+            }
+        });
+
+
+
+
+
         planter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Planter un arbre' cliqué");
+            net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
+            int rand = faker.number().numberBetween(1, 99874);
+            for(Arbre a : Arbre.listeArbres){
+                while(a.getIdBase() == rand){
+                    rand = faker.number().numberBetween(1, 99874);
+                }
+            }
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Planter un arbre");
             alert.setHeaderText("Êtes-vous sûr de vouloir planter cet arbre ?");
-            alert.setContentText("");
+            alert.setContentText("Il aura l'ID " + rand);
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            int finalRand = rand;
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
@@ -115,14 +191,7 @@ public class PlanterArbreEVView {
                     HashMap<String, Double> coordGPS = new HashMap<>();
                     coordGPS.put("latitude", lat);
                     coordGPS.put("longitude", lon);
-                    net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
-                    int rand = faker.number().numberBetween(1, 99874);
-                    for(Arbre a : Arbre.listeArbres){
-                        while(a.getIdBase() == rand){
-                            rand = faker.number().numberBetween(1, 99874);
-                        }
-                    }
-                    Arbre arbre = new Arbre(rand, n, g, esp, circ, haut, Arbre.ArbreDEV.Jeune, ad, coordGPS);
+                    Arbre arbre = new Arbre(finalRand, n, g, esp, circ, haut, Arbre.ArbreDEV.Jeune, ad, coordGPS);
                     Arbre.listeArbres.add(arbre);
                     for(Association asso : ServiceEV.obtenirAssosAbonne()){
                         try {
