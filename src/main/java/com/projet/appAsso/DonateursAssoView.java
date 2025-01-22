@@ -44,6 +44,16 @@ public class DonateursAssoView {
         Association a = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom());
         list.setItems(FXCollections.observableArrayList(a.getListeDonateurs()));
 
+        virer.setDisable(true);
+
+        list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                virer.setDisable(false);
+            }else {
+                virer.setDisable(true);
+            }
+        });
+
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
