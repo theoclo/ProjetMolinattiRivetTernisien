@@ -465,7 +465,19 @@ public class Association implements Abonne{
             }
         }
         LinkedHashMap<Arbre, Integer> sortedMap = votes.entrySet().stream()
-                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed())
+                .sorted((e1, e2) -> {
+                    // Tri par nombre de votes décroissant
+                    int cmp = Integer.compare(e2.getValue(), e1.getValue());
+                    if (cmp == 0) {
+                        // Si égalité de votes, on trie par circonférence décroissante
+                        cmp = Integer.compare(e2.getKey().getCirconference(), e1.getKey().getCirconference());
+                        if (cmp == 0) {
+                            // Si égalité de circonférence, on trie par hauteur décroissante
+                            cmp = Integer.compare(e2.getKey().getHauteur(), e1.getKey().getHauteur());
+                        }
+                    }
+                    return cmp;
+                })
                 .limit(5)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
@@ -489,7 +501,19 @@ public class Association implements Abonne{
             }
         }
         LinkedHashMap<Arbre, Integer> sortedMap = votes.entrySet().stream()
-                .sorted(Map.Entry.<Arbre, Integer>comparingByValue().reversed())
+                .sorted((e1, e2) -> {
+                    // Tri par nombre de votes décroissant
+                    int cmp = Integer.compare(e2.getValue(), e1.getValue());
+                    if (cmp == 0) {
+                        // Si égalité de votes, on trie par circonférence décroissante
+                        cmp = Integer.compare(e2.getKey().getCirconference(), e1.getKey().getCirconference());
+                        if (cmp == 0) {
+                            // Si égalité de circonférence, on trie par hauteur décroissante
+                            cmp = Integer.compare(e2.getKey().getHauteur(), e1.getKey().getHauteur());
+                        }
+                    }
+                    return cmp;
+                })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
         System.out.println(sortedMap.keySet());
