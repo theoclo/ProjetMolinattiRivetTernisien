@@ -7,6 +7,8 @@ import com.projet.entite.Personne;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServiceEV {
 
@@ -16,6 +18,7 @@ public class ServiceEV {
     private ArrayList<Arbre> listeArbre;
     private ArrayList <String> listeAbonne;
     private ArrayList < Evenement > listeEvent;
+    private ArrayList <Map<Integer, Integer>> listeVotesNonRemarquables;
 
     public static ArrayList<ServiceEV> listeServiceEV = new ArrayList<>();
 
@@ -28,6 +31,7 @@ public class ServiceEV {
         this.listeArbre = new ArrayList<>();
         this.listeAbonne = new ArrayList<>();
         this.listeEvent = new ArrayList<>();
+        this.listeVotesNonRemarquables = new ArrayList<>();
     }
 
     public ServiceEV() {
@@ -35,6 +39,7 @@ public class ServiceEV {
         this.listeArbre = new ArrayList<>();
         this.listeAbonne = new ArrayList<>();
         this.listeEvent = new ArrayList<>();
+        this.listeVotesNonRemarquables = new ArrayList<>();
     }
 
 
@@ -53,6 +58,7 @@ public class ServiceEV {
     public ArrayList < Evenement > getListeEvent() {
         return listeEvent;
     }
+    public ArrayList < Map<Integer, Integer>> getListeVotesNonRemarquables() {return listeVotesNonRemarquables;}
 
 
 
@@ -70,6 +76,7 @@ public class ServiceEV {
     public void setListeEvent(ArrayList<Evenement> listeEvent) {
         this.listeEvent = listeEvent;
     }
+
 
 
 
@@ -186,6 +193,31 @@ public class ServiceEV {
             }
         }
         return associations;
+    }
+
+    public void ajouterVotesNonRemarquables(Map<Integer, Integer> votes) {
+        listeVotesNonRemarquables.add(votes);
+    }
+
+    public Map<Arbre, Integer> obtenirVotesNonRemarquables() {
+        Map<Arbre, Integer> votes = new HashMap<>();
+        for(Arbre a : Arbre.obtenirNonRemarquables()){
+            votes.put(a, 0);
+        }
+        for(Map<Integer, Integer> vote : listeVotesNonRemarquables) {
+            for(Map.Entry<Integer, Integer> arbre : vote.entrySet()) {
+                Arbre arbreVote = Arbre.obtenirArbre(arbre.getKey());
+                if(!arbreVote.getClassifie()){
+                    if(votes.containsKey(arbreVote)){
+                        votes.put(arbreVote, votes.get(arbreVote)+arbre.getValue());
+                    }
+                    else{
+                        votes.put(arbreVote, arbre.getValue());
+                    }
+                }
+            }
+        }
+        return votes;
     }
 
 

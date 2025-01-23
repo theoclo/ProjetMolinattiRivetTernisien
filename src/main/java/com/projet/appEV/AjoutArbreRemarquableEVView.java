@@ -6,6 +6,9 @@ import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,9 +17,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class AjoutArbreRemarquableEVView {
     @FXML
@@ -41,18 +45,24 @@ public class AjoutArbreRemarquableEVView {
     public void initialize(){
         refresh.setVisible(false);
 
-       ArrayList<Arbre> arbreNonRemarquable = new ArrayList<>();
-        arbreNonRemarquable.addAll(InitialisationAppMembre.arbresNonRemarquables);
-
+      ArrayList<String>arbreNonRemarquable= new ArrayList<>();
         ArrayList<Integer> idNonRemarquable = new ArrayList<>();
-        for(Arbre arbre : arbreNonRemarquable){
-            idNonRemarquable.add(arbre.getIdBase());
-        }
+
+      Map<Arbre, Integer> arbreVotes = ServiceEV.listeServiceEV.get(0).obtenirVotesNonRemarquables();
+        List<Map.Entry<Arbre, Integer>> sortedEntries = arbreVotes.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+
+          // Print the sorted entries
+          for (Map.Entry<Arbre, Integer> entry : sortedEntries) {
+              arbreNonRemarquable.add("Votes: " + entry.getValue() +", Arbre: " + entry.getKey() );
+              idNonRemarquable.add(entry.getKey().getIdBase());
+          }
 
 
-        //A MODIFIER POUR LIER A InitialisationAppEV ou un truc du genre
 
-        listview.getItems().addAll(arbreNonRemarquable);
+
+      listview.setItems(FXCollections.observableArrayList(arbreNonRemarquable));
 
         valider.setDisable(true);
 
@@ -111,7 +121,14 @@ public class AjoutArbreRemarquableEVView {
 
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
-            Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
+            String aS = (String) listview.getSelectionModel().getSelectedItem();
+            Integer idA=0;
+            Pattern pattern = Pattern.compile("Arbre N°(\\d+)");
+            Matcher matcher = pattern.matcher(aS);
+            if (matcher.find()) {
+                idA = Integer.parseInt(matcher.group(1));
+            }
+            Arbre arbreSelectionne = Arbre.obtenirArbre(idA);
 
             if(arbreSelectionne == null){
                 int id = Integer.valueOf(text.getText());
@@ -145,6 +162,13 @@ public class AjoutArbreRemarquableEVView {
                         System.out.println("L'utilisateur a cliqué sur Oui");
 
                         finalArbreSelectionne.classifier(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+                        for(Arbre a : ServiceEV.listeServiceEV.get(0).getListeArbre()){
+                            if(a.getIdBase() == finalArbreSelectionne.getIdBase()){
+                                ServiceEV.listeServiceEV.get(0).getListeArbre().remove(a);
+                                ServiceEV.listeServiceEV.get(0).getListeArbre().add(finalArbreSelectionne);
+                                break;
+                            }
+                        }
                         for (Association asso : ServiceEV.obtenirAssosAbonne()) {
                             try {
                                 asso.ajouterNotification("L'arbre " + finalArbreSelectionne.getIdBase() + " a été classifié le " + LocalDate.now());

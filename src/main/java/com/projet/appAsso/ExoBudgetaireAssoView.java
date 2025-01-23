@@ -1,15 +1,21 @@
 package com.projet.appAsso;
 
+import com.projet.Arbre;
+import com.projet.Main;
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExoBudgetaireAssoView {
 
@@ -87,6 +93,57 @@ public class ExoBudgetaireAssoView {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });
+
+        fin.setOnMouseClicked(event -> {
+            System.out.printf("Bouton fin cliqué");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Quitter l'association");
+            alert.setHeaderText("Êtes-vous sûr de vouloir mettre fin à l'exercice budgétaire ?");
+            alert.setContentText("");
+            ButtonType buttonTypeYes = new ButtonType("Oui");
+            ButtonType buttonTypeNo = new ButtonType("Non");
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.showAndWait().ifPresent(buttonType -> {
+                if (buttonType == buttonTypeYes) {
+                    System.out.println("L'utilisateur a cliqué sur Oui");
+                    Association a = Association.getAssociation(nom_asso.getText());
+                    ArrayList<Pair<Personne, Boolean>> cotisations = a.verifierCotisations();
+                    for(Pair<Personne, Boolean> pair : cotisations) {
+                        Personne p = pair.getKey();
+                        p=Personne.obtenirPersonne(p.getPseudo());
+                        if(! pair.getValue()){
+                            try {
+                                if(p.quitterAsso()){
+                                    System.out.println(p.getPseudo() + " a été expulsé de l'association.");
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        Map<Integer, Integer> idVotes = new HashMap<>();
+                        for(Map.Entry<Arbre,Integer> entree : a.selectTop5Nomination().entrySet()) {
+                            idVotes.put(entree.getKey().getIdBase(), entree.getValue() );
+                        }
+                        ServiceEV.listeServiceEV.get(0).ajouterVotesNonRemarquables(idVotes);
+                        a.getListeReco().clear();
+                        try {
+                            Main.MaJFichierServiceEV();
+                            Main.MaJFichierJSONAssociation();
+                            Main.MaJFichierJSONPersonnes();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+
+
+                    }
+
+
+                } else {
+                    System.out.println("L'utilisateur a cliqué sur Non");
+                }
+
+            });
         });
 
     };
