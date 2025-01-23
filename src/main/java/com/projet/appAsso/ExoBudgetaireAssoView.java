@@ -26,6 +26,9 @@ public class ExoBudgetaireAssoView {
     private Button retour;
 
     @FXML
+    private Button fin;
+
+    @FXML
     private ComboBox annee;
 
     @FXML

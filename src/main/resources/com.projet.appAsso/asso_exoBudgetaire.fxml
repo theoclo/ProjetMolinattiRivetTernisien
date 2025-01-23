@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -77,8 +77,8 @@
                         <Font name="Acme Regular" size="48.0" />
                     </font>
                 </Text>
-                <Pane prefHeight="4.0" prefWidth="800.0" />
-                <VBox alignment="CENTER" prefHeight="409.0" prefWidth="800.0">
+                <Pane prefHeight="0.0" prefWidth="800.0" />
+                <VBox alignment="CENTER" prefHeight="395.0" prefWidth="800.0">
                     <children>
                   <ComboBox fx:id="annee" prefWidth="150.0" style="-fx-background-color: rgba(237,237,237,1); -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
                      <VBox.margin>
@@ -145,7 +145,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                        <Button fx:id="retour" layoutX="300.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#8aafeb">
+                        <Button fx:id="fin" layoutX="300.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="Fin exercice budgétaire" textFill="#8aafeb">
                             <font>
                                 <Font name="Acme Regular" size="25.0" />
                             </font>
@@ -156,6 +156,17 @@
                                 <Insets top="20.0" />
                             </VBox.margin>
                         </Button>
+                  <Button fx:id="retour" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#8aafeb">
+                     <font>
+                        <Font name="Acme Regular" size="25.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
                     </children>
                 </VBox>
             </children>
