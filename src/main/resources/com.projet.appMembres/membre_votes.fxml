@@ -77,11 +77,11 @@
                </font>
             </Text>
             <Pane prefHeight="69.0" prefWidth="800.0" />
-            <HBox alignment="CENTER" prefHeight="208.0" prefWidth="800.0">
+            <HBox alignment="CENTER" prefHeight="130.0" prefWidth="800.0">
                <children>
-                  <ListView fx:id="listview" prefHeight="188.0" prefWidth="442.0">
+                  <ListView fx:id="listview" prefHeight="110.0" prefWidth="379.0">
                      <HBox.margin>
-                        <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
+                        <Insets left="50.0" right="10.0" />
                      </HBox.margin>
                   </ListView>
                   <Button fx:id="ajouterArbre" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;" text="Ajouter un arbre" textFill="#e19522">
