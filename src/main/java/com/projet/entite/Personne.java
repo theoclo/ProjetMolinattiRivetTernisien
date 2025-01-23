@@ -240,9 +240,11 @@ public class Personne implements Abonne, Entite {
                 System.out.println("Vous avez déjà cotisé cette année.");
             }
             else{
+                Personne p = Personne.obtenirPersonne(this.getPseudo());
+                Personne.listePersonnes.remove(p);
                 solde-=prixAPayer;
                 listeCotisation.put(LocalDate.now().getYear(), LocalDate.now());
-                Personne.listePersonnes.remove(this);
+
                 Personne.listePersonnes.add(this);
                 Main.MaJFichierJSONPersonnes();
                 Main.MaJFichierJSONAssociation();

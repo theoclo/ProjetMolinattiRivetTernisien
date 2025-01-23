@@ -336,6 +336,7 @@ public class Association implements Abonne{
             //ajouter l'effacement de ses données
             listeMembre.remove(membre);
             p.setAssociation(Optional.empty());
+            p.setListeCotisation(new HashMap<>());
             Main.MaJFichierJSONAssociation();
             Main.MaJFichierJSONPersonnes();
             Main.MaJFichierJSONAssociation();
