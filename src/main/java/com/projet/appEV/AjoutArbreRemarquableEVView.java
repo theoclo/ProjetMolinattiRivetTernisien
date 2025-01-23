@@ -123,10 +123,13 @@ public class AjoutArbreRemarquableEVView {
             System.out.println("Bouton 'Valider' cliqué");
             String aS = (String) listview.getSelectionModel().getSelectedItem();
             Integer idA=0;
-            Pattern pattern = Pattern.compile("Arbre N°(\\d+)");
-            Matcher matcher = pattern.matcher(aS);
-            if (matcher.find()) {
-                idA = Integer.parseInt(matcher.group(1));
+            if(!(aS == null)){
+
+                Pattern pattern = Pattern.compile("Arbre N°(\\d+)");
+                Matcher matcher = pattern.matcher(aS);
+                if (matcher.find()) {
+                    idA = Integer.parseInt(matcher.group(1));
+                }
             }
             Arbre arbreSelectionne = Arbre.obtenirArbre(idA);
 
