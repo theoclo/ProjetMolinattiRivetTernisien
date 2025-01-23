@@ -89,7 +89,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                                 </Text>
-                                <ListView fx:id="list" prefHeight="207.0" prefWidth="340.0" />
+                                <ListView fx:id="list" prefHeight="130.0" prefWidth="340.0" />
                             </children>
                             <HBox.margin>
                                 <Insets left="30.0" right="30.0" />
