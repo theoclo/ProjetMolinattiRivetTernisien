@@ -1,5 +1,6 @@
 package com.projet.appAsso;
 
+import com.projet.appMembres.ArbresMembreView;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.espacesVerts.Visite;
@@ -32,6 +33,9 @@ public class HomeAssoView {
 
     @FXML
     private Button visites;
+
+    @FXML
+    private Button liste;
 
 
     @FXML
@@ -96,6 +100,20 @@ public class HomeAssoView {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_association.fxml"));
                 fxmlLoader.setController(new AssociationAssoView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Association");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        liste.setOnMouseClicked(event -> {
+            System.out.println("Bouton 'Liste des arbres' cliqué");
+            Stage stage = (Stage) liste.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_listeArbres.fxml"));
+                fxmlLoader.setController(new ArbresAssoView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Association");

@@ -35,6 +35,9 @@ public class ConnecteMembreView {
     private Button notifs;
 
     @FXML
+    private Button liste;
+
+    @FXML
     public void initialize(){
         refresh.setVisible(false);
 
@@ -64,6 +67,20 @@ public class ConnecteMembreView {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_notifications.fxml"));
                 fxmlLoader.setController(new NotificationsMembreView());
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                stage.setScene(scene);
+                stage.setTitle("Application Membre");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        liste.setOnMouseClicked(event -> {
+            System.out.println("Bouton 'Liste des arbres' cliqué");
+            Stage stage = (Stage) liste.getScene().getWindow();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(AppMembre.class.getResource("/com.projet.appMembres/membre_arbres.fxml"));
+                fxmlLoader.setController(new ArbresMembreView());
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 stage.setScene(scene);
                 stage.setTitle("Application Membre");

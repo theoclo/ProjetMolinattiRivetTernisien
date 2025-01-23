@@ -20,12 +20,12 @@
     <children>
         <ImageView fx:id="image" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@fondAsso.jpg" />
+                <Image url="@arbres.png" />
             </image>
             <effect>
                 <BoxBlur iterations="3" />
             </effect></ImageView>
-      <Pane prefHeight="48.0" prefWidth="800.0" style="-fx-background-color: rgba(138, 175, 235, 0.8);">
+      <Pane prefHeight="48.0" prefWidth="800.0" style="-fx-background-color: rgba(225, 149, 34, 0.8);">
          <children>
             <Pane prefHeight="48.0" prefWidth="41.0">
                <children>
@@ -33,7 +33,7 @@
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../com.projet.appMembres/refresh.png" />
+                              <Image url="@refresh.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -45,7 +45,7 @@
             </Pane>
             <HBox alignment="CENTER" layoutX="100.0" prefHeight="48.0" prefWidth="600.0">
                <children>
-                  <Label fx:id="nom_asso" text="Nom association">
+                  <Label fx:id="nom_membre" text="Nom Prénom">
                      <font>
                         <Font name="Acme Regular" size="25.0" />
                      </font>
@@ -58,7 +58,7 @@
                      <graphic>
                         <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../com.projet.appMembres/deconnexion.jpg" />
+                              <Image url="@deconnexion.jpg" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -72,7 +72,7 @@
       </Pane>
         <VBox alignment="CENTER" layoutY="48.0" prefHeight="552.0" prefWidth="800.0">
             <children>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(138, 175,235,0.8), 20, 0, 0, 0);" text="LISTE DES ARBRES">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(225,149,24,0.8), 20, 0, 0, 0);" text="LISTE DES ARBRES">
                     <font>
                         <Font name="Acme Regular" size="48.0" />
                     </font>
@@ -103,7 +103,7 @@
                 </Pane>
             </children>
         </VBox>
-        <Button fx:id="retour" layoutX="333.0" layoutY="530.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#8aafeb">
+        <Button fx:id="retour" layoutX="333.0" layoutY="530.0" mnemonicParsing="false" style="-fx-background-color: rgba(237,237,237,1); -fx-border-color: black; -fx-background-radius: 20; -fx-border-radius: 20;" text="← Retour" textFill="#e19522">
             <font>
                 <Font name="Acme Regular" size="25.0" />
             </font>

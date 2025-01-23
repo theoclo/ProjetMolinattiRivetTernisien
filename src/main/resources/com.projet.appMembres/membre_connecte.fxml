@@ -182,5 +182,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Button fx:id="liste" layoutX="17.0" layoutY="60.0" mnemonicParsing="false" style="-fx-background-color: rgba(237, 237, 237, 0.75); -fx-background-radius: 200;">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@listeArbres.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
