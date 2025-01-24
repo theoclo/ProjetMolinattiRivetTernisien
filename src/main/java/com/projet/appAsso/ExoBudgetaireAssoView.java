@@ -5,6 +5,8 @@ import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
+import com.projet.espacesVerts.Visite;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -52,6 +54,52 @@ public class ExoBudgetaireAssoView {
     @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        Association a = Association.getAssociation(nom_asso.getText());
+
+        membres.getItems().clear();
+        ArrayList<Pair<Personne, Boolean>> cotisants = a.verifierCotisations();
+        ArrayList<Personne> exclus = new ArrayList<>();
+        for(Pair<Personne, Boolean> p : cotisants) {
+            if(! p.getValue() && ! p.getKey().getPseudo().equals(a.getPresident().getPseudo())) {
+                membres.getItems().add(p.getKey());
+            }
+        }
+
+        votes.getItems().clear();
+        HashMap<Arbre,Integer> v = a.selectTop5Nomination();
+        for( Map.Entry<Arbre, Integer> valeurs: v.entrySet()){
+            votes.getItems().add("Arbre n° : "+valeurs.getKey().getIdBase()+" | "+valeurs.getValue());
+        }
+
+        annee.getItems().clear();
+        ArrayList<String> anneesB = new ArrayList<>();
+        System.out.println(a.getAnneeBudgetaire());
+        for(int i = 0; i<=a.getAnneeBudgetaire();i++){
+            anneesB.add("Annee Budgétaire "+i);
+        }
+        annee.setItems(FXCollections.observableArrayList(anneesB));
+        annee.setValue("Annee Budgétaire "+a.getAnneeBudgetaire());
+
+
+        int recettes = 0;
+        for(int i = 0; i<a.getListeDemandeDons().size();i++){
+            System.out.println(a.getListeDemandeDons().get(i));
+            int j = a.getListeDemandeDons().get(i).indexOf(':');
+            String word = a.getListeDemandeDons().get(i).substring(0, j);
+            recettes=recettes+Integer.parseInt(word);
+        }
+
+        int depenses = 0;
+        for(Visite vis : a.getListeVisite()){
+            if(!vis.getCr().equals("")){
+                depenses++;
+            }
+        }
+
+        rapport.getItems().clear();
+        rapport.getItems().add("Nb visites : "+a.getListeVisite().size());
+        rapport.getItems().add("Dépenses : "+depenses*a.getMontantDefraiement() +"€");
+        rapport.getItems().add("Recettes : "+recettes+"€");
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -107,7 +155,6 @@ public class ExoBudgetaireAssoView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
-                    Association a = Association.getAssociation(nom_asso.getText());
                     ArrayList<Pair<Personne, Boolean>> cotisations = a.verifierCotisations();
                     for(Pair<Personne, Boolean> pair : cotisations) {
                         Personne p = pair.getKey();
@@ -127,6 +174,8 @@ public class ExoBudgetaireAssoView {
                         }
                         ServiceEV.listeServiceEV.get(0).ajouterVotesNonRemarquables(idVotes);
                         a.getListeReco().clear();
+                        a.setAnneeBudgetaire(a.getAnneeBudgetaire()+1);
+                        a.getListeDemandeDons().clear();
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
                             pers.setNbVisites(0);

@@ -3,6 +3,7 @@ package com.projet.appMembres;
 import com.projet.Main;
 import com.projet.appAsso.InitialisationAppAsso;
 import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -123,7 +124,14 @@ public class VisitesCompteRenduView {
                     for(Visite visite : visites){
                         if(v.equals(visite)){
                             v.modifCR(text);
+                            Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
+                            Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
+                            InitialisationAppMembre.membreActuel.setSolde( InitialisationAppMembre.membreActuel.getSolde()+a.getMontantDefraiement());
+                            p.setSolde(p.getSolde()+a.getMontantDefraiement());
+                            a.setBudget(a.getBudget()-a.getMontantDefraiement());
+                            v.payer();
                             try {
+                                Main.MaJFichierJSONPersonnes();
                                 Main.MaJFichierJSONAssociation();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

@@ -6,8 +6,10 @@ import com.projet.entite.Personne;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -37,6 +39,9 @@ public class DonateursAssoView {
     @FXML
     private Button ajouter;
 
+    @FXML
+    private Button demande;
+
 
     @FXML
     public void initialize() {
@@ -45,12 +50,15 @@ public class DonateursAssoView {
         list.setItems(FXCollections.observableArrayList(a.getListeDonateurs()));
 
         virer.setDisable(true);
+        demande.setDisable(true);
 
         list.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 virer.setDisable(false);
+                demande.setDisable(false);
             }else {
                 virer.setDisable(true);
+                demande.setDisable(true);
             }
         });
 
@@ -189,6 +197,68 @@ public class DonateursAssoView {
                     System.out.println("Annulation de la suppression.");
                 }
             });
+
+        });
+
+        demande.setOnMouseClicked(event -> {
+
+            System.out.println("Bouton 'demande' cliqué");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Nouvelle demande");
+            alert.setHeaderText("Veuillez renseigner les informations suivantes :");
+
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 15, 10, 10));
+
+
+            TextField montantField = new TextField();
+            montantField.setPromptText("Montant");
+
+            montantField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    montantField.setText(oldValue);
+                }
+            });
+
+            // Bouton de validation
+            Button btnValider = new Button("Valider la demande");
+            btnValider.setDisable(true); // Initialement désactivé
+            montantField.textProperty().addListener((observable, oldValue, newValue) -> {
+                btnValider.setDisable(newValue.isEmpty());
+            });
+
+            TextField raisonField = new TextField();
+            raisonField.setPromptText("Raison");
+
+            grid.add(new Label("Montant :"), 0, 0);
+            grid.add(montantField, 1, 0);
+            grid.add(new Label("Raison :"), 0, 1);
+            grid.add(raisonField, 1, 1);
+            grid.add(btnValider, 1, 2);
+
+            alert.getDialogPane().setContent(grid);
+
+            ButtonType buttonTypeClose = new ButtonType("Fermer");
+            alert.getDialogPane().getButtonTypes().setAll(buttonTypeClose);
+            btnValider.setOnMouseClicked(e -> {
+
+                a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
+                a.getListeDemandeDons().add(montantField.getText()+":"+raisonField.getText());
+
+                Stage stage = (Stage) btnValider.getScene().getWindow();
+                stage.close();
+                try {
+                    Main.MaJFichierJSONAssociation();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
+            alert.showAndWait();
+
 
         });
     }

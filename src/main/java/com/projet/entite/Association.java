@@ -36,6 +36,8 @@ public class Association implements Abonne{
     //    System.out.println(word);
     private Map<String, ArrayList<Arbre>> listeReco;
     private ArrayList<Visite> listeVisite;
+    private int anneeBudgetaire;
+    private ArrayList<String> listeDemandeDons;
 
     public static ArrayList<Association> listeAssociations=new ArrayList<Association>();
 
@@ -64,6 +66,8 @@ public class Association implements Abonne{
         listeFactures = lF;
         listeReco = lR;
         listeVisite = new ArrayList<>();
+        anneeBudgetaire = 0;
+        listeDemandeDons = new ArrayList<>();
     }
 
     public Association(String n,
@@ -84,6 +88,8 @@ public class Association implements Abonne{
         listeFactures = new ArrayList<>();
         listeReco = new HashMap<>();
         listeVisite = new ArrayList<>();
+        anneeBudgetaire = 0;
+        listeDemandeDons = new ArrayList<>();
     }
 
     public Association(){
@@ -99,6 +105,8 @@ public class Association implements Abonne{
         this.listeFactures = new ArrayList<>();
         this.listeReco = new HashMap<>();
         listeVisite = new ArrayList<>();
+        anneeBudgetaire = 0;
+        listeDemandeDons = new ArrayList<>();
     }
 
     /*  GETTERS  */
@@ -147,9 +155,17 @@ public class Association implements Abonne{
         return listeVisite;
     }
 
+    public ArrayList<String> getListeDemandeDons() {
+        return listeDemandeDons;
+    }
+
     @Override
     public ArrayList<String> getListeNotif() {
         return listeNotif;
+    }
+
+    public int getAnneeBudgetaire() {
+        return anneeBudgetaire;
     }
 
     @Override
@@ -202,6 +218,15 @@ public class Association implements Abonne{
     public void setListeVisite(ArrayList<Visite> listeVisite) {
         this.listeVisite = listeVisite;
     }
+
+    public void setAnneeBudgetaire(int anneeBudgetaire) {
+        this.anneeBudgetaire = anneeBudgetaire;
+    }
+
+    public void setListeDemandeDons(ArrayList<String> listeDemandeDons) {
+        this.listeDemandeDons = listeDemandeDons;
+    }
+
     /*  AFFICHAGE  */
 
     @Override

@@ -1,12 +1,11 @@
 package com.projet.appAsso;
 
+import com.projet.appMembres.InitialisationAppMembre;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -41,8 +40,15 @@ public class AssociationAssoView {
     private Button budget;
 
     @FXML
+    private Text solde;
+
+    @FXML
     public void initialize(){
         refresh.setVisible(false);
+
+        String s;
+        s = String.valueOf(InitialisationAppAsso.associationActuelle.getBudget());
+        solde.setText("ASSOCIATION - "+ s+"€");
 
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
 
