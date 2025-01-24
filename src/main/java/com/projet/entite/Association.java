@@ -338,6 +338,7 @@ public class Association implements Abonne{
             p.setAssociation(Optional.empty());
             p.setListeCotisation(new ArrayList<LocalDate>());
             p.setaCotise(false);
+            p.setNbVisites(0);
             Main.MaJFichierJSONAssociation();
             Main.MaJFichierJSONPersonnes();
             Main.MaJFichierJSONAssociation();
