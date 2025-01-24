@@ -87,7 +87,6 @@ public class ArbresMembreView {
             Double latitude = coordGPS.get("latitude");
             Double longitude = coordGPS.get("longitude");
 
-            // Vérifier si les valeurs existent pour éviter les erreurs
             String formattedCoord = (latitude != null && longitude != null)
                     ? String.format("(%.6f, %.6f)", latitude, longitude)
                     : "Coordonnées indisponibles";
