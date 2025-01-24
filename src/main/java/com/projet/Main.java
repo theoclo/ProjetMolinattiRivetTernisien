@@ -77,7 +77,7 @@ public class Main {
             String nom = faker.name().lastName();
             String adresse = faker.address().fullAddress();
             int solde = faker.number().numberBetween(1, 10000);
-            Personne personne = new Personne(nom, prenom, adresse, Optional.empty(),Optional.empty(),new ArrayList<>(),solde,new HashMap<>());
+            Personne personne = new Personne(nom, prenom, adresse, Optional.empty(),Optional.empty(),new ArrayList<>(),solde,new ArrayList<>());
             Personne.listePersonnes.add(personne);
         }
     }

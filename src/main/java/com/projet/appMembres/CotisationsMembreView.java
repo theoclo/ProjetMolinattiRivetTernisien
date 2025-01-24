@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class CotisationsMembreView {
     @FXML
@@ -39,7 +40,7 @@ public class CotisationsMembreView {
     public void initialize(){
 
         Personne m = InitialisationAppMembre.membreActuel;
-        if(m.getSolde() < m.obtenirAssociationObjet().get().getPrixCotisation() || m.getListeCotisation().containsKey(LocalDate.now().getYear())){
+        if(m.getSolde() < m.obtenirAssociationObjet().get().getPrixCotisation() || m.getaCotise()){
             cotiser.setDisable(true);
         }
         else{
@@ -48,9 +49,11 @@ public class CotisationsMembreView {
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
         solde.setText(String.valueOf(InitialisationAppMembre.membreActuel.getSolde()));
 
+        listview.getItems().clear();
+
         ObservableList<String> cotisations = FXCollections.observableArrayList();
-        for(Integer annee : m.getListeCotisation().keySet()){
-            String cotisation = annee.toString() + " " + m.getListeCotisation().get(annee);
+        for(LocalDate date : m.getListeCotisation()){
+            String cotisation = date.getYear() + " " + date;
             cotisations.add(cotisation);
         }
         listview.setItems(cotisations);
@@ -117,11 +120,12 @@ public class CotisationsMembreView {
 
                     cotiser.setDisable(true);
                     solde.setText(String.valueOf(InitialisationAppMembre.membreActuel.getSolde()));
-                    for(Integer annee : m.getListeCotisation().keySet()){
-                        String cotisation = annee.toString() + " " + m.getListeCotisation().get(annee);
-                        cotisations.add(cotisation);
+
+                    ArrayList<String> lesCotis = new ArrayList();
+                    for(LocalDate date : m.getListeCotisation()){
+                        lesCotis.add(date.getYear() + " " + date);
                     }
-                    listview.setItems(cotisations);
+                    listview.setItems(FXCollections.observableArrayList(lesCotis));
                 } else {
                     System.out.println("L'utilisateur a cliqué sur Non");
                 }

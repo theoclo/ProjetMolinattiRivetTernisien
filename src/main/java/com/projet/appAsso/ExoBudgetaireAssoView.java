@@ -127,6 +127,12 @@ public class ExoBudgetaireAssoView {
                         }
                         ServiceEV.listeServiceEV.get(0).ajouterVotesNonRemarquables(idVotes);
                         a.getListeReco().clear();
+                        for(Personne pers : a.getListeMembre()){
+                            pers.setaCotise(false);
+                            Personne ps = Personne.obtenirPersonne(pers.getPseudo());
+                            ps.setaCotise(false);
+                        }
+
                         try {
                             Main.MaJFichierServiceEV();
                             Main.MaJFichierJSONAssociation();

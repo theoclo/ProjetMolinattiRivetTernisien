@@ -9,10 +9,7 @@ import com.projet.espacesVerts.Visite;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.projet.Main.MaJFichierJSONAssociation;
 import static com.projet.Main.MaJFichierJSONPersonnes;
@@ -29,11 +26,12 @@ public class Personne implements Abonne, Entite {
     private Optional<String> association;
     private ArrayList<String> listeNotif;
     private int solde;
-    private Map<Integer, LocalDate> listeCotisation; //toutes les années où on a cotisé et le jour correspondant
+    private boolean aCotise;
+    private ArrayList<LocalDate> listeCotisation; //toutes les années où on a cotisé et le jour correspondant
 
     public static ArrayList<Personne> listePersonnes = new ArrayList<>();
 
-    public Personne(String nom, String prenom, String adresse, Optional<String> abonnement, Optional<String> association, ArrayList<String> listeNotif, int solde, Map<Integer, LocalDate> listeCotisation) {
+    public Personne(String nom, String prenom, String adresse, Optional<String> abonnement, Optional<String> association, ArrayList<String> listeNotif, int solde, ArrayList<LocalDate> listeCotisation) {
         this.pseudo = nom.toUpperCase()+prenom;
         this.nom = nom;
         this.prenom = prenom;
@@ -43,6 +41,7 @@ public class Personne implements Abonne, Entite {
         this.listeNotif = listeNotif;
         this.solde = solde;
         this.listeCotisation = listeCotisation;
+        this.aCotise = false;
     }
 
     public Personne(){
@@ -54,7 +53,8 @@ public class Personne implements Abonne, Entite {
         this.association = Optional.empty();
         this.solde = 0;
         this.listeNotif = new ArrayList<>();
-        this.listeCotisation = new HashMap<>();
+        this.listeCotisation = new ArrayList<LocalDate>();
+        this.aCotise = false;
     }
 
     /*  GETTERS  */
@@ -93,7 +93,7 @@ public class Personne implements Abonne, Entite {
         return solde;
     }
 
-    public Map<Integer, LocalDate> getListeCotisation() {
+    public ArrayList<LocalDate> getListeCotisation() {
         return listeCotisation;
     }
 
@@ -102,11 +102,17 @@ public class Personne implements Abonne, Entite {
         return this.listeNotif;
     }
 
+    public boolean getaCotise(){
+        return this.aCotise;
+    }
+
+    /*  SETTERS  */
+
     @Override
     public void setListeNotif(ArrayList<String> listeNotif) {
+
         this.listeNotif = listeNotif;
     }
-    /*  SETTERS  */
 
     public void setNom(String nom) {
         this.nom = nom;
@@ -132,9 +138,11 @@ public class Personne implements Abonne, Entite {
         this.solde = solde;
     }
 
-    public void setListeCotisation(Map<Integer, LocalDate> listeCotisation) {
+    public void setListeCotisation(ArrayList<LocalDate> listeCotisation) {
         this.listeCotisation = listeCotisation;
     }
+
+    public void setaCotise(boolean aCotise) {this.aCotise = aCotise;}
 
     /*  AFFICHAGE  */
 
@@ -149,8 +157,8 @@ public class Personne implements Abonne, Entite {
 
     public void lireCotisation(){
         System.out.println("Liste des cotisations :");
-        for(Map.Entry<Integer, LocalDate> entry : this.listeCotisation.entrySet()){
-            System.out.println(entry.getKey()+" : "+entry.getValue());
+        for(LocalDate date : this.listeCotisation){
+            System.out.println(date.getYear()+" : "+date);
         }
     }
 
@@ -236,15 +244,23 @@ public class Personne implements Abonne, Entite {
             if(prixAPayer>solde){
                 System.out.println("Vous n'avez pas un solde nécessaire ("+solde+") pour payer : "+prixAPayer);
             }
-            else if(listeCotisation.containsKey(LocalDate.now().getYear())){
+            else if(aCotise){
                 System.out.println("Vous avez déjà cotisé cette année.");
             }
             else{
                 Personne p = Personne.obtenirPersonne(this.getPseudo());
+                for(Personne pers : a.getListeMembre()){
+                    if(pers.getPseudo().equals(p.getPseudo())){
+                        a.getListeMembre().remove(pers);
+                        break;
+                    }
+                }
                 Personne.listePersonnes.remove(p);
                 solde-=prixAPayer;
-                listeCotisation.put(LocalDate.now().getYear(), LocalDate.now());
+                aCotise = true;
+                listeCotisation.add(LocalDate.now());
 
+                a.getListeMembre().add(this);
                 Personne.listePersonnes.add(this);
                 Main.MaJFichierJSONPersonnes();
                 Main.MaJFichierJSONAssociation();
@@ -358,8 +374,8 @@ public class Personne implements Abonne, Entite {
 
     public ArrayList<String> cotisations(){
         ArrayList<String> list = new ArrayList<>();
-        for(Map.Entry<Integer, LocalDate> entree : listeCotisation.entrySet()){
-            list.add(" Annee : " + entree.getKey() + " cotisé le : " + entree.getValue());
+        for(LocalDate date : listeCotisation){
+            list.add(" Annee : " + date.getYear() + " cotisé le : " + date);
         }
         list.add("Total : " + listeCotisation.size()* Association.getAssociation(association.get()).getPrixCotisation());
 

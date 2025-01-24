@@ -336,7 +336,8 @@ public class Association implements Abonne{
             //ajouter l'effacement de ses données
             listeMembre.remove(membre);
             p.setAssociation(Optional.empty());
-            p.setListeCotisation(new HashMap<>());
+            p.setListeCotisation(new ArrayList<LocalDate>());
+            p.setaCotise(false);
             Main.MaJFichierJSONAssociation();
             Main.MaJFichierJSONPersonnes();
             Main.MaJFichierJSONAssociation();
@@ -390,7 +391,7 @@ public class Association implements Abonne{
     public ArrayList<Pair<Personne, Boolean>> verifierCotisations(){//renvoie true si cotisé false sinon
         ArrayList<Pair<Personne, Boolean>> liste = new ArrayList<>();
         for(Personne p : listeMembre){
-            if(p.getListeCotisation().containsKey(LocalDate.now().getYear())){
+            if(p.getaCotise()){
                 liste.add(new Pair<>(p, true));
             }
             else{

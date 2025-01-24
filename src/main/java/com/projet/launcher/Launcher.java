@@ -22,8 +22,8 @@ public class Launcher extends Application {
 
     public static void main(String[] args) throws IOException {
         //creationJSON();
-        MaJFichierJSONArbres();
         MaJFichierJSONPersonnes();
+        MaJFichierJSONArbres();
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
