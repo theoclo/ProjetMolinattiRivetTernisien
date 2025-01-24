@@ -51,39 +51,48 @@ public class ExoBudgetaireAssoView {
     @FXML
     private ListView rapport;
 
-    @FXML
-    public void initialize() {
-        nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
-        Association a = Association.getAssociation(nom_asso.getText());
+    private String donsActuels(Association a){
+        StringBuilder res = new StringBuilder();
+        ArrayList<String> dons = a.getListeDemandeDons();
+        for(String don : dons){
+            res.append(don+",");
+        }
+        if(!res.isEmpty()){
+            res.setLength(res.length() - 1);
+        }
+        return res.toString();
+    }
 
-        membres.getItems().clear();
+    private String exclusActuels(Association a){
+        StringBuilder res = new StringBuilder();
         ArrayList<Pair<Personne, Boolean>> cotisants = a.verifierCotisations();
-        ArrayList<Personne> exclus = new ArrayList<>();
         for(Pair<Personne, Boolean> p : cotisants) {
             if(! p.getValue() && ! p.getKey().getPseudo().equals(a.getPresident().getPseudo())) {
-                membres.getItems().add(p.getKey());
+                res.append(p.getKey()+",");
             }
         }
+        if(!res.isEmpty()){
+            res.setLength(res.length() - 1);
+        }
+        return res.toString();
+    }
 
-        votes.getItems().clear();
+    private String votesActuels(Association a){
+        StringBuilder res = new StringBuilder();
         HashMap<Arbre,Integer> v = a.selectTop5Nomination();
         for( Map.Entry<Arbre, Integer> valeurs: v.entrySet()){
-            votes.getItems().add("Arbre n° : "+valeurs.getKey().getIdBase()+" | "+valeurs.getValue());
+            res.append("Arbre n° : "+valeurs.getKey().getIdBase()+" | "+valeurs.getValue()+',');
         }
-
-        annee.getItems().clear();
-        ArrayList<String> anneesB = new ArrayList<>();
-        System.out.println(a.getAnneeBudgetaire());
-        for(int i = 0; i<=a.getAnneeBudgetaire();i++){
-            anneesB.add("Annee Budgétaire "+i);
+        if(!res.isEmpty()){
+            res.setLength(res.length() - 1);
         }
-        annee.setItems(FXCollections.observableArrayList(anneesB));
-        annee.setValue("Annee Budgétaire "+a.getAnneeBudgetaire());
+        return res.toString();
+    }
 
-
+    private String rapportActuel(Association a){
+        StringBuilder res = new StringBuilder();
         int recettes = 0;
         for(int i = 0; i<a.getListeDemandeDons().size();i++){
-            System.out.println(a.getListeDemandeDons().get(i));
             int j = a.getListeDemandeDons().get(i).indexOf(':');
             String word = a.getListeDemandeDons().get(i).substring(0, j);
             recettes=recettes+Integer.parseInt(word);
@@ -95,11 +104,79 @@ public class ExoBudgetaireAssoView {
                 depenses++;
             }
         }
+        res.append("Nb visites : "+a.getListeVisite().size()+",");
+        res.append("Dépenses : "+depenses*a.getMontantDefraiement() +"€"+",");
+        res.append("Recettes : "+recettes+"€");
+        return res.toString();
+    }
+
+    @FXML
+    public void initialize() {
+        nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+        Association a = Association.getAssociation(nom_asso.getText());
+
+        membres.getItems().clear();
+        membres.getItems().addAll(exclusActuels(a).split(","));
+
+        dons.getItems().clear();
+        dons.getItems().addAll(donsActuels(a).split(","));
+
+        votes.getItems().clear();
+        votes.getItems().addAll(votesActuels(a).split(","));
 
         rapport.getItems().clear();
-        rapport.getItems().add("Nb visites : "+a.getListeVisite().size());
-        rapport.getItems().add("Dépenses : "+depenses*a.getMontantDefraiement() +"€");
-        rapport.getItems().add("Recettes : "+recettes+"€");
+        rapport.getItems().addAll(rapportActuel(a).split(","));
+
+       annee.getItems().clear();
+        ArrayList<String> anneesB = new ArrayList<>();
+        System.out.println(a.getAnneeBudgetaire());
+        for(int i = 0; i<=a.getAnneeBudgetaire();i++){
+            anneesB.add("Annee Budgétaire "+i);
+        }
+        annee.setItems(FXCollections.observableArrayList(anneesB));
+        annee.setValue("Annee Budgetaire actuelle ("+a.getAnneeBudgetaire()+")");
+
+        annee.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("Annee Budgétaire "+a.getAnneeBudgetaire())) {
+                membres.getItems().clear();
+                membres.getItems().addAll(exclusActuels(a).split(","));
+
+                dons.getItems().clear();
+                dons.getItems().addAll(donsActuels(a).split(","));
+
+                votes.getItems().clear();
+                votes.getItems().addAll(votesActuels(a).split(","));
+
+                rapport.getItems().clear();
+                rapport.getItems().addAll(rapportActuel(a).split(","));
+            }else if (! a.getListeExercicesBudgetaires().isEmpty()){
+                String an = (String) annee.getValue();
+                int anneeBudget = an.charAt(an.length()-1) - '0';
+                ArrayList<String> valeurs = a.getListeExercicesBudgetaires().get(anneeBudget);
+
+                membres.getItems().clear();
+                membres.getItems().addAll(valeurs.get(1).split(","));
+
+                dons.getItems().clear();
+                dons.getItems().addAll(valeurs.get(0).split(","));
+
+                votes.getItems().clear();
+                votes.getItems().addAll(valeurs.get(2).split(","));
+
+                rapport.getItems().clear();
+                rapport.getItems().addAll(valeurs.get(3).split(","));
+            }
+            else{
+                membres.getItems().clear();
+                votes.getItems().clear();
+                rapport.getItems().clear();
+                dons.getItems().clear();
+            }
+        });
+
+
+
+
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
@@ -176,6 +253,12 @@ public class ExoBudgetaireAssoView {
                         a.getListeReco().clear();
                         a.setAnneeBudgetaire(a.getAnneeBudgetaire()+1);
                         a.getListeDemandeDons().clear();
+                        ArrayList<String> valeurs = new ArrayList<>();
+                        valeurs.add(donsActuels(a));
+                        valeurs.add(exclusActuels(a));
+                        valeurs.add(votesActuels(a));
+                        valeurs.add(rapportActuel(a));
+                        a.getListeExercicesBudgetaires().add(valeurs);
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
                             pers.setNbVisites(0);

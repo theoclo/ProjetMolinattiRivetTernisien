@@ -38,6 +38,7 @@ public class Association implements Abonne{
     private ArrayList<Visite> listeVisite;
     private int anneeBudgetaire;
     private ArrayList<String> listeDemandeDons;
+    private ArrayList<ArrayList<String>> listeExercicesBudgetaires;
 
     public static ArrayList<Association> listeAssociations=new ArrayList<Association>();
 
@@ -68,6 +69,7 @@ public class Association implements Abonne{
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
         listeDemandeDons = new ArrayList<>();
+        listeExercicesBudgetaires = new ArrayList<>();
     }
 
     public Association(String n,
@@ -90,6 +92,7 @@ public class Association implements Abonne{
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
         listeDemandeDons = new ArrayList<>();
+        listeExercicesBudgetaires = new ArrayList<>();
     }
 
     public Association(){
@@ -107,6 +110,7 @@ public class Association implements Abonne{
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
         listeDemandeDons = new ArrayList<>();
+        listeExercicesBudgetaires = new ArrayList<>();
     }
 
     /*  GETTERS  */
@@ -157,6 +161,10 @@ public class Association implements Abonne{
 
     public ArrayList<String> getListeDemandeDons() {
         return listeDemandeDons;
+    }
+
+    public ArrayList<ArrayList<String>> getListeExercicesBudgetaires() {
+        return listeExercicesBudgetaires;
     }
 
     @Override

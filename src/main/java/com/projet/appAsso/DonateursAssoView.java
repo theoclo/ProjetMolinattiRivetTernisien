@@ -202,6 +202,8 @@ public class DonateursAssoView {
 
         demande.setOnMouseClicked(event -> {
 
+            String donateur = (String) list.getSelectionModel().getSelectedItem();
+
             System.out.println("Bouton 'demande' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Nouvelle demande");
@@ -246,7 +248,7 @@ public class DonateursAssoView {
             btnValider.setOnMouseClicked(e -> {
 
                 a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
-                a.getListeDemandeDons().add(montantField.getText()+":"+raisonField.getText());
+                a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
 
                 Stage stage = (Stage) btnValider.getScene().getWindow();
                 stage.close();
