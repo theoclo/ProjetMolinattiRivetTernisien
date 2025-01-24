@@ -129,8 +129,10 @@ public class ExoBudgetaireAssoView {
                         a.getListeReco().clear();
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
+                            pers.setNbVisites(0);
                             Personne ps = Personne.obtenirPersonne(pers.getPseudo());
                             ps.setaCotise(false);
+                            ps.setNbVisites(0);
                         }
 
                         try {
