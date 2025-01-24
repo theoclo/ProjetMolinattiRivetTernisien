@@ -1,5 +1,7 @@
 package com.projet.appMembres;
 
+import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,6 +38,11 @@ public class VisitesMembreView {
         refresh.setVisible(false);
 
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
+        sinscrire.setDisable(false);
+        Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
+        if(p.getNbVisites() >= 3){
+            sinscrire.setDisable(true);
+        }
 
 
         deconnecter.setOnMouseClicked(event -> {

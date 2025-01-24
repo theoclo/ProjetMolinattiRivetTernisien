@@ -2,6 +2,7 @@ package com.projet.appMembres;
 
 import com.projet.Main;
 import com.projet.entite.Association;
+import com.projet.entite.Personne;
 import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -123,6 +124,14 @@ public class InscriptionVisitesMembreView {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
+                        }
+                    }
+
+                    Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
+                    p.setNbVisites(p.getNbVisites() + 1);
+                    for(Personne pers : Association.getAssociation(p.getAssociation().get()).getListeMembre()){
+                        if(pers.getPseudo().equals(p.getPseudo())){
+                            pers.setNbVisites(pers.getNbVisites() + 1);
                         }
                     }
 

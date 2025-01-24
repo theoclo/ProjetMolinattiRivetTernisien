@@ -27,6 +27,7 @@ public class Personne implements Abonne, Entite {
     private ArrayList<String> listeNotif;
     private int solde;
     private boolean aCotise;
+    private int nbVisites;
     private ArrayList<LocalDate> listeCotisation; //toutes les années où on a cotisé et le jour correspondant
 
     public static ArrayList<Personne> listePersonnes = new ArrayList<>();
@@ -42,6 +43,7 @@ public class Personne implements Abonne, Entite {
         this.solde = solde;
         this.listeCotisation = listeCotisation;
         this.aCotise = false;
+        this.nbVisites = 0;
     }
 
     public Personne(){
@@ -55,6 +57,7 @@ public class Personne implements Abonne, Entite {
         this.listeNotif = new ArrayList<>();
         this.listeCotisation = new ArrayList<LocalDate>();
         this.aCotise = false;
+        this.nbVisites = 0;
     }
 
     /*  GETTERS  */
@@ -106,6 +109,10 @@ public class Personne implements Abonne, Entite {
         return this.aCotise;
     }
 
+    public int getNbVisites() {
+        return nbVisites;
+    }
+
     /*  SETTERS  */
 
     @Override
@@ -143,6 +150,8 @@ public class Personne implements Abonne, Entite {
     }
 
     public void setaCotise(boolean aCotise) {this.aCotise = aCotise;}
+
+    public void setNbVisites(int nbVisites) {this.nbVisites = nbVisites;}
 
     /*  AFFICHAGE  */
 

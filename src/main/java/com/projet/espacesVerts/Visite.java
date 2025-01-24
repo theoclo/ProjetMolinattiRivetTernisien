@@ -80,7 +80,7 @@ public class Visite {
 
     @Override
     public String toString(){
-        String s= "Arbre n°" + arbre.getIdBase() + ", Nom : " + arbre.getNom() + " | Date : " + date.getDayOfYear() + "/" + date.getMonthValue() + "/" + date.getYear();
+        String s= "Arbre n°" + arbre.getIdBase() + ", Nom : " + arbre.getNom() + " | Date : " + date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear();
         if(!getParticipant().equals("")){
             s+=" Membre : " + getParticipant();
         }
