@@ -268,6 +268,7 @@ public class Personne implements Abonne, Entite {
                 solde-=prixAPayer;
                 aCotise = true;
                 listeCotisation.add(LocalDate.now());
+                a.setBudget(a.getBudget()+prixAPayer);
 
                 a.getListeMembre().add(this);
                 Personne.listePersonnes.add(this);
