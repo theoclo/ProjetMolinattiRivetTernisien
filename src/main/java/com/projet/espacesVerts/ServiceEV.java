@@ -137,7 +137,7 @@ public class ServiceEV {
         for(Map<Integer, Integer> vote : listeVotesNonRemarquables) {
             for(Map.Entry<Integer, Integer> arbre : vote.entrySet()) {
                 Arbre arbreVote = Arbre.obtenirArbre(arbre.getKey());
-                if(!arbreVote.getClassifie()){
+                if(!arbreVote.classifie()){
                     if(votes.containsKey(arbreVote)){
                         votes.put(arbreVote, votes.get(arbreVote)+arbre.getValue());
                     }

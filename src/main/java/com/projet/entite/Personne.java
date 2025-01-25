@@ -248,7 +248,7 @@ public class Personne implements Abonne, Entite {
         }
         boolean dejaPresent = false;
         for(Arbre arbre:listeReco){
-            if (arbre.getIdBase() == (a.getIdBase())) {
+            if (arbre.idBase() == (a.idBase())) {
                 dejaPresent = true;
                 break;
             }
@@ -288,7 +288,7 @@ public class Personne implements Abonne, Entite {
             listeReco = asso.getListeReco().get(this.pseudo);
         }
         for(Arbre arbre:listeReco){
-            if(arbre.getIdBase()==(a.getIdBase())){
+            if(arbre.idBase()==(a.idBase())){
                 listeReco.remove(arbre);
                 System.out.println(listeReco);
                 asso.getListeReco().put(this.pseudo, listeReco);
@@ -313,9 +313,9 @@ public class Personne implements Abonne, Entite {
         Personne p = Personne.obtenirPersonne(this.pseudo);
 
         ArrayList<String> notif = new ArrayList<>();
-       if(p.getListeNotif()!= null){
-           notif = p.getListeNotif();
-       }
+        if(p.getListeNotif()!= null){
+            notif = p.getListeNotif();
+        }
         notif.add(notification);
         p.setListeNotif(notif);
         MaJFichierJSONPersonnes();

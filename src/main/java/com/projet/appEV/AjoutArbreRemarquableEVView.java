@@ -45,24 +45,24 @@ public class AjoutArbreRemarquableEVView {
     public void initialize(){
         refresh.setVisible(false);
 
-      ArrayList<String>arbreNonRemarquable= new ArrayList<>();
+        ArrayList<String>arbreNonRemarquable= new ArrayList<>();
         ArrayList<Integer> idNonRemarquable = new ArrayList<>();
 
-      Map<Arbre, Integer> arbreVotes = ServiceEV.listeServiceEV.get(0).obtenirVotesNonRemarquables();
+        Map<Arbre, Integer> arbreVotes = ServiceEV.listeServiceEV.get(0).obtenirVotesNonRemarquables();
         List<Map.Entry<Arbre, Integer>> sortedEntries = arbreVotes.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toList());
 
-          // Print the sorted entries
-          for (Map.Entry<Arbre, Integer> entry : sortedEntries) {
-              arbreNonRemarquable.add("Votes: " + entry.getValue() +", Arbre: " + entry.getKey() );
-              idNonRemarquable.add(entry.getKey().getIdBase());
-          }
+        // Print the sorted entries
+        for (Map.Entry<Arbre, Integer> entry : sortedEntries) {
+            arbreNonRemarquable.add("Votes: " + entry.getValue() +", Arbre: " + entry.getKey() );
+            idNonRemarquable.add(entry.getKey().idBase());
+        }
 
 
 
 
-      listview.setItems(FXCollections.observableArrayList(arbreNonRemarquable));
+        listview.setItems(FXCollections.observableArrayList(arbreNonRemarquable));
 
         valider.setDisable(true);
 
@@ -142,7 +142,7 @@ public class AjoutArbreRemarquableEVView {
                 }
             }
             else{
-                arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
+                arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.idBase());
             }
             if(arbreSelectionne == null){
                 Alert alert2 = new Alert(Alert.AlertType.ERROR);
@@ -155,7 +155,7 @@ public class AjoutArbreRemarquableEVView {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Rendre remarquable un arbre");
                 alert.setHeaderText("Êtes-vous sûr de vouloir rendre remarquable cet arbre ?");
-                alert.setContentText("Son id dans la base de données est " + arbreSelectionne.getIdBase());
+                alert.setContentText("Son id dans la base de données est " + arbreSelectionne.idBase());
                 ButtonType buttonTypeYes = new ButtonType("Oui");
                 ButtonType buttonTypeNo = new ButtonType("Non");
                 alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
@@ -164,31 +164,32 @@ public class AjoutArbreRemarquableEVView {
                     if (buttonType == buttonTypeYes) {
                         System.out.println("L'utilisateur a cliqué sur Oui");
 
-                        finalArbreSelectionne.classifier(LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
-                        for(Arbre a : ServiceEV.listeServiceEV.get(0).getListeArbre()){
-                            if(a.getIdBase() == finalArbreSelectionne.getIdBase()){
-                                ServiceEV.listeServiceEV.get(0).getListeArbre().remove(a);
-                                ServiceEV.listeServiceEV.get(0).getListeArbre().add(finalArbreSelectionne);
+
+
+                        for(Arbre a : ServiceEV.listeServiceEV.getFirst().getListeArbre()){
+                            if(a.idBase() == finalArbreSelectionne.idBase()){
+                                ServiceEV.listeServiceEV.getFirst().getListeArbre().remove(a);
+                                ServiceEV.listeServiceEV.getFirst().getListeArbre().add(finalArbreSelectionne.withClassifie(true).withDateClassification(Optional.of(LocalDate.now())));
                                 break;
                             }
                         }
                         for (Association asso : ServiceEV.obtenirAssosAbonne()) {
                             try {
-                                asso.ajouterNotification("L'arbre " + finalArbreSelectionne.getIdBase() + " a été classifié le " + LocalDate.now());
+                                asso.ajouterNotification("L'arbre " + finalArbreSelectionne.idBase() + " a été classifié le " + LocalDate.now());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
                         for (Personne p : ServiceEV.obtenirParticuliersAbonne()) {
                             try {
-                                p.ajouterNotification("L'arbre " + finalArbreSelectionne.getIdBase() + " a été classifié le " + LocalDate.now());
+                                p.ajouterNotification("L'arbre " + finalArbreSelectionne.idBase() + " a été classifié le " + LocalDate.now());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
 
                         InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
-                        InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne);
+                        InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne.withClassifie(true).withDateClassification(Optional.of(LocalDate.now())));
                         try {
                             Main.MaJFichierJSONArbres();
                             Main.MaJFichierServiceEV();

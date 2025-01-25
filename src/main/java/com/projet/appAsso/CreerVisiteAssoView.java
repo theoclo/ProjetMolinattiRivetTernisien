@@ -125,7 +125,7 @@ public class CreerVisiteAssoView {
             LocalDate dateSelectionnee = date.getValue();
             System.out.println(dateSelectionnee);
             Arbre arbreSelectionne = (Arbre) list.getSelectionModel().getSelectedItem();
-            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.idBase());
             System.out.println(arbreSelectionne);
 
 

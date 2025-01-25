@@ -73,7 +73,7 @@ public class AbattreArbreEVView {
 
         abattre.setOnMouseClicked(event -> {
             Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
-            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.idBase());
             System.out.println("Bouton 'Abattre' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Abattage d'un arbre");
@@ -98,21 +98,21 @@ public class AbattreArbreEVView {
 
                     for(Association asso : ServiceEV.obtenirAssosAbonne()){
                         try {
-                            asso.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été abattu le "+LocalDate.now());
+                            asso.ajouterNotification("L'arbre "+finalArbreSelectionne.idBase()+" a été abattu le "+LocalDate.now());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
                     for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
                         try {
-                            p.ajouterNotification("L'arbre "+finalArbreSelectionne.getIdBase()+" a été abattu le "+LocalDate.now());
+                            p.ajouterNotification("L'arbre "+finalArbreSelectionne.idBase()+" a été abattu le "+LocalDate.now());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
 
                     for(Arbre a : ServiceEV.listeServiceEV.get(0).getListeArbre()){
-                        if(a.getIdBase() == finalArbreSelectionne.getIdBase()){
+                        if(a.idBase() == finalArbreSelectionne.idBase()){
                             ServiceEV.listeServiceEV.get(0).getListeArbre().remove(a);
                             break;
                         }
@@ -120,7 +120,7 @@ public class AbattreArbreEVView {
 
                     for(Association a : Association.listeAssociations){
                         for(Visite v : a.getListeVisite()){
-                            if(v.arbre().getIdBase() == finalArbreSelectionne.getIdBase()){
+                            if(v.arbre().idBase() == finalArbreSelectionne.idBase()){
                                 a.getListeVisite().remove(v);
                                 break;
                             }

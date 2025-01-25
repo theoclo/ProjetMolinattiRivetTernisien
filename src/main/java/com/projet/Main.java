@@ -54,11 +54,11 @@ public class Main {
                         Integer.valueOf(info.get(12)),Integer.valueOf(info.get(13)),
                         dev,
                         info.get(3)+", "+info.get(4)+" "+info.get(5)+" "+info.get(6),
-                        coordonnee
+                        coordonnee,false,Optional.empty()
 
                 );
                 if(info.get(15).equals("OUI")){
-                    arbre.setClassification(Optional.empty());
+                    arbre = arbre.withClassifie(true);
                 }
                 Arbre.listeArbres.add(arbre);
             }
@@ -95,7 +95,7 @@ public class Main {
             }
             Association asso = new Association("Association"+i, president,budget,prixCotisation,montantDefraiement);
             asso.ajouterFacturesBase();
-           president.rejoindreAsso(asso);
+            president.rejoindreAsso(asso);
             System.out.println(asso);
             Association.listeAssociations.add(asso);
         }
@@ -164,26 +164,26 @@ public class Main {
 
 
     public static void creationJSON(){
-        //creationServiceEV(); //QUE SI PAS JSON ou si vide
-        //lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
-        creationPersonnes(10); //A FAIRE SI PAS DE JSON ou si vide
-        creationAssociation(2);
+        lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
+        creationServiceEV(); //QUE SI PAS JSON ou si vide
+        //creationPersonnes(10); //A FAIRE SI PAS DE JSON ou si vide
+        //creationAssociation(2);
     }
 /**
-    public static void main(String[] args) throws IOException {
-        //creationJSON();
-        MaJFichierJSONArbres();
-        MaJFichierJSONPersonnes(); //met à jour le fichier json si modification (si ajout d'une valeur dans Personne.listePersonnes
-        MaJFichierServiceEV();
-        MaJFichierJSONAssociation();
-        MaJFichierJSONPersonnes();
-        MaJFichierJSONVisite();
-        Personne.listePersonnes.get(3).rejoindreAsso(Association.listeAssociations.get(0));
-        MaJFichierJSONAssociation();
-        MaJFichierJSONPersonnes();
-        System.out.println(Association.listeAssociations.get(0).affiche());
-        System.out.println(Personne.listePersonnes.get(3).affiche());
+ public static void main(String[] args) throws IOException {
+ //creationJSON();
+ MaJFichierJSONArbres();
+ MaJFichierJSONPersonnes(); //met à jour le fichier json si modification (si ajout d'une valeur dans Personne.listePersonnes
+ MaJFichierServiceEV();
+ MaJFichierJSONAssociation();
+ MaJFichierJSONPersonnes();
+ MaJFichierJSONVisite();
+ Personne.listePersonnes.get(3).rejoindreAsso(Association.listeAssociations.get(0));
+ MaJFichierJSONAssociation();
+ MaJFichierJSONPersonnes();
+ System.out.println(Association.listeAssociations.get(0).affiche());
+ System.out.println(Personne.listePersonnes.get(3).affiche());
 
-        }
+ }
  **/
 }

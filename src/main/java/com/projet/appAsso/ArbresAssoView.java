@@ -75,16 +75,16 @@ public class ArbresAssoView {
     public void initialize(){
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
 
-        id.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getIdBase()));
-        nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-        genre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGenre()));
-        espece.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEspece()));
-        circ.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getCirconference()));
-        haut.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getHauteur()));
-        stadedev.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStadeDev().toString()));
-        adresse.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAdresseAcces()));
+        id.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().idBase()));
+        nom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nom()));
+        genre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().genre()));
+        espece.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().espece()));
+        circ.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().circonference()));
+        haut.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().hauteur()));
+        stadedev.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().stadeDev().toString()));
+        adresse.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().adresseAcces()));
         coord.setCellValueFactory(cellData -> {
-            Map<String, Double> coordGPS = cellData.getValue().getCoordGPS();
+            Map<String, Double> coordGPS = cellData.getValue().coordGPS();
             Double latitude = coordGPS.get("latitude");
             Double longitude = coordGPS.get("longitude");
 
@@ -95,11 +95,11 @@ public class ArbresAssoView {
 
             return new SimpleStringProperty(formattedCoord);
         });
-        classifie.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClassifie() ? "OUI" : "NON"));
+        classifie.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().classifie() ? "OUI" : "NON"));
         date.setCellValueFactory(cellData -> new SimpleStringProperty(
-                cellData.getValue().getDateClassification().map(LocalDate::toString).orElse("")));
+                cellData.getValue().dateClassification().map(LocalDate::toString).orElse("")));
 
-        table.setItems(FXCollections.observableArrayList(ServiceEV.listeServiceEV.get(0).getListeArbre()));
+        table.setItems(FXCollections.observableArrayList(ServiceEV.listeServiceEV.getFirst().getListeArbre()));
 
 
         deconnecter.setOnMouseClicked(event -> {

@@ -17,7 +17,7 @@ public record Visite(String association, Arbre arbre, LocalDateTime date, String
 
     @Override
     public String toString() {
-        String s= "Arbre n°" + arbre.getIdBase() + ", Nom : " + arbre.getNom() + " | Date : " + date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear();
+        String s= "Arbre n°" + arbre.idBase() + ", Nom : " + arbre.nom() + " | Date : " + date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear();
         if(!participant.equals("")){
             s+=" Membre : " + participant;
         }

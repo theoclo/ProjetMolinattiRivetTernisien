@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class PlanterArbreEVView {
     @FXML
@@ -166,7 +167,7 @@ public class PlanterArbreEVView {
             net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
             int rand = faker.number().numberBetween(1, 99874);
             for(Arbre a : Arbre.listeArbres){
-                while(a.getIdBase() == rand){
+                while(a.idBase() == rand){
                     rand = faker.number().numberBetween(1, 99874);
                 }
             }
@@ -192,18 +193,18 @@ public class PlanterArbreEVView {
                     HashMap<String, Double> coordGPS = new HashMap<>();
                     coordGPS.put("latitude", lat);
                     coordGPS.put("longitude", lon);
-                    Arbre arbre = new Arbre(finalRand, n, g, esp, circ, haut, Arbre.ArbreDEV.Jeune, ad, coordGPS);
+                    Arbre arbre = new Arbre(finalRand, n, g, esp, circ, haut, Arbre.ArbreDEV.Jeune, ad, coordGPS,false, Optional.empty());
                     Arbre.listeArbres.add(arbre);
                     for(Association asso : ServiceEV.obtenirAssosAbonne()){
                         try {
-                            asso.ajouterNotification("L'arbre "+arbre.getIdBase()+" a été planté le "+ LocalDate.now());
+                            asso.ajouterNotification("L'arbre "+arbre.idBase()+" a été planté le "+ LocalDate.now());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
                     for(Personne p : ServiceEV.obtenirParticuliersAbonne()){
                         try {
-                            p.ajouterNotification("L'arbre "+ arbre.getIdBase()+" a été planté le "+LocalDate.now());
+                            p.ajouterNotification("L'arbre "+ arbre.idBase()+" a été planté le "+LocalDate.now());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

@@ -81,7 +81,7 @@ public class ExoBudgetaireAssoView {
         StringBuilder res = new StringBuilder();
         HashMap<Arbre,Integer> v = a.selectTop5Nomination();
         for( Map.Entry<Arbre, Integer> valeurs: v.entrySet()){
-            res.append("Arbre n° : "+valeurs.getKey().getIdBase()+" | "+valeurs.getValue()+',');
+            res.append("Arbre n° : "+valeurs.getKey().idBase()+" | "+valeurs.getValue()+',');
         }
         if(!res.isEmpty()){
             res.setLength(res.length() - 1);
@@ -274,7 +274,7 @@ public class ExoBudgetaireAssoView {
                         }
                         Map<Integer, Integer> idVotes = new HashMap<>();
                         for(Map.Entry<Arbre,Integer> entree : a.selectTop5Nomination().entrySet()) {
-                            idVotes.put(entree.getKey().getIdBase(), entree.getValue() );
+                            idVotes.put(entree.getKey().idBase(), entree.getValue() );
                         }
                         ServiceEV.listeServiceEV.get(0).ajouterVotesNonRemarquables(idVotes);
                         ArrayList<String> valeurs = new ArrayList<>();

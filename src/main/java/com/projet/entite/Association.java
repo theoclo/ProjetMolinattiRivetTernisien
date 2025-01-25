@@ -338,7 +338,7 @@ public class Association implements Abonne{
         Map<Arbre,Integer> votes = new HashMap<>();
         for(ArrayList<Arbre> a : listeReco.values()){
             for(Arbre arbre : a){
-                Arbre arbreVote = Arbre.obtenirArbre(arbre.getIdBase());
+                Arbre arbreVote = Arbre.obtenirArbre(arbre.idBase());
                 if(votes.containsKey(arbreVote)){
                     votes.put(arbreVote, votes.get(arbreVote)+1);
                 }
@@ -353,10 +353,10 @@ public class Association implements Abonne{
                     int cmp = Integer.compare(e2.getValue(), e1.getValue());
                     if (cmp == 0) {
                         // Si égalité de votes, on trie par circonférence décroissante
-                        cmp = Integer.compare(e2.getKey().getCirconference(), e1.getKey().getCirconference());
+                        cmp = Integer.compare(e2.getKey().circonference(), e1.getKey().circonference());
                         if (cmp == 0) {
                             // Si égalité de circonférence, on trie par hauteur décroissante
-                            cmp = Integer.compare(e2.getKey().getHauteur(), e1.getKey().getHauteur());
+                            cmp = Integer.compare(e2.getKey().hauteur(), e1.getKey().hauteur());
                         }
                     }
                     return cmp;
@@ -374,7 +374,7 @@ public class Association implements Abonne{
         Map<Arbre,Integer> votes = new HashMap<>();
         for(ArrayList<Arbre> a : listeReco.values()){
             for(Arbre arbre : a){
-                Arbre arbreVote = Arbre.obtenirArbre(arbre.getIdBase());
+                Arbre arbreVote = Arbre.obtenirArbre(arbre.idBase());
                 if(votes.containsKey(arbreVote)){
                     votes.put(arbreVote, votes.get(arbreVote)+1);
                 }
@@ -389,10 +389,10 @@ public class Association implements Abonne{
                     int cmp = Integer.compare(e2.getValue(), e1.getValue());
                     if (cmp == 0) {
                         // Si égalité de votes, on trie par circonférence décroissante
-                        cmp = Integer.compare(e2.getKey().getCirconference(), e1.getKey().getCirconference());
+                        cmp = Integer.compare(e2.getKey().circonference(), e1.getKey().circonference());
                         if (cmp == 0) {
                             // Si égalité de circonférence, on trie par hauteur décroissante
-                            cmp = Integer.compare(e2.getKey().getHauteur(), e1.getKey().getHauteur());
+                            cmp = Integer.compare(e2.getKey().hauteur(), e1.getKey().hauteur());
                         }
                     }
                     return cmp;

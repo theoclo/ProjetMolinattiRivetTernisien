@@ -84,11 +84,11 @@ public class AjoutArbreVotesMembreView {
 
         valider.setOnMouseClicked(event -> {
             Arbre arbreSelectionne = (Arbre) listview.getSelectionModel().getSelectedItem();
-            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.getIdBase());
+            arbreSelectionne = Arbre.obtenirArbre(arbreSelectionne.idBase());
             System.out.println("Bouton 'Valider' cliqué");
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ajout arbre aux votes");
-            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter l'arbre "+arbreSelectionne.getIdBase()+ " dans la liste de vos votes ?");
+            alert.setHeaderText("Êtes-vous sûr de vouloir ajouter l'arbre "+arbreSelectionne.idBase()+ " dans la liste de vos votes ?");
             alert.setContentText("");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
