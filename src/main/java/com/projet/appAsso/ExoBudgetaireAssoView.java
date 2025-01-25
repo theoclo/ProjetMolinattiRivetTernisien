@@ -2,6 +2,8 @@ package com.projet.appAsso;
 
 import com.projet.Arbre;
 import com.projet.Main;
+import com.projet.appMembres.AppMembre;
+import com.projet.appMembres.VisitesMembreView;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
@@ -315,6 +317,17 @@ public class ExoBudgetaireAssoView {
                             throw new RuntimeException(e);
                         }
 
+                    }
+                    Stage stage = (Stage) retour.getScene().getWindow();
+                    try {
+
+                        FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_exoBudgetaire.fxml"));
+                        fxmlLoader.setController(new ExoBudgetaireAssoView());
+                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                        stage.setScene(scene);
+                        stage.setTitle("Application Association");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
 

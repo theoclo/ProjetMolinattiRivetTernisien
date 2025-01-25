@@ -126,9 +126,15 @@ public class VisitesCompteRenduView {
                             v.modifCR(text);
                             Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
                             Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
-                            InitialisationAppMembre.membreActuel.setSolde( InitialisationAppMembre.membreActuel.getSolde()+a.getMontantDefraiement());
                             p.setSolde(p.getSolde()+a.getMontantDefraiement());
+                            for(Personne membre :a.getListeMembre()){
+                                if(membre.getPseudo().equals(p.getPseudo())){
+                                    membre.setSolde(p.getSolde());
+                                    break;
+                                }
+                            }
                             a.setBudget(a.getBudget()-a.getMontantDefraiement());
+                            InitialisationAppMembre.membreActuel = p;
                             v.payer();
                             try {
                                 Main.MaJFichierJSONPersonnes();

@@ -1,6 +1,7 @@
 package com.projet.appAsso;
 
 import com.projet.appMembres.InitialisationAppMembre;
+import com.projet.entite.Association;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -47,7 +48,7 @@ public class AssociationAssoView {
         refresh.setVisible(false);
 
         String s;
-        s = String.valueOf(InitialisationAppAsso.associationActuelle.getBudget());
+        s = String.valueOf(Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getBudget());
         solde.setText("ASSOCIATION - "+ s+"€");
 
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
