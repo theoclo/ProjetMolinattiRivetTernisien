@@ -96,6 +96,7 @@ public class Main {
                 president = Personne.listePersonnes.get(faker.number().numberBetween(0, Personne.listePersonnes.size()));
             }
             Association asso = new Association("Association"+i, president,budget,prixCotisation,montantDefraiement);
+            asso.ajouterFacturesBase();
            president.rejoindreAsso(asso);
             System.out.println(asso);
             Association.listeAssociations.add(asso);

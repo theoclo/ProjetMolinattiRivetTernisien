@@ -112,11 +112,25 @@ public class ExoBudgetaireAssoView {
             }
         }
 
+        int facture = 0;
+        for(String f : a.getListeFacturesPayees()){
+            int j = f.indexOf('€');
+            int montant = Integer.parseInt(f.substring(0, j));
+            facture=facture+montant;
+        }
+        for(String f : a.getListeFacturesNonPayees()){
+            int j = f.indexOf('€');
+            int montant = Integer.parseInt(f.substring(0, j));
+            facture=facture+montant;
+        }
+
 
 
         res.append("Nb visites prévues : "+a.getListeVisite().size()+",");
         res.append("Nb visites réalisées : "+depenses+",");
-        res.append("Dépenses : "+depenses*a.getMontantDefraiement() +"€,");
+        res.append("Dépenses : "+(depenses*a.getMontantDefraiement()+facture) +"€,");
+        res.append("dont défraiement : "+depenses*a.getMontantDefraiement()+"€,");
+        res.append("dont factures : "+facture+"€,");
         res.append("Recettes : "+(recettes+cotisations)+"€,");
         res.append("dont cotisations : "+cotisations+"€,");
         res.append("dont dons : "+recettes+"€");
@@ -273,6 +287,17 @@ public class ExoBudgetaireAssoView {
                         a.setAnneeBudgetaire(a.getAnneeBudgetaire()+1);
                         a.getListeDemandeDons().clear();
                         a.getListeVisite().clear();
+
+                        for(String facture : a.getListeFacturesNonPayees()) {
+                            int j = facture.indexOf('€');
+                            int montant = Integer.parseInt(facture.substring(0, j));
+                            a.getListeFacturesPayees().add(facture);
+                            a.setBudget(a.getBudget() - montant);
+                        }
+                        a.getListeFacturesNonPayees().clear();
+                        a.ajouterFacturesBase();
+                        a.getListeFacturesPayees().clear();
+
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
                             pers.setNbVisites(0);

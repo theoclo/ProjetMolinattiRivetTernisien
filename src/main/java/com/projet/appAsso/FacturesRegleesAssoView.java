@@ -1,10 +1,12 @@
 package com.projet.appAsso;
 
+import com.projet.entite.Association;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,8 +25,15 @@ public class FacturesRegleesAssoView {
     private Button retour;
 
     @FXML
+    private ListView facturesReglees;
+
+    @FXML
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
+
+        Association a = Association.getAssociation(String.valueOf(nom_asso.getText()));
+        facturesReglees.getItems().setAll(a.getListeFacturesPayees());
+
 
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");

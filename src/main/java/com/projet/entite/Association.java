@@ -29,11 +29,12 @@ public class Association implements Abonne{
     private int prixCotisation;
     private int montantDefraiement;
     private ArrayList<String> listeDonateurs;
-    private ArrayList<String> listeFactures; //String de type : String f = "50 : facture";
+    private ArrayList<String> listeFacturesNonPayees; //String de type : String f = "50 : facture";
     //int i = f.indexOf(' ');
     //String word = f.substring(0, i);
     //String rest = f.substring(i);
     //    System.out.println(word);
+    private ArrayList<String> listeFacturesPayees;
     private Map<String, ArrayList<Arbre>> listeReco;
     private ArrayList<Visite> listeVisite;
     private int anneeBudgetaire;
@@ -53,7 +54,6 @@ public class Association implements Abonne{
                        int pC,
                        int mDF,
                        ArrayList<String> lD,
-                       ArrayList<String> lF,
                        HashMap<String, ArrayList<Arbre>> lR) {
         nom = n;
         abonnement = a;
@@ -64,7 +64,8 @@ public class Association implements Abonne{
         prixCotisation = pC;
         montantDefraiement = mDF;
         listeDonateurs = lD;
-        listeFactures = lF;
+        listeFacturesNonPayees = new ArrayList<>();
+        listeFacturesPayees = new ArrayList<>();
         listeReco = lR;
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
@@ -87,7 +88,8 @@ public class Association implements Abonne{
         prixCotisation = c;
         montantDefraiement = m;
         listeDonateurs = new ArrayList<>();
-        listeFactures = new ArrayList<>();
+        listeFacturesNonPayees = new ArrayList<>();
+        listeFacturesPayees = new ArrayList<>();
         listeReco = new HashMap<>();
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
@@ -105,7 +107,8 @@ public class Association implements Abonne{
         this.prixCotisation = 0;
         this.montantDefraiement = 0;
         this.listeDonateurs = new ArrayList<>();
-        this.listeFactures = new ArrayList<>();
+        this.listeFacturesNonPayees = new ArrayList<>();
+        this.listeFacturesPayees = new ArrayList<>();
         this.listeReco = new HashMap<>();
         listeVisite = new ArrayList<>();
         anneeBudgetaire = 0;
@@ -147,8 +150,12 @@ public class Association implements Abonne{
         return listeDonateurs;
     }
 
-    public ArrayList<String> getListeFactures(){
-        return listeFactures;
+    public ArrayList<String> getListeFacturesNonPayees(){
+        return listeFacturesNonPayees;
+    }
+
+    public ArrayList<String> getListeFacturesPayees(){
+        return listeFacturesPayees;
     }
 
     public Map<String, ArrayList<Arbre>> getListeReco() {
@@ -215,8 +222,12 @@ public class Association implements Abonne{
         this.listeDonateurs = listeDonateurs;
     }
 
-    public void setListeFactures(ArrayList<String> listeFactures) {
-        this.listeFactures = listeFactures;
+    public void setListeFacturesNonPayees(ArrayList<String> listeFacturesNonPayees) {
+        this.listeFacturesNonPayees = listeFacturesNonPayees;
+    }
+
+    public void setListeFacturesPayees(ArrayList<String> listeFacturesPayees) {
+        this.listeFacturesPayees = listeFacturesPayees;
     }
 
     public void setListeReco(Map<String, ArrayList<Arbre>> listeReco) {
@@ -255,7 +266,7 @@ public class Association implements Abonne{
 
         str+= "\n budget = "+budget+", prixCotisation = "+prixCotisation+", defraiement = "+montantDefraiement;
         str+="\n listeDonateurs = "+listeDonateurs.toString();
-        str+= "\n listeFactures = "+listeFactures.toString();
+        str+= "\n listeFactures = "+ listeFacturesNonPayees.toString();
         return str;
     }
 
@@ -271,7 +282,7 @@ public class Association implements Abonne{
     public void lireFacture(){
         System.out.println("Liste des factures :");
         int i=1;
-        for(String facture : this.listeFactures){
+        for(String facture : this.listeFacturesNonPayees){
             System.out.println(i+". montant : "+facture +"\n");
             i++;
         }
@@ -598,6 +609,14 @@ public class Association implements Abonne{
         MaJFichierJSONPersonnes();
         MaJFichierJSONAssociation();
 
+    }
+
+    public void ajouterFacturesBase(){
+        net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
+        this.listeFacturesNonPayees.add(faker.number().numberBetween(200,300)+"€ : Electricite");
+        this.listeFacturesNonPayees.add(faker.number().numberBetween(100,200)+"€ : Eau");
+        this.listeFacturesNonPayees.add(faker.number().numberBetween(500,700)+"€ : Loyer");
+        this.listeFacturesNonPayees.add(faker.number().numberBetween(50,150)+"€ : Autre");
     }
 
 }
