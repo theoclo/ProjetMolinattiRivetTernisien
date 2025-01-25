@@ -27,8 +27,8 @@ public class Launcher extends Application {
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
-        InitialisationAppMembre.associations.clear();
-        InitialisationAppMembre.associations.addAll(Association.listeAssociations);
+        //InitialisationAppMembre.associations.clear();
+        //InitialisationAppMembre.associations.addAll(Association.listeAssociations);
         InitialisationAppMembre.arbres.clear();
         InitialisationAppMembre.arbres.addAll(Arbre.listeArbres);
         InitialisationAppMembre.arbresNonRemarquables.clear();

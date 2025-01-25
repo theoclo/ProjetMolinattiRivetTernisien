@@ -6,6 +6,7 @@ import com.projet.appEV.AppEV;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class ConnexionAssoView {
 
     @FXML
     public void initialize() throws IOException {
-        combobox.setItems(InitialisationAppMembre.associations);
+        combobox.setItems(FXCollections.observableArrayList(Association.listeAssociations));
 
         if(combobox.getSelectionModel().getSelectedItem() == null){
             connexion.setDisable(true);

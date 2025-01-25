@@ -386,8 +386,8 @@ public class Association implements Abonne{
             Main.MaJFichierJSONAssociation();
             Main.MaJFichierJSONPersonnes();
             Main.MaJFichierJSONAssociation();
-            InitialisationAppMembre.associations.clear();
-            InitialisationAppMembre.associations.addAll(Association.listeAssociations);
+            //InitialisationAppMembre.associations.clear();
+            //InitialisationAppMembre.associations.addAll(Association.listeAssociations);
 
 
             return true;

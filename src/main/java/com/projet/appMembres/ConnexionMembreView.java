@@ -38,7 +38,7 @@ public class ConnexionMembreView {
 
     @FXML
     public void initialize(){
-        combobox_asso.setItems(InitialisationAppMembre.associations);
+        combobox_asso.setItems(FXCollections.observableArrayList(Association.listeAssociations));
         combobox.setVisible(false);
 
         if(combobox_asso.getSelectionModel().getSelectedItem() == null){

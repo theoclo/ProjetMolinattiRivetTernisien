@@ -6,6 +6,8 @@ import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
+import com.projet.espacesVerts.Visite;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,9 +39,7 @@ public class AbattreArbreEVView {
     @FXML
     public void initialize() throws IOException {
         refresh.setVisible(false);
-        InitialisationAppMembre.arbresNonRemarquables.clear();
-        InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
-        listview.setItems(InitialisationAppMembre.arbresNonRemarquables);
+        listview.setItems(FXCollections.observableArrayList(ServiceEV.listeServiceEV.get(0).getListeArbre()));
         deconnecter.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Se déconnecter' cliqué");
             Stage stage = (Stage) deconnecter.getScene().getWindow();
@@ -87,7 +87,7 @@ public class AbattreArbreEVView {
             alert.showAndWait().ifPresent(buttonType -> {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
-                    for(Association a : InitialisationAppMembre.associations){
+                    for(Association a : Association.listeAssociations){
                         for(Personne p : a.getListeMembre()){
                             try {
                                 p.retirerArbre(finalArbreSelectionne);
@@ -112,8 +112,22 @@ public class AbattreArbreEVView {
                         }
                     }
 
-                    InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
-                    InitialisationAppMembre.arbres.remove(finalArbreSelectionne);
+                    for(Arbre a : ServiceEV.listeServiceEV.get(0).getListeArbre()){
+                        if(a.getIdBase() == finalArbreSelectionne.getIdBase()){
+                            ServiceEV.listeServiceEV.get(0).getListeArbre().remove(a);
+                            break;
+                        }
+                    }
+
+                    for(Association a : Association.listeAssociations){
+                        for(Visite v : a.getListeVisite()){
+                            if(v.getArbre().getIdBase() == finalArbreSelectionne.getIdBase()){
+                                a.getListeVisite().remove(v);
+                                break;
+                            }
+                        }
+                    }
+
                     Arbre.listeArbres.remove(finalArbreSelectionne);
 
                     try {

@@ -266,17 +266,20 @@ public class DonateursAssoView {
             btnValider.setOnMouseClicked(e -> {
 
                 Personne d = Personne.obtenirPersonne(donateur);
+                Personne.listePersonnes.remove(d);
                 d.setSolde(d.getSolde() - Integer.valueOf(montantField.getText()));
                 for(Association as : Association.listeAssociations) {
                     for (Personne membre : as.getListeMembre()) {
                         if (membre.getPseudo().equals(d.getPseudo())) {
-                            System.out.println(membre);
                             as.getListeMembre().remove(membre);
-                            as.getListeMembre().add(d);
+                            membre = d;
+                            as.getListeMembre().add(membre);
                             break;
                         }
                     }
                 }
+                Personne.listePersonnes.add(d);
+                System.out.println("Personne : "+d.affiche());
 
                 a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
                 a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
@@ -285,6 +288,7 @@ public class DonateursAssoView {
                 stage.close();
                 try {
                     Main.MaJFichierJSONAssociation();
+                    Main.MaJFichierJSONPersonnes();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
