@@ -1,16 +1,13 @@
 package com.projet.entite;
 
 import com.projet.Arbre;
-import com.projet.Main;
-import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.util.Pair;
 import net.datafaker.Faker;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,13 +28,9 @@ public class Association implements Abonne{
     private int montantDefraiement;
     private ArrayList<String> listeDonateurs;
     private ArrayList<String> listeFacturesNonPayees; //String de type : String f = "50 : facture";
-    //int i = f.indexOf(' ');
-    //String word = f.substring(0, i);
-    //String rest = f.substring(i);
-    //    System.out.println(word);
     private ArrayList<String> listeFacturesPayees;
     private Map<String, ArrayList<Arbre>> listeReco;
-    private ArrayList<Visite> listeVisite;
+    private ArrayList<Visit> listeVisite;
     private int anneeBudgetaire;
     private ArrayList<String> listeDemandeDons;
     private ArrayList<ArrayList<String>> listeExercicesBudgetaires;
@@ -163,7 +156,7 @@ public class Association implements Abonne{
         return listeReco;
     }
 
-    public ArrayList<Visite> getListeVisite() {
+    public ArrayList<Visit> getListeVisite() {
         return listeVisite;
     }
 
@@ -199,10 +192,6 @@ public class Association implements Abonne{
         this.abonnement = abonnement;
     }
 
-    public void setPresident(Personne p) {
-        president = p;
-    }
-
     public void setListeMembre(ArrayList<Personne> listeMembre) {
         this.listeMembre = listeMembre;
     }
@@ -211,40 +200,8 @@ public class Association implements Abonne{
         this.budget = budget;
     }
 
-    public void setPrixCotisation(int prixCotisation) {
-        this.prixCotisation = prixCotisation;
-    }
-
-    public void setMontantDefraiement(int montantDefraie) {
-        this.montantDefraiement = montantDefraie;
-    }
-
-    public void setListeDonateurs(ArrayList<String> listeDonateurs) {
-        this.listeDonateurs = listeDonateurs;
-    }
-
-    public void setListeFacturesNonPayees(ArrayList<String> listeFacturesNonPayees) {
-        this.listeFacturesNonPayees = listeFacturesNonPayees;
-    }
-
-    public void setListeFacturesPayees(ArrayList<String> listeFacturesPayees) {
-        this.listeFacturesPayees = listeFacturesPayees;
-    }
-
-    public void setListeReco(Map<String, ArrayList<Arbre>> listeReco) {
-        this.listeReco = listeReco;
-    }
-
-    public void setListeVisite(ArrayList<Visite> listeVisite) {
-        this.listeVisite = listeVisite;
-    }
-
     public void setAnneeBudgetaire(int anneeBudgetaire) {
         this.anneeBudgetaire = anneeBudgetaire;
-    }
-
-    public void setListeDemandeDons(ArrayList<String> listeDemandeDons) {
-        this.listeDemandeDons = listeDemandeDons;
     }
 
     /*  AFFICHAGE  */
@@ -271,60 +228,6 @@ public class Association implements Abonne{
         return str;
     }
 
-    public void lireNotif(){
-        System.out.println("Liste des notifications :");
-        int i=1;
-        for(String notif : this.listeNotif){
-            System.out.println(i+". "+notif);
-            i++;
-        }
-    }
-
-    public void lireFacture(){
-        System.out.println("Liste des factures :");
-        int i=1;
-        for(String facture : this.listeFacturesNonPayees){
-            System.out.println(i+". montant : "+facture +"\n");
-            i++;
-        }
-    }
-
-    public void lireDonateur(){
-        System.out.println("Liste des donateurs :");
-        int i=1;
-        for(String donateur : this.listeDonateurs){
-            System.out.println(i+". "+donateur);
-        }
-    }
-
-    public void lireMembre(){
-        System.out.println("Liste des membres :");
-        int i=1;
-        for(Personne membre : this.listeMembre){
-            System.out.println(i+". "+membre);
-        }
-    }
-
-    public void lireReco(){
-        System.out.println("Liste des recommandations :");
-        int i=1;
-        for(Map.Entry<String, ArrayList<Arbre>> reco : this.listeReco.entrySet()){
-            System.out.println(i+". "+reco.getKey()+"\n");
-            int j=1;
-            for(Arbre arbre : reco.getValue()){
-                System.out.println(j+". "+arbre);
-                j++;
-            }
-        }
-    }
-
-    public void afficheVisitesDispo(){
-        for (Visite v : listeVisite){
-            if(v.getDate().isBefore(LocalDateTime.now()) && v.getParticipant() == ""){
-                System.out.println(v);
-            }
-        }
-    }
 
     @Override
     public void sAbonner(ServiceEV sEV) {
@@ -334,20 +237,6 @@ public class Association implements Abonne{
         else{
             setAbonnement(Optional.of(sEV.getCommune()));
             sEV.addAbonne(this.getNom());
-        }
-    }
-
-    @Override
-    public void resilierAbo() {
-        if(abonnement.isEmpty()){
-            System.out.println("Vous n'êtes pas abonné au Service EV d'une commune");
-        }
-        else{
-            for(String abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
-                if(abonne.equals(this.getNom())){
-                    ServiceEV.getServiceEV(abonnement.get()).getListeAbonne().remove(abonne);
-                }
-            }
         }
     }
 
@@ -387,8 +276,6 @@ public class Association implements Abonne{
             MaJFichierJSONAssociation();
             MaJFichierJSONPersonnes();
             MaJFichierJSONAssociation();
-            //InitialisationAppMembre.associations.clear();
-            //InitialisationAppMembre.associations.addAll(Association.listeAssociations);
 
 
             return true;
@@ -446,58 +333,6 @@ public class Association implements Abonne{
         }
         return liste;
     }
-
-    public int recettesCotisations(Personne p){
-        if(listeMembre.contains(p)){
-            return p.getListeCotisation().size()*prixCotisation;
-        }
-        else{
-            return 0;
-        }
-    }
-
-    public void transmettreListeReco(ServiceEV sEV){
-        //envoyer listeReco à sEV
-    }
-
-    public void organiserVisite(Arbre arbre_visite, LocalDateTime date_visite){
-        if (!arbre_visite.getClassifie()){
-            System.out.println("Arbre non remarquable !");
-        }
-        else{
-            Visite visite = new Visite(this.nom, arbre_visite, date_visite);
-            this.listeVisite.add(visite);
-        }
-    }
-
-    public boolean payerVisite(Visite v) throws IOException {
-        if(v.getPayee()){
-            System.out.println("Visite déjà payée");
-            return false;
-        }
-        else{
-            Personne p = Personne.obtenirPersonne(v.getParticipant());
-            if(listeMembre.contains(p)){
-                if(budget>= montantDefraiement){
-                    budget -= montantDefraiement;
-                    v.payer();
-                    p.setSolde(p.getSolde()+montantDefraiement);
-                    MaJFichierJSONPersonnes();
-                    MaJFichierJSONAssociation();
-                    return true;
-                }
-                else{
-                    System.out.println("Vous n'avez pas le budget pour défrayer ce membre de sa visite.");
-                    return false;
-                }
-            }
-            else{
-                System.out.println("Cette personne n'est pas membre de l'association.");
-                return false;
-            }
-        }
-    }
-
 
     public LinkedHashMap<Arbre, Integer> selectTop5Nomination(){
         Map<Arbre,Integer> votes = new HashMap<>();
@@ -570,12 +405,12 @@ public class Association implements Abonne{
         return sortedMap;
     }
 
-    public static ArrayList<Visite> obtenirVisitesSansParticipant(String asso){
-        ArrayList<Visite> visites = new ArrayList<Visite>();
+    public static ArrayList<Visit> obtenirVisitesSansParticipant(String asso){
+        ArrayList<Visit> visites = new ArrayList<>();
         Association a = Association.getAssociation(asso);
-        for(Visite v : a.listeVisite){
-            if(v.getAssociation().equals(asso)){
-                if(v.getParticipant().equals("")){
+        for(Visit v : a.listeVisite){
+            if(v.association().equals(asso)){
+                if(v.participant().equals("")){
                     visites.add(v);
                 }
             }
@@ -584,12 +419,12 @@ public class Association implements Abonne{
         return visites;
     }
 
-    public static ArrayList<Visite> obtenirVisitesParticipant(String asso, String participant){
-        ArrayList<Visite> visites = new ArrayList<Visite>();
+    public static ArrayList<Visit> obtenirVisitesParticipant(String asso, String participant){
+        ArrayList<Visit> visites = new ArrayList<>();
         Association a = Association.getAssociation(asso);
-        for(Visite v : a.listeVisite){
-            if(v.getAssociation().equals(asso)){
-                if(v.getParticipant().equals(participant) && v.getCr().equals("")){
+        for(Visit v : a.listeVisite){
+            if(v.association().equals(asso)){
+                if(v.participant().equals(participant) && v.cr().equals("")){
                     visites.add(v);
                 }
             }
@@ -598,6 +433,8 @@ public class Association implements Abonne{
         return visites;
     }
 
+
+    @Override
     public void ajouterNotification(String notification) throws IOException {
         Association a = Association.getAssociation(this.nom);
 

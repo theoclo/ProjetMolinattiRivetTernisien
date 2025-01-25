@@ -1,7 +1,7 @@
 package com.projet.appAsso;
 
 import com.projet.entite.Association;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -42,20 +41,20 @@ public class CompteRenduVisiteAssoView {
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
 
-        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
-        ArrayList<Visite> visites = new ArrayList<>();
-        for(Visite v : lvisite){
-            if(!v.getCr().equals("")){
+        ArrayList<Visit> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
+        ArrayList<Visit> visites = new ArrayList<>();
+        for(Visit v : lvisite){
+            if(!v.cr().equals("")){
                 visites.add(v);
             }
         }
-        visites.sort(Comparator.comparing(Visite::getDate).reversed());
+        visites.sort(Comparator.comparing(Visit::date).reversed());
 
         combobox.setItems(FXCollections.observableList(visites));
 
         combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Visite v = (Visite) combobox.getSelectionModel().getSelectedItem();
-            text.setText(v.getCr());
+            Visit v = (Visit) combobox.getSelectionModel().getSelectedItem();
+            text.setText(v.cr());
         });
 
         text.setText("Sélectionnez une visite pour en voir son compte rendu.");

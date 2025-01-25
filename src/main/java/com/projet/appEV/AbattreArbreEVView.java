@@ -2,11 +2,10 @@ package com.projet.appEV;
 
 import com.projet.Arbre;
 import com.projet.Main;
-import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -120,8 +119,8 @@ public class AbattreArbreEVView {
                     }
 
                     for(Association a : Association.listeAssociations){
-                        for(Visite v : a.getListeVisite()){
-                            if(v.getArbre().getIdBase() == finalArbreSelectionne.getIdBase()){
+                        for(Visit v : a.getListeVisite()){
+                            if(v.arbre().getIdBase() == finalArbreSelectionne.getIdBase()){
                                 a.getListeVisite().remove(v);
                                 break;
                             }

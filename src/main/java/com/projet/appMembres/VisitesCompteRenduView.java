@@ -1,10 +1,9 @@
 package com.projet.appMembres;
 
 import com.projet.Main;
-import com.projet.appAsso.InitialisationAppAsso;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +12,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class VisitesCompteRenduView {
 
-    private Visite visiteChoisie;
 
     @FXML
     private Label nom_membre;
@@ -46,8 +41,8 @@ public class VisitesCompteRenduView {
 
     @FXML
     public void initialize() {
-        ArrayList<Visite> visites= Association.obtenirVisitesParticipant(InitialisationAppMembre.membreActuel.getAssociation().get(), InitialisationAppMembre.membreActuel.getPseudo());
-        visites.sort(Comparator.comparing(Visite::getDate));
+        ArrayList<Visit> visites= Association.obtenirVisitesParticipant(InitialisationAppMembre.membreActuel.getAssociation().get(), InitialisationAppMembre.membreActuel.getPseudo());
+        visites.sort(Comparator.comparing(Visit::date));
 
         combobox.setItems(FXCollections.observableList(visites));
 
@@ -106,13 +101,13 @@ public class VisitesCompteRenduView {
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
 
-            Visite v = (Visite) combobox.getValue();
+            Visit v = (Visit) combobox.getValue();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Rédaction d'un compte-rendu");
             alert.setHeaderText("Voulez-vous confirmer l'envoi de ce compte-rendu ?");
             //Peut etre afficher la date etc
-            alert.setContentText("Date de la visite : " + v.getDate().getDayOfYear() + "-" + v.getDate().getMonthValue() + "-" + v.getDate().getYear());
+            alert.setContentText("Date de la visite : " + v.date().getDayOfYear() + "-" + v.date().getMonthValue() + "-" + v.date().getYear());
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
@@ -121,11 +116,10 @@ public class VisitesCompteRenduView {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
                     String text = textCR.getText();
-                    for(Visite visite : visites){
+                    Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
+                    for(Visit visite : a.getListeVisite()){
                         if(v.equals(visite)){
-                            v.modifCR(text);
                             Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
-                            Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
                             p.setSolde(p.getSolde()+a.getMontantDefraiement());
                             for(Personne membre :a.getListeMembre()){
                                 if(membre.getPseudo().equals(p.getPseudo())){
@@ -135,14 +129,17 @@ public class VisitesCompteRenduView {
                             }
                             a.setBudget(a.getBudget()-a.getMontantDefraiement());
                             InitialisationAppMembre.membreActuel = p;
-                            v.payer();
-                            try {
-                                Main.MaJFichierJSONPersonnes();
-                                Main.MaJFichierJSONAssociation();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            a.getListeVisite().add(visite.withPayee(true).withCr(text));
+                            a.getListeVisite().remove(visite);
+                            break;
                         }
+
+                    }
+                    try {
+                        Main.MaJFichierJSONPersonnes();
+                        Main.MaJFichierJSONAssociation();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                     Stage stage = (Stage) retour.getScene().getWindow();
                     try {

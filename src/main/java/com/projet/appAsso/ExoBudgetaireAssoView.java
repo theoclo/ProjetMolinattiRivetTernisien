@@ -2,12 +2,10 @@ package com.projet.appAsso;
 
 import com.projet.Arbre;
 import com.projet.Main;
-import com.projet.appMembres.AppMembre;
-import com.projet.appMembres.VisitesMembreView;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,8 +106,8 @@ public class ExoBudgetaireAssoView {
         }
 
         int depenses = 0;
-        for(Visite vis : a.getListeVisite()){
-            if(!vis.getCr().equals("")){
+        for(Visit vis : a.getListeVisite()){
+            if(!vis.cr().equals("")){
                 depenses++;
             }
         }
@@ -156,7 +154,7 @@ public class ExoBudgetaireAssoView {
         rapport.getItems().clear();
         rapport.getItems().addAll(rapportActuel(a).split(","));
 
-       annee.getItems().clear();
+        annee.getItems().clear();
         ArrayList<String> anneesB = new ArrayList<>();
         System.out.println(a.getAnneeBudgetaire());
         for(int i = 0; i<=a.getAnneeBudgetaire();i++){

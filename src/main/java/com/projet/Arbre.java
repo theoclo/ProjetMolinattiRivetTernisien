@@ -36,7 +36,7 @@ public class Arbre {
     private Optional<LocalDate> dateClassification;
 
     //private Pair < Boolean , Optional <LocalDate> > classification;
-    private ArrayList <String> listeCR;
+    private ArrayList <String> listeCR; // INUTILE ????
 
     public static ArrayList<Arbre> listeArbres=new ArrayList<Arbre>();
 

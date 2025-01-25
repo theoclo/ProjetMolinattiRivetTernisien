@@ -1,7 +1,7 @@
 package com.projet.appMembres;
 
 import com.projet.entite.Association;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,8 +36,8 @@ public class PlanningMembreView {
     public void initialize(){
 
         nom_membre.setText(InitialisationAppMembre.membreActuel.toString());
-        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get()).getListeVisite();
-        lvisite.sort(Comparator.comparing(Visite::getDate));
+        ArrayList<Visit> lvisite = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get()).getListeVisite();
+        lvisite.sort(Comparator.comparing(Visit::date));
         Collections.reverse(lvisite);
 
         listview.setItems(FXCollections.observableList(lvisite));

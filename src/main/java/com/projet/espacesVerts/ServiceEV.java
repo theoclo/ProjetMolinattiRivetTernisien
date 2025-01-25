@@ -5,7 +5,6 @@ import com.projet.entite.Abonne;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +13,9 @@ public class ServiceEV {
 
     /*  CHAMPS  */
 
-    private String commune;
+    private final String commune;
     private ArrayList<Arbre> listeArbre;
     private ArrayList <String> listeAbonne;
-    private ArrayList < Evenement > listeEvent;
     private ArrayList <Map<Integer, Integer>> listeVotesNonRemarquables;
 
     public static ArrayList<ServiceEV> listeServiceEV = new ArrayList<>();
@@ -30,7 +28,6 @@ public class ServiceEV {
         this.commune = commune;
         this.listeArbre = new ArrayList<>();
         this.listeAbonne = new ArrayList<>();
-        this.listeEvent = new ArrayList<>();
         this.listeVotesNonRemarquables = new ArrayList<>();
     }
 
@@ -38,7 +35,6 @@ public class ServiceEV {
         this.commune = "";
         this.listeArbre = new ArrayList<>();
         this.listeAbonne = new ArrayList<>();
-        this.listeEvent = new ArrayList<>();
         this.listeVotesNonRemarquables = new ArrayList<>();
     }
 
@@ -55,30 +51,15 @@ public class ServiceEV {
     public ArrayList < String > getListeAbonne() {
         return listeAbonne;
     }
-    public ArrayList < Evenement > getListeEvent() {
-        return listeEvent;
-    }
     public ArrayList < Map<Integer, Integer>> getListeVotesNonRemarquables() {return listeVotesNonRemarquables;}
 
 
 
     /*  SETTERS  */
 
-    public void setCommune(String commune) {
-        this.commune = commune;
-    }
     public void setListeArbre(ArrayList < Arbre > listeArbre) {
         this.listeArbre = listeArbre;
     }
-    public void setListeAbonne(ArrayList<String> listeAbonne) {
-        this.listeAbonne = listeAbonne;
-    }
-    public void setListeEvent(ArrayList<Evenement> listeEvent) {
-        this.listeEvent = listeEvent;
-    }
-
-
-
 
     /*  AFFICHAGE  */
 
@@ -86,32 +67,6 @@ public class ServiceEV {
     public String toString() {
         return commune;
     }
-
-    public String showListeArbre() {
-        String str = "";
-        for (int i = 0; i < listeArbre.size(); i++) {
-            str += listeArbre.get(i).toString() + "\n" ;
-        }
-        return str;
-    }
-
-    public String showListeAbonne() {
-        String str = "";
-        for (int i = 0; i < listeAbonne.size(); i++) {
-            str += listeAbonne.get(i).toString() + "\n" ;
-        }
-        return str;
-    }
-
-    public String showListeEvent() {
-        String str = "";
-        for (int i = 0; i < listeEvent.size(); i++) {
-            str += listeEvent.get(i).toString() + "\n" ;
-        }
-        return str;
-    }
-
-
 
     /*  METHODES  */
 
@@ -125,32 +80,7 @@ public class ServiceEV {
         }
     }
 
-    public void addEvent(Evenement event) {
-        listeEvent.add(event);
-    }
-
-    // Evènement aujourd'hui
-    public void organiserEvent(Evenement.TypeEvent typeEvent, Arbre arbreEvent, String descEvent) {
-        Evenement new_event = new Evenement(typeEvent, arbreEvent, LocalDate.now(), this, descEvent);
-        listeEvent.add(new_event);
-        for (String abonne : listeAbonne) {
-            notifier(new_event);
-        }
-    }
-
-    // Evènement à une date futur
-    public void organiserEvent(Evenement.TypeEvent typeEvent, Arbre arbreEvent, LocalDate dateEvent, String descEvent) {
-        if (dateEvent.isBefore(LocalDate.now())) {
-            System.out.println("Date invalide !");
-        }
-        else{
-            Evenement new_event = new Evenement(typeEvent, arbreEvent, dateEvent, this, descEvent);
-            listeEvent.add(new_event);
-            notifier(new_event);
-        }
-    }
-
-    public void notifier(Evenement event) {
+    public void notifier(String event) {
         for (String abonne : listeAbonne) {
             Personne p = Personne.obtenirPersonne(abonne);
             Association a = Association.getAssociation(abonne);
@@ -175,7 +105,7 @@ public class ServiceEV {
 
     public static ArrayList<Personne> obtenirParticuliersAbonne() {
         ArrayList<Personne> personnes = new ArrayList<>();
-        for (String p : listeServiceEV.get(0).getListeAbonne()) {
+        for (String p : listeServiceEV.getFirst().getListeAbonne()) {
             Personne personne = Personne.obtenirPersonne(p);
             if(personne != null){
                 personnes.add(personne);
@@ -186,7 +116,7 @@ public class ServiceEV {
 
     public static ArrayList<Association> obtenirAssosAbonne() {
         ArrayList<Association> associations = new ArrayList<>();
-        for (String a : listeServiceEV.get(0).getListeAbonne()) {
+        for (String a : listeServiceEV.getFirst().getListeAbonne()) {
             Association asso = Association.getAssociation(a);
             if(asso != null){
                 associations.add(asso);

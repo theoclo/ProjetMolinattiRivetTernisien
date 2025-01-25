@@ -2,8 +2,6 @@ package com.projet.launcher;
 
 import com.projet.Arbre;
 import com.projet.appMembres.InitialisationAppMembre;
-import com.projet.entite.Association;
-import com.projet.espacesVerts.Visite;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,8 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
 
 import static com.projet.Main.*;
 

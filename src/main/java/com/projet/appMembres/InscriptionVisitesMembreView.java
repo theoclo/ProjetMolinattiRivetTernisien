@@ -3,9 +3,8 @@ package com.projet.appMembres;
 import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
-import com.projet.espacesVerts.Visite;
+import com.projet.espacesVerts.Visit;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,14 +14,12 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class InscriptionVisitesMembreView {
 
-    private Visite visiteChoisie;
+    private Visit visiteChoisie;
 
     @FXML
     private Label nom_membre;
@@ -45,8 +42,8 @@ public class InscriptionVisitesMembreView {
     @FXML
     public void initialize() {
 
-        ArrayList<Visite> visites= Association.obtenirVisitesSansParticipant(InitialisationAppMembre.membreActuel.getAssociation().get());
-        visites.sort(Comparator.comparing(Visite::getDate));
+        ArrayList<Visit> visites= Association.obtenirVisitesSansParticipant(InitialisationAppMembre.membreActuel.getAssociation().get());
+        visites.sort(Comparator.comparing(Visit::date));
 
         combobox.setItems(FXCollections.observableList(visites));
 
@@ -125,18 +122,22 @@ public class InscriptionVisitesMembreView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    visiteChoisie = (Visite) combobox.getValue();
-                    for(Visite v : visites){
+                    visiteChoisie = (Visit) combobox.getValue();
+                    Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
+                    for(Visit v : a.getListeVisite()){
                         if(visiteChoisie.equals(v)){
-                            v.affecterParticipant(InitialisationAppMembre.membreActuel.getPseudo());
-                            try {
-                                Main.MaJFichierJSONAssociation();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            Visit v2 = v.withParticipant(InitialisationAppMembre.membreActuel.getPseudo());
+                            a.getListeVisite().add(v2);
+                            visiteChoisie = v2;
+                            a.getListeVisite().remove(v);
+                            break;
                         }
                     }
-
+                    try {
+                        Main.MaJFichierJSONAssociation();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
                     p.setNbVisites(p.getNbVisites() + 1);
                     for(Personne pers : Association.getAssociation(p.getAssociation().get()).getListeMembre()){

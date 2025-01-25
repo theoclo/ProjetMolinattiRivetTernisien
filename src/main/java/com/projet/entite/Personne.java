@@ -2,13 +2,10 @@ package com.projet.entite;
 
 import com.projet.Arbre;
 import com.projet.Main;
-import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visite;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.projet.Main.MaJFichierJSONAssociation;
@@ -18,10 +15,10 @@ public class Personne implements Abonne, Entite {
 
     /*  CHAMPS  */
 
-    private String pseudo;
-    private String nom;
-    private String prenom;
-    private String adresse;
+    private final String pseudo;
+    private final String nom;
+    private final String prenom;
+    private final String adresse;
     private Optional<String> abonnement; //se refere à un serviceEV
     private Optional<String> association;
     private ArrayList<String> listeNotif;
@@ -55,7 +52,7 @@ public class Personne implements Abonne, Entite {
         this.association = Optional.empty();
         this.solde = 0;
         this.listeNotif = new ArrayList<>();
-        this.listeCotisation = new ArrayList<LocalDate>();
+        this.listeCotisation = new ArrayList<>();
         this.aCotise = false;
         this.nbVisites = 0;
     }
@@ -86,10 +83,7 @@ public class Personne implements Abonne, Entite {
         return association;
     }
     public Optional<Association> obtenirAssociationObjet() {
-        if(association.isPresent()){
-            return Optional.of(Association.getAssociation(association.get()));
-        }
-        return Optional.empty();
+        return association.map(Association::getAssociation);
     }
 
     public int getSolde() {
@@ -121,18 +115,6 @@ public class Personne implements Abonne, Entite {
         this.listeNotif = listeNotif;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
     public void setAbonnement(Optional<String> abonnement) {
         this.abonnement = abonnement;
     }
@@ -154,22 +136,6 @@ public class Personne implements Abonne, Entite {
     public void setNbVisites(int nbVisites) {this.nbVisites = nbVisites;}
 
     /*  AFFICHAGE  */
-
-    public void lireNotif(){
-        System.out.println("Liste des notifications :");
-        int i=1;
-        for(String notif : this.listeNotif){
-            System.out.println(i+". "+notif);
-            i++;
-        }
-    }
-
-    public void lireCotisation(){
-        System.out.println("Liste des cotisations :");
-        for(LocalDate date : this.listeCotisation){
-            System.out.println(date.getYear()+" : "+date);
-        }
-    }
 
     @Override
     public String toString() {
@@ -219,21 +185,6 @@ public class Personne implements Abonne, Entite {
             sEV.addAbonne(this.getPseudo());
         }
     }
-
-    @Override
-    public void resilierAbo() {
-        if(abonnement.isEmpty()){
-            System.out.println("Vous n'êtes pas abonné au Service EV d'une commune");
-        }
-        else{
-            for(String abonne : ServiceEV.getServiceEV(abonnement.get()).getListeAbonne()){
-                if(abonne.equals(this.getPseudo())){
-                    ServiceEV.getServiceEV(abonnement.get()).getListeAbonne().remove(abonne);
-                }
-            }
-        }
-    }
-
 
 
     @Override
@@ -297,8 +248,9 @@ public class Personne implements Abonne, Entite {
         }
         boolean dejaPresent = false;
         for(Arbre arbre:listeReco){
-            if(arbre.getIdBase()==(a.getIdBase())){
+            if (arbre.getIdBase() == (a.getIdBase())) {
                 dejaPresent = true;
+                break;
             }
         }
 
@@ -307,7 +259,7 @@ public class Personne implements Abonne, Entite {
                 return false;
             }
             else{
-                listeReco.remove(0);
+                listeReco.removeFirst();
                 listeReco.add(a);
                 asso.getListeReco().put(this.pseudo, listeReco);
                 Main.MaJFichierJSONAssociation();
@@ -347,18 +299,6 @@ public class Personne implements Abonne, Entite {
         }
     }
 
-    public void participerVisite(Visite v){
-        if(v.getParticipant() == "" && v.getDate().isBefore(LocalDateTime.now())){
-            v.affecterParticipant(this.pseudo);
-        }
-    }
-
-    public void ecrireCRVisite(Visite v, String CR){
-        if(v.getDate().isAfter(LocalDateTime.now()) && this.pseudo == v.getParticipant()){
-            v.modifCR(CR);
-        }
-    }
-
     public static Personne obtenirPersonne(String pseudo){
         for(Personne p : Personne.listePersonnes){
             if(p.getPseudo().equals(pseudo)){
@@ -368,6 +308,7 @@ public class Personne implements Abonne, Entite {
         return null;
     }
 
+    @Override
     public void ajouterNotification(String notification) throws IOException {
         Personne p = Personne.obtenirPersonne(this.pseudo);
 
