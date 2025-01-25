@@ -48,6 +48,8 @@ public class InscriptionVisitesMembreView {
 
         combobox.setItems(FXCollections.observableList(visites));
 
+        valider.setDisable(true);
+
         combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 valider.setDisable(false);
