@@ -141,7 +141,7 @@ public class ExoBudgetaireAssoView {
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
         Association a = Association.getAssociation(nom_asso.getText());
-
+        InitialisationAppAsso.associationActuelle = a;
         membres.getItems().clear();
         membres.getItems().addAll(exclusActuels(a).split(","));
 
@@ -313,18 +313,6 @@ public class ExoBudgetaireAssoView {
                             Main.MaJFichierJSONPersonnes();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
-                        }
-
-                        System.out.println("Bouton 'Retour' cliqué");
-                        Stage stage = (Stage) retour.getScene().getWindow();
-                        try {
-                            FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_association.fxml"));
-                            fxmlLoader.setController(new AssociationAssoView());
-                            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                            stage.setScene(scene);
-                            stage.setTitle("Application Association");
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
 
                     }

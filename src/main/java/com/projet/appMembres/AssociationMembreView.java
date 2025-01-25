@@ -1,5 +1,6 @@
 package com.projet.appMembres;
 
+import com.projet.entite.Personne;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -94,7 +95,8 @@ public class AssociationMembreView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
                     try {
-                        boolean fait = InitialisationAppMembre.membreActuel.quitterAsso();
+                        Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
+                        boolean fait = p.quitterAsso();
                         if(!fait){
                             Alert alert2 = new Alert(Alert.AlertType.ERROR);
                             alert2.setTitle("Erreur");
