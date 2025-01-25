@@ -28,6 +28,7 @@ public class VisitesAssoView {
     @FXML
     private Button planning;
 
+
     @FXML
     private Button retour;
 
