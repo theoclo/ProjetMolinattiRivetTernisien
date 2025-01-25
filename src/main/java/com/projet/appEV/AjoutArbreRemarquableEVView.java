@@ -48,7 +48,7 @@ public class AjoutArbreRemarquableEVView {
         ArrayList<String>arbreNonRemarquable= new ArrayList<>();
         ArrayList<Integer> idNonRemarquable = new ArrayList<>();
 
-        Map<Arbre, Integer> arbreVotes = ServiceEV.listeServiceEV.get(0).obtenirVotesNonRemarquables();
+        Map<Arbre, Integer> arbreVotes = ServiceEV.listeServiceEV.getFirst().obtenirVotesNonRemarquables();
         List<Map.Entry<Arbre, Integer>> sortedEntries = arbreVotes.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toList());
@@ -164,12 +164,17 @@ public class AjoutArbreRemarquableEVView {
                     if (buttonType == buttonTypeYes) {
                         System.out.println("L'utilisateur a cliqué sur Oui");
 
-
-
                         for(Arbre a : ServiceEV.listeServiceEV.getFirst().getListeArbre()){
                             if(a.idBase() == finalArbreSelectionne.idBase()){
                                 ServiceEV.listeServiceEV.getFirst().getListeArbre().remove(a);
                                 ServiceEV.listeServiceEV.getFirst().getListeArbre().add(finalArbreSelectionne.withClassifie(true).withDateClassification(Optional.of(LocalDate.now())));
+                                break;
+                            }
+                        }
+                        for(Arbre a : Arbre.listeArbres){
+                            if(a.idBase() == finalArbreSelectionne.idBase()){
+                                Arbre.listeArbres.remove(a);
+                                Arbre.listeArbres.add(finalArbreSelectionne.withClassifie(true).withDateClassification(Optional.of(LocalDate.now())));
                                 break;
                             }
                         }
