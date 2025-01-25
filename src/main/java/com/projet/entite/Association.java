@@ -6,6 +6,7 @@ import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.espacesVerts.ServiceEV;
 import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
+import net.datafaker.Faker;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -383,9 +384,9 @@ public class Association implements Abonne{
             p.setListeCotisation(new ArrayList<LocalDate>());
             p.setaCotise(false);
             p.setNbVisites(0);
-            Main.MaJFichierJSONAssociation();
-            Main.MaJFichierJSONPersonnes();
-            Main.MaJFichierJSONAssociation();
+            MaJFichierJSONAssociation();
+            MaJFichierJSONPersonnes();
+            MaJFichierJSONAssociation();
             //InitialisationAppMembre.associations.clear();
             //InitialisationAppMembre.associations.addAll(Association.listeAssociations);
 
@@ -404,7 +405,7 @@ public class Association implements Abonne{
     }
 
     public static Association getAssociation(String nom) {
-        Association asso = new Association();
+        Association asso = null;
         for(Association a : listeAssociations){
             if(a.getNom().equals(nom)){
                 asso = a;
@@ -481,8 +482,8 @@ public class Association implements Abonne{
                     budget -= montantDefraiement;
                     v.payer();
                     p.setSolde(p.getSolde()+montantDefraiement);
-                    Main.MaJFichierJSONPersonnes();
-                    Main.MaJFichierJSONAssociation();
+                    MaJFichierJSONPersonnes();
+                    MaJFichierJSONAssociation();
                     return true;
                 }
                 else{
@@ -612,7 +613,7 @@ public class Association implements Abonne{
     }
 
     public void ajouterFacturesBase(){
-        net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
+        Faker faker = new Faker(new Locale("fr_FR", "FR"));
         this.listeFacturesNonPayees.add(faker.number().numberBetween(200,300)+"€ : Electricite");
         this.listeFacturesNonPayees.add(faker.number().numberBetween(100,200)+"€ : Eau");
         this.listeFacturesNonPayees.add(faker.number().numberBetween(500,700)+"€ : Loyer");

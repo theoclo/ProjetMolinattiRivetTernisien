@@ -84,7 +84,7 @@ public class ServiceEV {
 
     @Override
     public String toString() {
-        return "Service des Espaces Verts de la commune de : " + commune;
+        return commune;
     }
 
     public String showListeArbre() {
@@ -219,7 +219,6 @@ public class ServiceEV {
         }
         return votes;
     }
-
 
 
 }

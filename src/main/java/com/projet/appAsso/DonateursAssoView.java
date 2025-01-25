@@ -3,6 +3,7 @@ package com.projet.appAsso;
 import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
+import com.projet.espacesVerts.ServiceEV;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -119,6 +120,18 @@ public class DonateursAssoView {
                     personnes.add(p.getPseudo());
                 }
             }
+            for(Association asso : Association.listeAssociations){
+                if(! a.getListeDonateurs().contains(asso.getNom()) && ! asso.getNom().equals(nom_asso.getText())){
+                    personnes.add(asso.getNom());
+                }
+            }
+            for(ServiceEV sEV : ServiceEV.listeServiceEV){
+                if(! a.getListeDonateurs().contains(sEV.getCommune())){
+                    personnes.add(sEV.getCommune());
+                }
+            }
+
+
             comboBox.setItems(FXCollections.observableArrayList(personnes));
             //comboBox.getItems().addAll(personnes sans asso);
 
@@ -141,20 +154,31 @@ public class DonateursAssoView {
                 if (response == okButton) {
                     String selectedDonateur = comboBox.getValue();
                     Personne donateur = Personne.obtenirPersonne(selectedDonateur);
+                    Association asso = Association.getAssociation(selectedDonateur);
+                    System.out.println("assos : "+asso);
+                    ServiceEV sEV = ServiceEV.getServiceEV(selectedDonateur);
                     if (selectedDonateur != null) {
                         System.out.println("Donateur ajouté : " + selectedDonateur);
-                        a.ajouterDonateur(donateur.getPseudo());
+                        if(donateur != null){
+                            a.ajouterDonateur(donateur.getPseudo());
+                            System.out.println("test");
+                        }
+                        else if(asso != null){
+                            System.out.println("asso");
+                            a.ajouterDonateur(asso.getNom());
+                        }
+                        else{
+                            System.out.println("null");
+                            a.ajouterDonateur(sEV.getCommune());
+
+                        }
 
                         try {
                             Main.MaJFichierJSONAssociation();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        for(Personne p : Personne.listePersonnes){
-                            if(! a.getListeDonateurs().contains(p.getPseudo())){
-                                personnes.add(p.getPseudo());
-                            }
-                        }
+
                         Stage stage = (Stage) refresh.getScene().getWindow();
                         try {
                             FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_donateurs.fxml"));
@@ -266,21 +290,28 @@ public class DonateursAssoView {
             btnValider.setOnMouseClicked(e -> {
 
                 Personne d = Personne.obtenirPersonne(donateur);
-                Personne.listePersonnes.remove(d);
-                d.setSolde(d.getSolde() - Integer.valueOf(montantField.getText()));
-                for(Association as : Association.listeAssociations) {
-                    for (Personne membre : as.getListeMembre()) {
-                        if (membre.getPseudo().equals(d.getPseudo())) {
-                            as.getListeMembre().remove(membre);
-                            membre = d;
-                            as.getListeMembre().add(membre);
-                            break;
+                Association asso = Association.getAssociation(donateur);
+                if(d != null) {
+                    Personne.listePersonnes.remove(d);
+                    d.setSolde(d.getSolde() - Integer.valueOf(montantField.getText()));
+                    for (Association as : Association.listeAssociations) {
+                        for (Personne membre : as.getListeMembre()) {
+                            if (membre.getPseudo().equals(d.getPseudo())) {
+                                as.getListeMembre().remove(membre);
+                                membre = d;
+                                as.getListeMembre().add(membre);
+                                break;
+                            }
                         }
                     }
+                    Personne.listePersonnes.add(d);
+                    System.out.println("Personne : " + d.affiche());
                 }
-                Personne.listePersonnes.add(d);
-                System.out.println("Personne : "+d.affiche());
-
+                else if(asso != null){
+                    Association.listeAssociations.remove(asso);
+                    asso.setBudget(asso.getBudget() - Integer.valueOf(montantField.getText()));
+                    Association.listeAssociations.add(asso);
+                }
                 a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
                 a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
 
