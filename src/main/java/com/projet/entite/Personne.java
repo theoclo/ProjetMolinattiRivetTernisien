@@ -282,19 +282,21 @@ public class Personne implements Abonne, Entite {
     }
 
     public void retirerArbre(Arbre a) throws IOException {
-        Association asso = Association.getAssociation(association.get());
-        ArrayList<Arbre> listeReco=new ArrayList<>();
-        if(asso.getListeReco().containsKey(this.pseudo)){
-            listeReco = asso.getListeReco().get(this.pseudo);
-        }
-        for(Arbre arbre:listeReco){
-            if(arbre.idBase()==(a.idBase())){
-                listeReco.remove(arbre);
-                System.out.println(listeReco);
-                asso.getListeReco().put(this.pseudo, listeReco);
-                Main.MaJFichierJSONPersonnes();
-                Main.MaJFichierJSONAssociation();
-                return;
+        if(association.isPresent()) {
+            Association asso = Association.getAssociation(association.get());
+            ArrayList<Arbre> listeReco=new ArrayList<>();
+            if(asso.getListeReco().containsKey(this.pseudo)){
+                listeReco = asso.getListeReco().get(this.pseudo);
+            }
+            for(Arbre arbre:listeReco){
+                if(arbre.idBase()==(a.idBase())){
+                    listeReco.remove(arbre);
+                    System.out.println(listeReco);
+                    asso.getListeReco().put(this.pseudo, listeReco);
+                    Main.MaJFichierJSONPersonnes();
+                    Main.MaJFichierJSONAssociation();
+                    return;
+                }
             }
         }
     }

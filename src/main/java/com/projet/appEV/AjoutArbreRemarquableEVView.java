@@ -192,6 +192,14 @@ public class AjoutArbreRemarquableEVView {
                                 throw new RuntimeException(e);
                             }
                         }
+                        for(Personne p : Personne.listePersonnes){
+                            Arbre a = Arbre.obtenirArbre(finalArbreSelectionne.idBase());
+                            try {
+                                p.retirerArbre(a);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
 
                         InitialisationAppMembre.arbresNonRemarquables.remove(finalArbreSelectionne);
                         InitialisationAppMembre.arbresRemarquables.add(finalArbreSelectionne.withClassifie(true).withDateClassification(Optional.of(LocalDate.now())));
