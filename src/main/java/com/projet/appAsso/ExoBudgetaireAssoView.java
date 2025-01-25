@@ -250,15 +250,16 @@ public class ExoBudgetaireAssoView {
                             idVotes.put(entree.getKey().getIdBase(), entree.getValue() );
                         }
                         ServiceEV.listeServiceEV.get(0).ajouterVotesNonRemarquables(idVotes);
-                        a.getListeReco().clear();
-                        a.setAnneeBudgetaire(a.getAnneeBudgetaire()+1);
-                        a.getListeDemandeDons().clear();
                         ArrayList<String> valeurs = new ArrayList<>();
                         valeurs.add(donsActuels(a));
                         valeurs.add(exclusActuels(a));
                         valeurs.add(votesActuels(a));
                         valeurs.add(rapportActuel(a));
                         a.getListeExercicesBudgetaires().add(valeurs);
+                        a.getListeReco().clear();
+                        a.setAnneeBudgetaire(a.getAnneeBudgetaire()+1);
+                        a.getListeDemandeDons().clear();
+                        a.getListeVisite().clear();
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
                             pers.setNbVisites(0);
