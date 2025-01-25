@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -109,7 +111,13 @@ public class InscriptionVisitesMembreView {
             alert.setTitle("Inscription à une visite");
             alert.setHeaderText("Êtes-vous sûr de vouloir vous inscrire pour faire cette visite ?");
             //Peut etre afficher la date etc
-            alert.setContentText("");
+            Text attentionText = new Text("ATTENTION, IL FAUT FAIRE LE COMPTE RENDU POUR VALIDER LA VISITE ET POUR ÊTRE PAYÉ");
+            attentionText.setStyle("-fx-fill: red; -fx-font-weight: bold;");
+
+            TextFlow content = new TextFlow(attentionText);
+
+            alert.getDialogPane().setContent(content);
+
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
