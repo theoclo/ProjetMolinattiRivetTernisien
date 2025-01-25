@@ -92,10 +92,17 @@ public class ExoBudgetaireAssoView {
     private String rapportActuel(Association a){
         StringBuilder res = new StringBuilder();
         int recettes = 0;
+        int cotisations =0;
         for(int i = 0; i<a.getListeDemandeDons().size();i++){
             int j = a.getListeDemandeDons().get(i).indexOf(':');
             String word = a.getListeDemandeDons().get(i).substring(0, j);
             recettes=recettes+Integer.parseInt(word);
+        }
+
+        for(Personne membre : a.getListeMembre()){
+            if(membre.getaCotise()){
+                cotisations=cotisations+a.getPrixCotisation();
+            }
         }
 
         int depenses = 0;
@@ -104,9 +111,15 @@ public class ExoBudgetaireAssoView {
                 depenses++;
             }
         }
-        res.append("Nb visites : "+a.getListeVisite().size()+",");
-        res.append("Dépenses : "+depenses*a.getMontantDefraiement() +"€"+",");
-        res.append("Recettes : "+recettes+"€");
+
+
+
+        res.append("Nb visites prévues : "+a.getListeVisite().size()+",");
+        res.append("Nb visites réalisées : "+depenses+",");
+        res.append("Dépenses : "+depenses*a.getMontantDefraiement() +"€,");
+        res.append("Recettes : "+(recettes+cotisations)+"€,");
+        res.append("dont cotisations : "+cotisations+"€,");
+        res.append("dont dons : "+recettes+"€");
         return res.toString();
     }
 

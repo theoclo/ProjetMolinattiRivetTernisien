@@ -155,8 +155,16 @@ public class DonateursAssoView {
                                 personnes.add(p.getPseudo());
                             }
                         }
-                        comboBox.setItems(FXCollections.observableArrayList(personnes));
-                        list.setItems(FXCollections.observableArrayList(a.getListeDonateurs()));
+                        Stage stage = (Stage) refresh.getScene().getWindow();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_donateurs.fxml"));
+                            fxmlLoader.setController(new DonateursAssoView());
+                            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                            stage.setScene(scene);
+                            stage.setTitle("Application Association");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         System.out.println("Aucun donateur sélectionné !");
                     }
@@ -191,7 +199,17 @@ public class DonateursAssoView {
                         throw new RuntimeException(e);
                     }
 
-                    list.setItems(FXCollections.observableArrayList(a.getListeDonateurs()));
+                    Stage stage = (Stage) refresh.getScene().getWindow();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_donateurs.fxml"));
+                        fxmlLoader.setController(new DonateursAssoView());
+                        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                        stage.setScene(scene);
+                        stage.setTitle("Application Association");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
 
                 } else {
                     System.out.println("Annulation de la suppression.");
@@ -247,6 +265,19 @@ public class DonateursAssoView {
             alert.getDialogPane().getButtonTypes().setAll(buttonTypeClose);
             btnValider.setOnMouseClicked(e -> {
 
+                Personne d = Personne.obtenirPersonne(donateur);
+                d.setSolde(d.getSolde() - Integer.valueOf(montantField.getText()));
+                for(Association as : Association.listeAssociations) {
+                    for (Personne membre : as.getListeMembre()) {
+                        if (membre.getPseudo().equals(d.getPseudo())) {
+                            System.out.println(membre);
+                            as.getListeMembre().remove(membre);
+                            as.getListeMembre().add(d);
+                            break;
+                        }
+                    }
+                }
+
                 a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
                 a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
 
@@ -256,6 +287,16 @@ public class DonateursAssoView {
                     Main.MaJFichierJSONAssociation();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
+                }
+                Stage s = (Stage) refresh.getScene().getWindow();
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_donateurs.fxml"));
+                    fxmlLoader.setController(new DonateursAssoView());
+                    Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                    s.setScene(scene);
+                    s.setTitle("Application Association");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             });
 
