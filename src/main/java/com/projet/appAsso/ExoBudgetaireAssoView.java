@@ -297,6 +297,7 @@ public class ExoBudgetaireAssoView {
                         a.getListeFacturesNonPayees().clear();
                         a.ajouterFacturesBase();
                         a.getListeFacturesPayees().clear();
+                        InitialisationAppAsso.associationActuelle =a;
 
                         for(Personne pers : a.getListeMembre()){
                             pers.setaCotise(false);
@@ -314,6 +315,17 @@ public class ExoBudgetaireAssoView {
                             throw new RuntimeException(e);
                         }
 
+                        System.out.println("Bouton 'Retour' cliqué");
+                        Stage stage = (Stage) retour.getScene().getWindow();
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(AppAsso.class.getResource("/com.projet.appAsso/asso_association.fxml"));
+                            fxmlLoader.setController(new AssociationAssoView());
+                            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                            stage.setScene(scene);
+                            stage.setTitle("Application Association");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                     }
 
