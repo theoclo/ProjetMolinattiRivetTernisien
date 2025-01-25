@@ -1,7 +1,7 @@
 package com.projet.appAsso;
 
 import com.projet.entite.Association;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,19 +41,19 @@ public class CompteRenduVisiteAssoView {
     public void initialize() {
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
 
-        ArrayList<Visit> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
-        ArrayList<Visit> visites = new ArrayList<>();
-        for(Visit v : lvisite){
+        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
+        ArrayList<Visite> visites = new ArrayList<>();
+        for(Visite v : lvisite){
             if(!v.cr().equals("")){
                 visites.add(v);
             }
         }
-        visites.sort(Comparator.comparing(Visit::date).reversed());
+        visites.sort(Comparator.comparing(Visite::date).reversed());
 
         combobox.setItems(FXCollections.observableList(visites));
 
         combobox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Visit v = (Visit) combobox.getSelectionModel().getSelectedItem();
+            Visite v = (Visite) combobox.getSelectionModel().getSelectedItem();
             text.setText(v.cr());
         });
 

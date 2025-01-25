@@ -1,7 +1,7 @@
 package com.projet.appAsso;
 
 import com.projet.entite.Association;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,8 +35,8 @@ public class PlanningAssoView {
     @FXML
     public void initialize(){
         nom_asso.setText(InitialisationAppAsso.associationActuelle.toString());
-        ArrayList<Visit> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
-        lvisite.sort(Comparator.comparing(Visit::date));
+        ArrayList<Visite> lvisite = Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite();
+        lvisite.sort(Comparator.comparing(Visite::date));
         Collections.reverse(lvisite);
 
         listview.setItems(FXCollections.observableList(lvisite));

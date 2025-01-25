@@ -2,7 +2,7 @@ package com.projet.entite;
 
 import com.projet.Arbre;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
 import net.datafaker.Faker;
 
@@ -30,7 +30,7 @@ public class Association implements Abonne{
     private ArrayList<String> listeFacturesNonPayees; //String de type : String f = "50 : facture";
     private ArrayList<String> listeFacturesPayees;
     private Map<String, ArrayList<Arbre>> listeReco;
-    private ArrayList<Visit> listeVisite;
+    private ArrayList<Visite> listeVisite;
     private int anneeBudgetaire;
     private ArrayList<String> listeDemandeDons;
     private ArrayList<ArrayList<String>> listeExercicesBudgetaires;
@@ -156,7 +156,7 @@ public class Association implements Abonne{
         return listeReco;
     }
 
-    public ArrayList<Visit> getListeVisite() {
+    public ArrayList<Visite> getListeVisite() {
         return listeVisite;
     }
 
@@ -405,10 +405,10 @@ public class Association implements Abonne{
         return sortedMap;
     }
 
-    public static ArrayList<Visit> obtenirVisitesSansParticipant(String asso){
-        ArrayList<Visit> visites = new ArrayList<>();
+    public static ArrayList<Visite> obtenirVisitesSansParticipant(String asso){
+        ArrayList<Visite> visites = new ArrayList<>();
         Association a = Association.getAssociation(asso);
-        for(Visit v : a.listeVisite){
+        for(Visite v : a.listeVisite){
             if(v.association().equals(asso)){
                 if(v.participant().equals("")){
                     visites.add(v);
@@ -419,10 +419,10 @@ public class Association implements Abonne{
         return visites;
     }
 
-    public static ArrayList<Visit> obtenirVisitesParticipant(String asso, String participant){
-        ArrayList<Visit> visites = new ArrayList<>();
+    public static ArrayList<Visite> obtenirVisitesParticipant(String asso, String participant){
+        ArrayList<Visite> visites = new ArrayList<>();
         Association a = Association.getAssociation(asso);
-        for(Visit v : a.listeVisite){
+        for(Visite v : a.listeVisite){
             if(v.association().equals(asso)){
                 if(v.participant().equals(participant) && v.cr().equals("")){
                     visites.add(v);

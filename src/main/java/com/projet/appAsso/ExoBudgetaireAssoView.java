@@ -5,7 +5,7 @@ import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
 import com.projet.espacesVerts.ServiceEV;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,7 +106,7 @@ public class ExoBudgetaireAssoView {
         }
 
         int depenses = 0;
-        for(Visit vis : a.getListeVisite()){
+        for(Visite vis : a.getListeVisite()){
             if(!vis.cr().equals("")){
                 depenses++;
             }

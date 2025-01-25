@@ -3,7 +3,7 @@ package com.projet.appMembres;
 import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,8 +41,8 @@ public class VisitesCompteRenduView {
 
     @FXML
     public void initialize() {
-        ArrayList<Visit> visites= Association.obtenirVisitesParticipant(InitialisationAppMembre.membreActuel.getAssociation().get(), InitialisationAppMembre.membreActuel.getPseudo());
-        visites.sort(Comparator.comparing(Visit::date));
+        ArrayList<Visite> visites= Association.obtenirVisitesParticipant(InitialisationAppMembre.membreActuel.getAssociation().get(), InitialisationAppMembre.membreActuel.getPseudo());
+        visites.sort(Comparator.comparing(Visite::date));
 
         combobox.setItems(FXCollections.observableList(visites));
 
@@ -101,7 +101,7 @@ public class VisitesCompteRenduView {
         valider.setOnMouseClicked(event -> {
             System.out.println("Bouton 'Valider' cliqué");
 
-            Visit v = (Visit) combobox.getValue();
+            Visite v = (Visite) combobox.getValue();
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Rédaction d'un compte-rendu");
@@ -117,7 +117,7 @@ public class VisitesCompteRenduView {
 
                     String text = textCR.getText();
                     Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
-                    for(Visit visite : a.getListeVisite()){
+                    for(Visite visite : a.getListeVisite()){
                         if(v.equals(visite)){
                             Personne p = Personne.obtenirPersonne(InitialisationAppMembre.membreActuel.getPseudo());
                             p.setSolde(p.getSolde()+a.getMontantDefraiement());

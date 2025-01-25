@@ -2,7 +2,7 @@ package com.projet.appMembres;
 
 import com.projet.Arbre;
 import com.projet.entite.Personne;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -15,7 +15,7 @@ public class InitialisationAppMembre {
     public static ObservableList<Arbre> arbresRemarquables = FXCollections.observableArrayList();
     //public static  ObservableList<Association> associations = FXCollections.observableArrayList();
     public static ObservableList<Arbre> listeRecommandations = FXCollections.observableArrayList();
-    public static ObservableList<Visit> listeVisites = FXCollections.observableArrayList();
+    public static ObservableList<Visite> listeVisites = FXCollections.observableArrayList();
 
 
     public static void main(String[] args) throws IOException{

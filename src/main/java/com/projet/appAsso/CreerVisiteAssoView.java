@@ -4,7 +4,7 @@ import com.projet.Arbre;
 import com.projet.Main;
 import com.projet.appMembres.InitialisationAppMembre;
 import com.projet.entite.Association;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -143,7 +143,7 @@ public class CreerVisiteAssoView {
                     System.out.println("L'utilisateur a cliqué sur Oui");
                     Stage stage = (Stage) creer.getScene().getWindow();
 
-                    Visit v = new Visit(InitialisationAppAsso.associationActuelle.getNom(), finalArbreSelectionne, dateSelectionnee.atStartOfDay(),"","",false);
+                    Visite v = new Visite(InitialisationAppAsso.associationActuelle.getNom(), finalArbreSelectionne, dateSelectionnee.atStartOfDay(),"","",false);
                     Association.getAssociation(InitialisationAppAsso.associationActuelle.getNom()).getListeVisite().add(v);
                     try {
                         Main.MaJFichierJSONAssociation();

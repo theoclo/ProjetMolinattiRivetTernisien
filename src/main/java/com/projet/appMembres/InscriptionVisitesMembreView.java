@@ -3,7 +3,7 @@ package com.projet.appMembres;
 import com.projet.Main;
 import com.projet.entite.Association;
 import com.projet.entite.Personne;
-import com.projet.espacesVerts.Visit;
+import com.projet.espacesVerts.Visite;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ import java.util.Comparator;
 
 public class InscriptionVisitesMembreView {
 
-    private Visit visiteChoisie;
+    private Visite visiteChoisie;
 
     @FXML
     private Label nom_membre;
@@ -42,8 +42,8 @@ public class InscriptionVisitesMembreView {
     @FXML
     public void initialize() {
 
-        ArrayList<Visit> visites= Association.obtenirVisitesSansParticipant(InitialisationAppMembre.membreActuel.getAssociation().get());
-        visites.sort(Comparator.comparing(Visit::date));
+        ArrayList<Visite> visites= Association.obtenirVisitesSansParticipant(InitialisationAppMembre.membreActuel.getAssociation().get());
+        visites.sort(Comparator.comparing(Visite::date));
 
         combobox.setItems(FXCollections.observableList(visites));
 
@@ -122,11 +122,11 @@ public class InscriptionVisitesMembreView {
                 if (buttonType == buttonTypeYes) {
                     System.out.println("L'utilisateur a cliqué sur Oui");
 
-                    visiteChoisie = (Visit) combobox.getValue();
+                    visiteChoisie = (Visite) combobox.getValue();
                     Association a = Association.getAssociation(InitialisationAppMembre.membreActuel.getAssociation().get());
-                    for(Visit v : a.getListeVisite()){
+                    for(Visite v : a.getListeVisite()){
                         if(visiteChoisie.equals(v)){
-                            Visit v2 = v.withParticipant(InitialisationAppMembre.membreActuel.getPseudo());
+                            Visite v2 = v.withParticipant(InitialisationAppMembre.membreActuel.getPseudo());
                             a.getListeVisite().add(v2);
                             visiteChoisie = v2;
                             a.getListeVisite().remove(v);
