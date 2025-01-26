@@ -1,15 +1,15 @@
 package com.projet.espacesVerts;
 
 import com.projet.Arbre;
-import com.projet.entite.Abonne;
 import com.projet.entite.Association;
+import com.projet.entite.Entite;
 import com.projet.entite.Personne;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServiceEV {
+public class ServiceEV implements Entite {
 
     /*  CHAMPS  */
 
@@ -151,6 +151,10 @@ public class ServiceEV {
     }
 
 
+    @Override
+    public void transfererMontant(int montant, Association asso) {
+        asso.setBudget(asso.getBudget() +montant);
+    }
 }
 
 

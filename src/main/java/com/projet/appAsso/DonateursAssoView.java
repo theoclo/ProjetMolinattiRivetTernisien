@@ -161,16 +161,12 @@ public class DonateursAssoView {
                         System.out.println("Donateur ajouté : " + selectedDonateur);
                         if(donateur != null){
                             a.ajouterDonateur(donateur.getPseudo());
-                            System.out.println("test");
                         }
                         else if(asso != null){
-                            System.out.println("asso");
                             a.ajouterDonateur(asso.getNom());
                         }
                         else{
-                            System.out.println("null");
                             a.ajouterDonateur(sEV.getCommune());
-
                         }
 
                         try {
@@ -209,9 +205,7 @@ public class DonateursAssoView {
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
             alert.showAndWait().ifPresent(buttonType -> {
 
-                //EN GROS LE BOUTON EST GRISE TANT QUE RIEN N'EST SELECTIONNE
-
-                if (buttonType == buttonTypeYes) { // AND MEMBER SELECTED , CAR ON NE PEUT PAS VIRER UN MEMBRE SANS LE SELECTIONNER
+                if (buttonType == buttonTypeYes) {
                     System.out.println("Donateur supprimé");
 
                     String donateur = (String) list.getSelectionModel().getSelectedItem();
@@ -291,28 +285,18 @@ public class DonateursAssoView {
 
                 Personne d = Personne.obtenirPersonne(donateur);
                 Association asso = Association.getAssociation(donateur);
+                ServiceEV sEV = ServiceEV.getServiceEV(donateur);
                 if(d != null) {
-                    Personne.listePersonnes.remove(d);
-                    d.setSolde(d.getSolde() - Integer.valueOf(montantField.getText()));
-                    for (Association as : Association.listeAssociations) {
-                        for (Personne membre : as.getListeMembre()) {
-                            if (membre.getPseudo().equals(d.getPseudo())) {
-                                as.getListeMembre().remove(membre);
-                                membre = d;
-                                as.getListeMembre().add(membre);
-                                break;
-                            }
-                        }
-                    }
-                    Personne.listePersonnes.add(d);
+                    d.transfererMontant(Integer.valueOf(montantField.getText()), a);
                     System.out.println("Personne : " + d.affiche());
                 }
                 else if(asso != null){
-                    Association.listeAssociations.remove(asso);
-                    asso.setBudget(asso.getBudget() - Integer.valueOf(montantField.getText()));
-                    Association.listeAssociations.add(asso);
+                    asso.transfererMontant(Integer.valueOf(montantField.getText()), a);
+
                 }
-                a.setBudget(a.getBudget() + Integer.valueOf(montantField.getText()));
+                else{
+                    sEV.transfererMontant(Integer.valueOf(montantField.getText()), a);
+                }
                 a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
 
                 Stage stage = (Stage) btnValider.getScene().getWindow();

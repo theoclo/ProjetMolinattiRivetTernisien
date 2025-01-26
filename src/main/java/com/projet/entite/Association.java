@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static com.projet.Main.MaJFichierJSONAssociation;
 import static com.projet.Main.MaJFichierJSONPersonnes;
 
-public class Association implements Abonne{
+public class Association implements Abonne, Entite{
 
     /*  CHAMPS  */
 
@@ -457,5 +457,12 @@ public class Association implements Abonne{
         this.listeFacturesNonPayees.add(faker.number().numberBetween(50,150)+"€ : Autre");
     }
 
+    @Override
+    public void transfererMontant(int montant, Association asso) {
+        Association.listeAssociations.remove(this);
+        this.setBudget(this.getBudget() - montant);
+        Association.listeAssociations.add(this);
+        asso.setBudget(asso.getBudget() +montant);
+    }
 }
 

@@ -188,13 +188,21 @@ public class Personne implements Abonne, Entite {
 
 
     @Override
-    public boolean transfererMontant(int montant, Association asso) {
-        if(solde >= montant) {
-            solde -= montant;
-            asso.ajouterBudget(montant);
-            return true;
+    public void transfererMontant(int montant, Association asso) {
+        Personne.listePersonnes.remove(this);
+        this.setSolde(this.getSolde() - montant);
+        for (Association as : Association.listeAssociations) {
+            for (Personne membre : as.getListeMembre()) {
+                if (membre.getPseudo().equals(this.getPseudo())) {
+                    as.getListeMembre().remove(membre);
+                    membre = this;
+                    as.getListeMembre().add(membre);
+                    break;
+                }
+            }
         }
-        return false;
+        Personne.listePersonnes.add(this);
+        asso.setBudget(asso.getBudget() +montant);
     }
 
     public void payerAsso() throws IOException {
