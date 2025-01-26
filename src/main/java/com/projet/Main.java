@@ -21,7 +21,8 @@ public class Main {
             String line = "";
             CSVreader.readLine(); // Passer la première ligne
             Arbre arbre;
-            while ((line = CSVreader.readLine()) != null) {
+            int k = 0;
+            while ((line = CSVreader.readLine()) != null && k < 5000) {
 
                 List<String> info= Arrays.asList(line.split(";"));
 
@@ -61,6 +62,7 @@ public class Main {
                     arbre = arbre.withClassifie(true);
                 }
                 Arbre.listeArbres.add(arbre);
+                k++;
             }
 
             CSVreader.close();
