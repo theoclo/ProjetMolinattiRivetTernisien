@@ -80,19 +80,6 @@ public class ServiceEV implements Entite {
         }
     }
 
-    public void notifier(String event) {
-        for (String abonne : listeAbonne) {
-            Personne p = Personne.obtenirPersonne(abonne);
-            Association a = Association.getAssociation(abonne);
-            if(a==null){
-                p.getListeNotif().add("Un évènement a été organisé : " + event.toString());
-            }
-            else{
-                a.getListeNotif().add("Un évènement a été organisé : " + event.toString());
-            }
-        }
-    }
-
     public static ServiceEV getServiceEV(String nom){
         ServiceEV serviceEV=null;
         for(ServiceEV service : ServiceEV.listeServiceEV){

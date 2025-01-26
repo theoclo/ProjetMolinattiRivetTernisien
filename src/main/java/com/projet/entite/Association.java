@@ -1,7 +1,6 @@
 package com.projet.entite;
 
 import com.projet.Arbre;
-import com.projet.espacesVerts.ServiceEV;
 import com.projet.espacesVerts.Visite;
 import javafx.util.Pair;
 import net.datafaker.Faker;
@@ -192,10 +191,6 @@ public class Association implements Abonne, Entite{
         this.abonnement = abonnement;
     }
 
-    public void setListeMembre(ArrayList<Personne> listeMembre) {
-        this.listeMembre = listeMembre;
-    }
-
     public void setBudget(int budget) {
         this.budget = budget;
     }
@@ -209,35 +204,6 @@ public class Association implements Abonne, Entite{
     @Override
     public String toString() {
         return nom;
-    }
-
-    public String affiche() { //affiche toutes les informations
-        String str="Association [nom = "+nom;
-        if(abonnement.isPresent()){
-            str+= ", abonnement = "+abonnement.get().toString();
-        }
-        str+= ", president = "+president.getNom();
-        str+= "\n listeMembre = "+listeMembre.toString();
-        if(listeNotif != null) {
-            str+="ListeNotif= " + listeNotif + "\n";
-        }
-
-        str+= "\n budget = "+budget+", prixCotisation = "+prixCotisation+", defraiement = "+montantDefraiement;
-        str+="\n listeDonateurs = "+listeDonateurs.toString();
-        str+= "\n listeFactures = "+ listeFacturesNonPayees.toString();
-        return str;
-    }
-
-
-    @Override
-    public void sAbonner(ServiceEV sEV) {
-        if(abonnement.isPresent()) {
-            System.out.println("Vous avez déjà un abonnement : "+abonnement.get());
-        }
-        else{
-            setAbonnement(Optional.of(sEV.getCommune()));
-            sEV.addAbonne(this.getNom());
-        }
     }
 
     public void ajouterMembre(Personne p) {
@@ -290,10 +256,6 @@ public class Association implements Abonne, Entite{
 
     }
 
-    public void ajouterBudget(int montant){
-        budget += montant;
-    }
-
     public static Association getAssociation(String nom) {
         Association asso = null;
         for(Association a : listeAssociations){
@@ -303,8 +265,6 @@ public class Association implements Abonne, Entite{
         }
         return asso;
     }
-
-
 
     public void ajouterDonateur(String p){
         if(listeDonateurs.contains(p)){
