@@ -35,7 +35,7 @@ public class Association implements Abonne, Entite{
     private ArrayList<String> listeDemandeDons;
     private ArrayList<ArrayList<String>> listeExercicesBudgetaires;
 
-    public static ArrayList<Association> listeAssociations=new ArrayList<Association>();
+    public static ArrayList<Association> listeAssociations=new ArrayList<>();
 
     /*  CONSTRUCTEUR  */
 
@@ -273,6 +273,9 @@ public class Association implements Abonne, Entite{
             p.setListeCotisation(new ArrayList<LocalDate>());
             p.setaCotise(false);
             p.setNbVisites(0);
+            if(listeReco.containsKey(p.getPseudo())){
+                listeReco.remove(p.getPseudo());
+            }
             MaJFichierJSONAssociation();
             MaJFichierJSONPersonnes();
             MaJFichierJSONAssociation();
