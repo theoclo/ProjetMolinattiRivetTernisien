@@ -99,6 +99,7 @@ public class Main {
             System.out.println(asso);
             Association.listeAssociations.add(asso);
         }
+
         int k=0;
         for(Personne membre : Personne.listePersonnes){
             if(membre == Association.listeAssociations.get(0).getPresident() || membre == Association.listeAssociations.get(1).getPresident()){
@@ -113,6 +114,7 @@ public class Main {
             }
             k++;
         }
+
     }
 
     public static void MaJFichierServiceEV() throws IOException {
@@ -164,10 +166,10 @@ public class Main {
 
 
     public static void creationJSON(){
-        lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
-        creationServiceEV(); //QUE SI PAS JSON ou si vide
-        //creationPersonnes(10); //A FAIRE SI PAS DE JSON ou si vide
-        //creationAssociation(2);
+        //lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
+        //creationServiceEV(); //QUE SI PAS JSON ou si vide
+        creationPersonnes(20); //A FAIRE SI PAS DE JSON ou si vide
+        creationAssociation(2);
     }
 /**
  public static void main(String[] args) throws IOException {

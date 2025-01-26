@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -129,7 +130,7 @@ public class VisitesCompteRenduView {
                             }
                             a.setBudget(a.getBudget()-a.getMontantDefraiement());
                             InitialisationAppMembre.membreActuel = p;
-                            a.getListeVisite().add(visite.withPayee(true).withCr(text));
+                            a.getListeVisite().add(visite.withPayee(true).withCr("Date du compte-rendu : "+ LocalDate.now()+"\n"+text));
                             a.getListeVisite().remove(visite);
                             break;
                         }
