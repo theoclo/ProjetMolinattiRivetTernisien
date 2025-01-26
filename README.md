@@ -143,6 +143,4 @@ automatique à chaque exécution du programme.
             <version>2.17.2</version>
         </dependency>
     </dependencies>
-```
-
-
+````
