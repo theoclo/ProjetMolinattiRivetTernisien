@@ -17,21 +17,18 @@ import static com.projet.Main.*;
 public class Launcher extends Application {
 
     public static void main(String[] args) throws IOException {
-        //creationJSON();
+        //creationJSON(); // DECOMMENTER CETTE LIGNE POUR RESET LES DONNEES
         MaJFichierJSONPersonnes();
         MaJFichierJSONArbres();
         MaJFichierServiceEV();
         MaJFichierJSONAssociation();
         MaJFichierJSONPersonnes();
-        //InitialisationAppMembre.associations.clear();
-        //InitialisationAppMembre.associations.addAll(Association.listeAssociations);
         InitialisationAppMembre.arbres.clear();
         InitialisationAppMembre.arbres.addAll(Arbre.listeArbres);
         InitialisationAppMembre.arbresNonRemarquables.clear();
         InitialisationAppMembre.arbresNonRemarquables.addAll(Arbre.obtenirNonRemarquables());
         InitialisationAppMembre.arbresRemarquables.clear();
         InitialisationAppMembre.arbresRemarquables.addAll(Arbre.obtenirArbreRemarquables());
-
 
         launch(args);
     }
