@@ -250,9 +250,9 @@ public class ExoBudgetaireAssoView {
         fin.setOnMouseClicked(event -> {
             System.out.printf("Bouton fin cliqué");
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Quitter l'association");
+            alert.setTitle("Fin exercice budgetaire");
             alert.setHeaderText("Êtes-vous sûr de vouloir mettre fin à l'exercice budgétaire ?");
-            alert.setContentText("");
+            alert.setContentText("Attention, si vous poursuivez tous les membres n'ayant pas réglés leur cotisation seront exclus.");
             ButtonType buttonTypeYes = new ButtonType("Oui");
             ButtonType buttonTypeNo = new ButtonType("Non");
             alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);

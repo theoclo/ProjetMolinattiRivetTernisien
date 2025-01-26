@@ -87,6 +87,7 @@ public class Main {
     }
     public static void creationAssociation(int nombreAsso){
         net.datafaker.Faker faker = new net.datafaker.Faker(new java.util.Locale("fr_FR", "FR"));
+        int l=0;
         for(int i = 0; i < nombreAsso; i++){
             int budget = faker.number().numberBetween(1, 100000);
             int prixCotisation = faker.number().numberBetween(10, 25);
@@ -95,13 +96,21 @@ public class Main {
             while(president.getAssociation().isPresent()){
                 president = Personne.listePersonnes.get(faker.number().numberBetween(0, Personne.listePersonnes.size()));
             }
-            Association asso = new Association("Association"+i, president,budget,prixCotisation,montantDefraiement);
+
+            String nom;
+            if(l==0){
+                nom = "Les amis des arbres";
+                l++;
+            }
+            else{
+                nom = "Protect Arbres";
+            }
+            Association asso = new Association(nom, president,budget,prixCotisation,montantDefraiement);
             asso.ajouterFacturesBase();
             president.rejoindreAsso(asso);
             System.out.println(asso);
             Association.listeAssociations.add(asso);
         }
-
         int k=0;
         for(Personne membre : Personne.listePersonnes){
             if(membre == Association.listeAssociations.get(0).getPresident() || membre == Association.listeAssociations.get(1).getPresident()){
