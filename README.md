@@ -1,4 +1,4 @@
-# Projet Arbres - Gautier TERNISIEN, Clothilde MOLINATTI, Mattis RIVET
+# Langages de la JVM - Projet Arbres - Gautier TERNISIEN, Clothilde MOLINATTI, Mattis RIVET
 
 ## Lancement des applications
 - Ouvrir le dossier ProjetMolinattiRiverTernisien dans IntelliJ
@@ -19,12 +19,15 @@ décommenter les lignes
 171 et 172 (lectureFichierCSV() et creationServiceEV()) : 
 
 ```java
-    public static void creationJSON(){
-        //lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
-        //creationServiceEV(); //QUE SI PAS JSON ou si vide
-        creationPersonnes(20); //A FAIRE SI PAS DE JSON ou si vide
-        creationAssociation(2);
-    }
+/**
+ * Chaque ligne de cette méthode permet de réinitialiser les données de l'application.
+ */
+public static void creationJSON(){
+    //lectureFichierCSV();
+    //creationServiceEV();
+    creationPersonnes(20);
+    creationAssociation(2);
+}
 ```
 
 - Puis décommenter la ligne 20 dans la classe Launcher dans le dossier 
@@ -45,12 +48,12 @@ public static void main(String[] args) throws IOException {
     InitialisationAppMembre.arbresRemarquables.clear();
     InitialisationAppMembre.arbresRemarquables.addAll(Arbre.obtenirArbreRemarquables());
 
-
     launch(args);
 }
 ```
 
-- Lancer le programme une fois pour réinitialiser les données, puis 
-recommenter les lignes décommentées afin de figer les données qui 
-viennent d'être créées.
+- Lancer le programme une fois pour réinitialiser les données
+- ⚠️ Important : Une fois les données réinitialisées, recommenter les lignes 
+décommentées dans les étapes précédentes pour éviter une réinitialisation 
+automatique à chaque exécution du programme.
 

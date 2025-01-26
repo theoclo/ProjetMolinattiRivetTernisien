@@ -167,27 +167,13 @@ public class Main {
     }
 
 
+    /**
+     * Chaque ligne de cette méthode permet de réinitialiser les données de l'application.
+     */
     public static void creationJSON(){
-        //lectureFichierCSV(); //A FAIRE SI PAS DE JSON ou si vide
-        //creationServiceEV(); //QUE SI PAS JSON ou si vide
-        creationPersonnes(20); //A FAIRE SI PAS DE JSON ou si vide
+        //lectureFichierCSV();
+        //creationServiceEV();
+        creationPersonnes(20);
         creationAssociation(2);
     }
-/**
- public static void main(String[] args) throws IOException {
- //creationJSON();
- MaJFichierJSONArbres();
- MaJFichierJSONPersonnes(); //met à jour le fichier json si modification (si ajout d'une valeur dans Personne.listePersonnes
- MaJFichierServiceEV();
- MaJFichierJSONAssociation();
- MaJFichierJSONPersonnes();
- MaJFichierJSONVisite();
- Personne.listePersonnes.get(3).rejoindreAsso(Association.listeAssociations.get(0));
- MaJFichierJSONAssociation();
- MaJFichierJSONPersonnes();
- System.out.println(Association.listeAssociations.get(0).affiche());
- System.out.println(Personne.listePersonnes.get(3).affiche());
-
- }
- **/
 }

@@ -17,7 +17,7 @@ import static com.projet.Main.*;
 public class Launcher extends Application {
 
     public static void main(String[] args) throws IOException {
-        //creationJSON(); // DECOMMENTER CETTE LIGNE POUR RESET LES DONNEES
+        //creationJSON(); //DECOMMENTER CETTE LIGNE POUR RESET LES DONNEES
         MaJFichierJSONPersonnes();
         MaJFichierJSONArbres();
         MaJFichierServiceEV();
