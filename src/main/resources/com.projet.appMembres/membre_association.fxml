@@ -129,7 +129,7 @@
                               </Button>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(three-pass-box, rgba(225,149,24,0.8), 20, 0, 0, 0);" text="Données Perso.">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font name ="Acme Regular" size="25.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets top="5.0" />
