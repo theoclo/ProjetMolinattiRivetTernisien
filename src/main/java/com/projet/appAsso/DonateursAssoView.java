@@ -297,7 +297,12 @@ public class DonateursAssoView {
                 else{
                     sEV.transfererMontant(Integer.valueOf(montantField.getText()), a);
                 }
-                a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText());
+                String st = "";
+                if(!a.getListeExercicesBudgetaires().isEmpty()) {
+                    st+="\n\nDernier rapport d'activité : \n"+a.getListeExercicesBudgetaires().getLast().getLast();
+                }
+
+                a.getListeDemandeDons().add(montantField.getText()+": "+donateur+" "+raisonField.getText()+st);
 
                 Stage stage = (Stage) btnValider.getScene().getWindow();
                 stage.close();
