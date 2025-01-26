@@ -20,11 +20,13 @@ lancer en double-cliquant dessus comme on le ferait pour une application
 d'ordinateur habituellement.
 
 ## Explications de certains choix de conception vis à vis du sujet fourni
+### Base de données simplifiée 
 - Nous avons choisi de ne pas avoir la possibilité dans l'application de créer des membres ni des associations, 
 il y a donc une liste prédéfinie de 20 membres (pour alléger les interfaces) et 2 associations 
 (ce qui permet de tester les fonctionnalités comme l'exclusion de membre et l'ajout de ce membre dans l'autre association par exemple)
 - Nous avons réalisé le code en ayant une base de 150 000 arbres, mais pour des raisons de performances, de taille de dossier et de facilité d'utilisation
 nous avons décidé de ne prendre en compte que les 5000 premiers arbres du CSV fourni par les espaces verts de la ville de Paris.
+### Simplification de fonctionnalités
 - Lors de la fin d'un exercice budgétaire d'une association, l'année réelle ne change pas mais toutes les fonctionnalités
 sont maintenues (possibilité de cotiser de nouveau, les visites suivent les jours classiques du calendrier, etc.)
 - Pour les visites, aucune vérification n'est effectuée à part le fait qu'elle doit être planifiée à une date future.
@@ -32,7 +34,7 @@ sont maintenues (possibilité de cotiser de nouveau, les visites suivent les jou
 et si l'exercice budgétaire de l'association est clos avant qu'il fasse son compte-rendu, il ne pourra pas être rémunéré et nous considérons que sa visite n'a pas été effectuée (bien qu'elle ait été planifiée).
 - Lorsqu'on plante un arbre, il est considéré comme "Jeune" par souci de logique et simplicité, et il est impossible de changer le stade de développement d'un arbren, toujours pas souci de simplicité d'utilisation des applications.
 
-## Réinitialisation des données fournies 
+## Réinitialisation des données 
 Nous avons fourni une base de données pré-enregistrées avec le projet. Cette base prend
 en compte les 5000 premiers arbres du CSV des arbres de la ville de Paris, 
 et 20 personnes réparties dans les 2 associations, 
