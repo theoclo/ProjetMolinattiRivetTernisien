@@ -2,7 +2,6 @@ package com.projet.entite;
 
 import com.projet.Arbre;
 import com.projet.Main;
-import com.projet.espacesVerts.ServiceEV;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -174,18 +173,6 @@ public class Personne implements Abonne, Entite {
 
         }
     }
-
-    @Override
-    public void sAbonner(ServiceEV sEV) {
-        if(abonnement.isPresent()) {
-            System.out.println("Vous avez déjà un abonnement : "+abonnement.get());
-        }
-        else{
-            setAbonnement(Optional.of(sEV.getCommune()));
-            sEV.addAbonne(this.getPseudo());
-        }
-    }
-
 
     @Override
     public void transfererMontant(int montant, Association asso) {
