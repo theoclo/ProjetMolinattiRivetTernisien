@@ -1,22 +1,31 @@
 # Langages de la JVM - Projet Arbres - Gautier TERNISIEN, Clothilde MOLINATTI, Mattis RIVET
 
+## Présentation du projet
+
+
 ## Lancement des applications
-- Ouvrir le dossier ProjetMolinattiRiverTernisien dans IntelliJ
-- Ouvrir la classe Launcher dans le dossier src/main/java/com.projet/launcher
-- Lancer avec le bouton vert ou MAJ + F10
+1. Ouvrir le projet 
+   - Dans IntelliJ, charger le dossier ProjetMolinattiRiverTernisien.
+2. Ouvrir la classe Launcher dans le dossier src/main/java/com.projet/launcher
+3. Lancer avec le bouton vert ou MAJ + F10
 
 Ces étapes lancent une application qui simule un bureau Windows, sur lequel 
 figurent les trois applications (membre, association, espaces verts) que l'on peut 
 lancer en double-cliquant dessus comme on le ferait pour une application
 d'ordinateur habituellement.
 
-## Réinitialisation des membres et des associations
-Nous avons fourni une base personnes et d'associations avec le projet, mais
-s'il y a besoin de réinitialiser ces données : 
+## Explications de certains choix de conception vis à vis du sujet
 
-- Aller dans la classe Main dans le dossier src/main/java/com.projet et 
+
+## Réinitialisation des données fournies 
+Nous avons fourni une base de données pré-enregistrées avec le projet. Cette base prend
+en compte les 5000 premiers arbres du CSV des arbres de la ville de Paris, 
+et 20 personnes réparties dans les 2 associations, 
+mais s'il y a besoin de réinitialiser ces données : 
+
+1. Aller dans la classe Main dans le dossier 'src/main/java/com.projet' et 
 décommenter les lignes
-171 et 172 (lectureFichierCSV() et creationServiceEV()) : 
+**171 et 172** dans la méthode 'creationJSON') : 
 
 ```java
 /**
@@ -29,8 +38,7 @@ public static void creationJSON(){
     creationAssociation(2);
 }
 ```
-
-- Puis décommenter la ligne 20 dans la classe Launcher dans le dossier 
+2. Décommenter la ligne 20 dans la classe Launcher dans le dossier 
 src/main/java/com.projet/launcher (creationJSON()) :
 
 ```java
@@ -52,8 +60,9 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-- Lancer le programme une fois pour réinitialiser les données
-- ⚠️ Important : Une fois les données réinitialisées, recommenter les lignes 
+3. Lancer le programme une fois pour réinitialiser les données 
+
+⚠️ Important : Une fois les données réinitialisées, recommenter les lignes 
 décommentées dans les étapes précédentes pour éviter une réinitialisation 
 automatique à chaque exécution du programme.
 
